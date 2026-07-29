@@ -1,0 +1,99 @@
+'use client';
+
+/** Side-by-side comparison (US-B2 … US-B7, AC-B5). */
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button, ButtonLink } from '@/components/ui/Button';
+import { Card, CardBody } from '@/components/ui/Card';
+import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
+import { ComparisonTable } from '@/components/domain/ComparisonTable';
+import { api } from '@/lib/api';
+import { useApi } from '@/lib/hooks';
+
+export default function ComparePage() {
+  const router = useRouter();
+  const { notify } = useToast();
+  const comparison = useApi(() => api.quotes.comparison());
+  const [busyQuoteId, setBusyQuoteId] = useState<string | null>(null);
+
+  const select = async (quoteId: string) => {
+    await api.quotes.select(quoteId);
+    notify('Marked as your chosen quote');
+    await comparison.reload();
+  };
+
+  const createProject = async (quoteId: string) => {
+    setBusyQuoteId(quoteId);
+    try {
+      const project = await api.projects.fromQuote(quoteId);
+      notify('Project created with milestones');
+      router.push(`/projects/${project.id}`);
+    } catch {
+      notify('Could not create the project. Please try again.', 'error');
+    } finally {
+      setBusyQuoteId(null);
+    }
+  };
+
+  if (comparison.loading) return <Spinner label="Normalising your quotes" />;
+  if (comparison.error) return <Alert tone="error">{comparison.error}</Alert>;
+  if (!comparison.data) return null;
+
+  const data = comparison.data;
+
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <Link href="/quotes" className="text-sm font-medium text-brand-700 hover:underline">
+            ← All quotes
+          </Link>
+          <h1 className="mt-2 text-2xl font-semibold">Compare quotes</h1>
+          <p className="mt-1 text-sm text-slate-600">
+            Every metric is per kWp or per year, so quotes for different system sizes stay comparable. Green
+            cells are the best value in that row.
+          </p>
+        </div>
+        <ButtonLink href="/quotes/new" variant="secondary">
+          Add another quote
+        </ButtonLink>
+      </div>
+
+      {data.rows.length === 0 ? (
+        <EmptyState
+          title="Nothing to compare yet"
+          description="Add at least two quotes and this page will line them up metric by metric."
+          action={<ButtonLink href="/quotes/new">Add a quote</ButtonLink>}
+        />
+      ) : (
+        <>
+          <Alert tone={data.context.source === 'BILLS' ? 'info' : 'warning'}>{data.context.note}</Alert>
+
+          <ComparisonTable
+            comparison={data}
+            onSelect={(quoteId) => void select(quoteId)}
+            onCreateProject={(quoteId) => void createProject(quoteId)}
+            busyQuoteId={busyQuoteId}
+          />
+
+          <Card>
+            <CardBody className="space-y-2">
+              <h2 className="text-base font-semibold">How the value score works</h2>
+              <p className="text-sm text-slate-700">{data.scoring.explanation}</p>
+              <p className="text-xs text-slate-500">
+                Savings assume ₹{data.context.tariffPerKwh}/unit and{' '}
+                {data.context.annualConsumptionKwh.toLocaleString('en-IN')} units a year of consumption.
+              </p>
+              <div>
+                <Button variant="ghost" size="sm" className="px-0" onClick={() => void comparison.reload()}>
+                  Refresh with my latest bills
+                </Button>
+              </div>
+            </CardBody>
+          </Card>
+        </>
+      )}
+    </div>
+  );
+}
