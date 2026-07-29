@@ -1,0 +1,535 @@
+// RoofToGrid — Prisma schema
+// Traces to docs/design.md §2. Every user-scoped table carries userId (NFR-S6, NFR-P4).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // pooled (pgbouncer :6543 on Supabase)
+  directUrl = env("DIRECT_URL") // direct (:5432) for migrations
+}
+
+// ---------------------------------------------------------------- enums
+
+enum UserRole {
+  HOMEOWNER
+  INSTALLER // reserved for Phase 2
+  ADMIN
+}
+
+enum PropertyType {
+  INDEPENDENT_HOUSE
+  ROW_HOUSE
+  APARTMENT
+  COMMERCIAL
+}
+
+enum DataSource {
+  MANUAL
+  OCR // reserved: BillParser / QuoteParser
+  INVERTER_API // reserved: InverterMonitoringProvider
+}
+
+enum RoofType {
+  FLAT
+  SLOPED
+  MIXED
+}
+
+enum Orientation {
+  N
+  NE
+  E
+  SE
+  S
+  SW
+  W
+  NW
+}
+
+enum ShadingLevel {
+  NONE
+  LIGHT
+  MODERATE
+  HEAVY
+}
+
+enum Suitability {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+  UNSUITABLE
+}
+
+enum ScenarioKey {
+  CONSERVATIVE
+  OPTIMAL
+  MAX_ROOF
+}
+
+enum PanelTechnology {
+  MONO_PERC
+  TOPCON
+  HJT
+  N_TYPE
+  POLY
+  THIN_FILM
+  UNKNOWN
+}
+
+enum InverterType {
+  STRING
+  MICRO
+  HYBRID
+  UNKNOWN
+}
+
+enum EquipmentTier {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+enum FinancingType {
+  CASH
+  LOAN
+  LEASE_PPA
+}
+
+enum GenerationSource {
+  INSTALLER
+  PLATFORM
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  COMMISSIONED
+  ON_HOLD
+  CANCELLED
+}
+
+enum MilestoneKey {
+  INQUIRY
+  SITE_SURVEY
+  DESIGN_CONFIRMED
+  DISCOM_APPLICATION_SUBMITTED
+  DISCOM_APPROVED
+  INSTALLATION_SCHEDULED
+  INSTALLATION_COMPLETE
+  NET_METERING_ACTIVE
+  SUBSIDY_RECEIVED
+}
+
+enum MilestoneStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+}
+
+enum DocumentCategory {
+  BILL
+  QUOTE
+  CONTRACT
+  DESIGN_DRAWING
+  DISCOM_APPROVAL
+  NET_METERING
+  SUBSIDY
+  WARRANTY
+  INVOICE
+  PHOTO
+  OTHER
+}
+
+enum WarrantyComponent {
+  PANEL
+  INVERTER
+  STRUCTURE
+  WORKMANSHIP
+  BATTERY
+  OTHER
+}
+
+enum ServiceSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ServiceStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+// ---------------------------------------------------------------- identity
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  fullName     String
+  role         UserRole @default(HOMEOWNER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile        Profile?
+  bills          ElectricityBillSummary[]
+  roofProfiles   RoofProfile[]
+  sizingRuns     SizingRun[]
+  quotes         Quote[]
+  projects       Project[]
+  documents      Document[]
+  refreshTokens  RefreshToken[]
+
+  @@map("users")
+}
+
+model Profile {
+  id                    String        @id @default(cuid())
+  userId                String        @unique
+  city                  String?
+  state                 String?
+  pincode               String?
+  discomName            String?
+  consumerNumber        String?
+  phone                 String?
+  propertyType          PropertyType?
+  currency              String        @default("INR")
+  region                String        @default("IN")
+  onboardingStep        Int           @default(0)
+  onboardingCompletedAt DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model RefreshToken {
+  id                  String    @id @default(cuid())
+  userId              String
+  tokenHash           String    @unique
+  familyId            String
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  replacedByTokenHash String?
+  userAgent           String?
+  ip                  String?
+  createdAt           DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_tokens")
+}
+
+// ---------------------------------------------------------------- data capture
+
+model ElectricityBillSummary {
+  id               String     @id @default(cuid())
+  userId           String
+  billMonth        String // YYYY-MM
+  unitsKwh         Float
+  billAmount       Float?
+  tariffPerKwh     Float
+  sanctionedLoadKw Float?
+  connectionType   String?
+  documentId       String?
+  source           DataSource @default(MANUAL)
+  notes            String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, billMonth])
+  @@index([userId])
+  @@map("electricity_bill_summaries")
+}
+
+model RoofProfile {
+  id             String       @id @default(cuid())
+  userId         String
+  label          String       @default("My roof")
+  roofType       RoofType
+  usableAreaSqft Float
+  orientation    Orientation  @default(S)
+  tiltDegrees    Float?
+  shadingLevel   ShadingLevel @default(NONE)
+  structureType  String?
+  notes          String?
+  isPrimary      Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sizingRuns SizingRun[]
+
+  @@index([userId])
+  @@map("roof_profiles")
+}
+
+// ---------------------------------------------------------------- sizing
+
+model SizingRun {
+  id                 String      @id @default(cuid())
+  userId             String?
+  roofProfileId      String?
+  avgMonthlyUnits    Float
+  tariffPerKwh       Float
+  region             String      @default("IN")
+  assumptionSetId    String
+  yieldEngine        String      @default("rule-based")
+  suitability        Suitability
+  suitabilityReasons String[]
+  roofCapacityKwp    Float
+  assumptions        Json
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  user        User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roofProfile RoofProfile?     @relation(fields: [roofProfileId], references: [id], onDelete: SetNull)
+  scenarios   SizingScenario[]
+
+  @@index([userId])
+  @@map("sizing_runs")
+}
+
+model SizingScenario {
+  id                     String      @id @default(cuid())
+  sizingRunId            String
+  key                    ScenarioKey
+  label                  String
+  systemSizeKwp          Float
+  annualGenerationKwh    Int
+  estimatedCost          Float
+  subsidyAmount          Float
+  netCost                Float
+  annualSavings          Float
+  paybackYears           Float? // null when savings <= 0 (AC-A13)
+  lifetimeSavings25y     Float
+  co2OffsetTonnesPerYear Float
+  roofAreaRequiredSqft   Float
+  notes                  String?
+  createdAt              DateTime    @default(now())
+
+  sizingRun SizingRun @relation(fields: [sizingRunId], references: [id], onDelete: Cascade)
+
+  @@index([sizingRunId])
+  @@map("sizing_scenarios")
+}
+
+// ---------------------------------------------------------------- quotes
+
+model Quote {
+  id           String  @id @default(cuid())
+  userId       String
+  installerName String
+  installerId  String? // reserved for Phase 2 marketplace
+
+  systemSizeKwp Float
+  totalPrice    Float
+  currency      String @default("INR")
+
+  panelBrand                    String?
+  panelTechnology               PanelTechnology @default(UNKNOWN)
+  panelWattage                  Int?
+  panelProductWarrantyYears     Float           @default(0)
+  panelPerformanceWarrantyYears Float           @default(0)
+
+  inverterBrand           String?
+  inverterType            InverterType @default(UNKNOWN)
+  inverterWarrantyYears   Float        @default(0)
+  workmanshipWarrantyYears Float       @default(0)
+
+  includesNetMetering Boolean @default(false)
+  includesStructure   Boolean @default(false)
+  includesAmcYears    Float   @default(0)
+
+  expectedAnnualGenerationKwh Int?
+
+  financingType   FinancingType @default(CASH)
+  interestRatePct Float?
+  tenureMonths    Int?
+  downPayment     Float?
+
+  // derived + persisted on every write (AC-B9)
+  pricePerKwp            Float
+  equipmentTier          EquipmentTier
+  valueScore             Float
+  scoreBreakdown         Json
+  redFlags               String[]
+  financedTotalCost      Float
+  estimatedAnnualSavings Float
+  paybackYears           Float?
+  generationSource       GenerationSource @default(PLATFORM)
+
+  isSelected      Boolean @default(false)
+  quoteDocumentId String?
+  notes           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects Project[]
+
+  @@index([userId])
+  @@map("quotes")
+}
+
+// ---------------------------------------------------------------- projects
+
+model Project {
+  id            String  @id @default(cuid())
+  userId        String
+  sourceQuoteId String?
+
+  // denormalized so the project survives quote deletion (AC-B8)
+  installerName  String
+  systemSizeKwp  Float
+  contractValue  Float
+  currency       String @default("INR")
+
+  name                        String
+  status                      ProjectStatus @default(PLANNING)
+  expectedAnnualGenerationKwh Int?
+  baselineMonthlyUnits        Float?
+  baselineTariffPerKwh        Float?
+  commissionedDate            DateTime?
+  notes                       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceQuote     Quote?           @relation(fields: [sourceQuoteId], references: [id], onDelete: SetNull)
+  milestones      Milestone[]
+  documents       Document[]
+  generationLogs  GenerationLog[]
+  warranties      Warranty[]
+  serviceRequests ServiceRequest[]
+
+  @@index([userId])
+  @@map("projects")
+}
+
+model Milestone {
+  id            String          @id @default(cuid())
+  projectId     String
+  key           MilestoneKey
+  title         String
+  sequence      Int
+  status        MilestoneStatus @default(NOT_STARTED)
+  plannedDate   DateTime?
+  completedDate DateTime?
+  notes         String?
+  ownerHint     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  documents Document[]
+
+  @@unique([projectId, key])
+  @@index([projectId, sequence])
+  @@map("milestones")
+}
+
+// ---------------------------------------------------------------- documents
+
+model Document {
+  id            String           @id @default(cuid())
+  userId        String
+  category      DocumentCategory @default(OTHER)
+  fileName      String // original name, metadata only (AC-E3)
+  storageKey    String           @unique
+  mimeType      String
+  sizeBytes     Int
+  storageDriver String           @default("local")
+  projectId     String?
+  milestoneId   String?
+  quoteId       String?
+  description   String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  milestone Milestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([milestoneId])
+  @@index([quoteId])
+  @@map("documents")
+}
+
+// ---------------------------------------------------------------- operations
+
+model GenerationLog {
+  id                String     @id @default(cuid())
+  projectId         String
+  month             String // YYYY-MM
+  generatedKwh      Float
+  billAmount        Float?
+  unitsImportedKwh  Float?
+  unitsExportedKwh  Float?
+  notes             String?
+  source            DataSource @default(MANUAL)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, month])
+  @@index([projectId])
+  @@map("generation_logs")
+}
+
+model Warranty {
+  id            String            @id @default(cuid())
+  projectId     String
+  component     WarrantyComponent
+  brand         String?
+  serialNumber  String?
+  startDate     DateTime
+  durationYears Float
+  documentId    String?
+  notes         String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("warranties")
+}
+
+model ServiceRequest {
+  id              String          @id @default(cuid())
+  projectId       String
+  title           String
+  description     String?
+  severity        ServiceSeverity @default(MEDIUM)
+  status          ServiceStatus   @default(OPEN)
+  raisedAt        DateTime        @default(now())
+  resolvedAt      DateTime?
+  resolutionNotes String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("service_requests")
+}

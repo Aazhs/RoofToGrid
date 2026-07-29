@@ -1,0 +1,72 @@
+# Render blueprint for the RoofToGrid API (NFR-O4).
+# Deploy: Render dashboard → New → Blueprint → point at this repo.
+# Database and object storage live in Supabase, so nothing stateful runs here.
+
+services:
+  - type: web
+    name: rooftogrid-api
+    runtime: node
+    plan: starter
+    region: singapore # closest to the India pilot; must match your Supabase region for low latency
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    # Migrations run before the new version takes traffic (NFR-O2).
+    # On plans without pre-deploy commands, run `npm run migrate:deploy` from a one-off job instead.
+    preDeployCommand: npm run migrate:deploy
+    startCommand: npm run start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: PORT
+        value: 4000
+
+      # Supabase → Project settings → Database → Connection string
+      # DATABASE_URL: pooled (pgbouncer, port 6543) + ?pgbouncer=true&connection_limit=1
+      # DIRECT_URL:   direct (port 5432), used only by prisma migrate
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+
+      # node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ACCESS_TOKEN_TTL_MINUTES
+        value: 15
+      - key: REFRESH_TOKEN_TTL_DAYS
+        value: 30
+      - key: BCRYPT_ROUNDS
+        value: 12
+
+      # Your Vercel production and preview origins, comma separated.
+      - key: CORS_ORIGINS
+        value: https://app.rooftogrid.com,https://rooftogrid.com
+      # Set only when the API and app share a registrable domain.
+      - key: COOKIE_DOMAIN
+        value: .rooftogrid.com
+      - key: TRUST_PROXY
+        value: true
+
+      - key: STORAGE_DRIVER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: rooftogrid-documents
+      - key: MAX_UPLOAD_MB
+        value: 10
+      - key: SIGNED_URL_TTL_SECONDS
+        value: 300
+
+      - key: YIELD_ENGINE
+        value: rule-based
+      - key: ASSUMPTION_SET_ID
+        value: IN_2026_07
