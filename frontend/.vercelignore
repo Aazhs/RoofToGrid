@@ -1,0 +1,6 @@
+# Ignore backend, docs, infra and root configuration files from triggering frontend Vercel builds
+../backend/
+../docs/
+../infra/
+../render.yaml
+../README.md

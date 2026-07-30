@@ -9,6 +9,13 @@ services:
     plan: free
     region: singapore # closest to the India pilot; must match your Supabase region for low latency
     rootDir: backend
+    buildFilter:
+      paths:
+        - backend/**
+      ignore:
+        - frontend/**
+        - docs/**
+        - infra/**
     buildCommand: npm ci && npm run build
     # Migrations run before the new version takes traffic (NFR-O2).
     # On plans without pre-deploy commands, run `npm run migrate:deploy` from a one-off job instead.
