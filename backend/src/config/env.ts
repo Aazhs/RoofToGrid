@@ -66,8 +66,21 @@ if (raw.STORAGE_DRIVER === 'supabase' && (!raw.SUPABASE_URL || !raw.SUPABASE_SER
   process.exit(1);
 }
 
+function sanitizeDatabaseUrl(url: string): string {
+  let cleaned = url.trim().replace(/^["']|["']$/g, '');
+  if ((cleaned.includes(':6543') || cleaned.includes('pooler.supabase.com')) && !cleaned.includes('pgbouncer=true')) {
+    const separator = cleaned.includes('?') ? '&' : '?';
+    cleaned = `${cleaned}${separator}pgbouncer=true`;
+  }
+  return cleaned;
+}
+
+const sanitizedDbUrl = sanitizeDatabaseUrl(raw.DATABASE_URL);
+process.env.DATABASE_URL = sanitizedDbUrl;
+
 export const env = {
   ...raw,
+  databaseUrl: sanitizedDbUrl,
   isProduction: raw.NODE_ENV === 'production',
   isTest: raw.NODE_ENV === 'test',
   corsOrigins: raw.CORS_ORIGINS.split(',')
