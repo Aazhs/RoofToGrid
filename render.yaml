@@ -6,7 +6,7 @@ services:
   - type: web
     name: rooftogrid-api
     runtime: node
-    plan: starter
+    plan: free
     region: singapore # closest to the India pilot; must match your Supabase region for low latency
     rootDir: backend
     buildCommand: npm ci && npm run build
@@ -46,10 +46,10 @@ services:
 
       # Your Vercel production and preview origins, comma separated.
       - key: CORS_ORIGINS
-        value: https://app.rooftogrid.com,https://rooftogrid.com
+        value: https://roof-to-grid.vercel.app,https://rooftogrid.in,https://app.rooftogrid.in,https://www.rooftogrid.in,https://app.rooftogrid.com,https://rooftogrid.com
       # Set only when the API and app share a registrable domain.
       - key: COOKIE_DOMAIN
-        value: .rooftogrid.com
+        value: .rooftogrid.in
       - key: TRUST_PROXY
         value: true
 

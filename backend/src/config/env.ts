@@ -71,7 +71,7 @@ export const env = {
   isProduction: raw.NODE_ENV === 'production',
   isTest: raw.NODE_ENV === 'test',
   corsOrigins: raw.CORS_ORIGINS.split(',')
-    .map((o) => o.trim())
+    .map((o) => o.trim().replace(/^["']|["']$/g, '').replace(/\/+$/, ''))
     .filter(Boolean),
   maxUploadBytes: Math.round(raw.MAX_UPLOAD_MB * 1024 * 1024),
 };
