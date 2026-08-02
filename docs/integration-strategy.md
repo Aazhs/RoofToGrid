@@ -1,4 +1,4 @@
-# RoofToGrid — Integration Strategy
+RoofToGrid — Integration Strategy
 
 Status: Living document
 Last updated: 2026-07-29
@@ -27,15 +27,15 @@ src/storage/
   supabase.ts       SupabaseStorageProvider     ✅ implemented (prod)
 ```
 
-| Provider | Env var | MVP value | Status |
-|---|---|---|---|
-| `StorageProvider` | `STORAGE_DRIVER` | `local` \| `supabase` | ✅ both real |
-| `YieldEngine` | `YIELD_ENGINE` | `rule-based` | ✅ real, replaceable |
-| `SubsidyProvider` | `SUBSIDY_PROVIDER` | `static-in` | ✅ real, static rules |
-| `DiscomProvider` | `DISCOM_PROVIDER` | `stub` | 🚧 not implemented |
-| `InverterMonitoringProvider` | `INVERTER_PROVIDER` | `stub` | 🚧 not implemented |
-| `QuoteParser` | `QUOTE_PARSER` | `stub` | 🚧 not implemented |
-| `NotificationProvider` | `NOTIFICATION_PROVIDER` | `console` | 🚧 logs only |
+| Provider                     | Env var                 | MVP value             | Status                |
+| ---------------------------- | ----------------------- | --------------------- | --------------------- |
+| `StorageProvider`            | `STORAGE_DRIVER`        | `local` \| `supabase` | ✅ both real          |
+| `YieldEngine`                | `YIELD_ENGINE`          | `rule-based`          | ✅ real, replaceable  |
+| `SubsidyProvider`            | `SUBSIDY_PROVIDER`      | `static-in`           | ✅ real, static rules |
+| `DiscomProvider`             | `DISCOM_PROVIDER`       | `stub`                | 🚧 not implemented    |
+| `InverterMonitoringProvider` | `INVERTER_PROVIDER`     | `stub`                | 🚧 not implemented    |
+| `QuoteParser`                | `QUOTE_PARSER`          | `stub`                | 🚧 not implemented    |
+| `NotificationProvider`       | `NOTIFICATION_PROVIDER` | `console`             | 🚧 logs only          |
 
 ---
 
@@ -49,6 +49,7 @@ purpose, and every result carries the `assumptionSetId` that produced it.
 
 **Phase 2 — climate-accurate.** Swap in PVGIS (free, good EU/Asia coverage), NREL PVWatts (US), or
 Google Solar API where roof geometry is available.
+
 - Inputs already captured: lat/long derivable from pincode, orientation, tilt, shading level, system size.
 - New inputs needed: precise coordinates, module and inverter specs, DC/AC ratio, soiling and loss factors.
 - Contract change: `monthlyKwh[]` becomes engine-supplied rather than seasonality-derived, and
@@ -57,6 +58,7 @@ Google Solar API where roof geometry is available.
 
 **Phase 2/3 — shading-aware simulation.** Aurora Solar, Helioscope, or an in-house engine on LiDAR/imagery,
 producing P50/P90 bands and a per-hour profile that feeds battery and ToU modelling.
+
 - Requires: roof polygons, obstruction models, hourly irradiance.
 - Architectural hook: the engine returns an optional `hourlyProfile` that `domain/performance.ts` can consume
   instead of the monthly seasonality curve.
@@ -81,12 +83,16 @@ interface DiscomProvider {
   id: string;
   listSupportedDiscoms(region: string): Promise<DiscomInfo[]>;
   checkEligibility(input: DiscomEligibilityInput): Promise<DiscomEligibility>;
-  submitApplication(input: DiscomApplicationInput): Promise<DiscomApplicationRef>;
-  getApplicationStatus(ref: DiscomApplicationRef): Promise<DiscomApplicationStatus>;
+  submitApplication(
+    input: DiscomApplicationInput,
+  ): Promise<DiscomApplicationRef>;
+  getApplicationStatus(
+    ref: DiscomApplicationRef,
+  ): Promise<DiscomApplicationStatus>;
 }
 interface SubsidyProvider {
   id: string;
-  estimate(input: SubsidyInput): Promise<SubsidyEstimate>;   // implemented
+  estimate(input: SubsidyInput): Promise<SubsidyEstimate>; // implemented
   getApplicationStatus?(ref: string): Promise<SubsidyStatus>; // Phase 2
 }
 ```
@@ -94,11 +100,11 @@ interface SubsidyProvider {
 **Phase 2 reality check.** Most Indian DISCOM portals have no public API. The provider interface deliberately
 does not assume one:
 
-| Tier | Mechanism | Where it plugs in |
-|---|---|---|
-| A | Real API / state portal integration | `submitApplication` + `getApplicationStatus` |
-| B | Authenticated scraping with consent | same interface, different implementation |
-| C | Human-in-the-loop ops agent updating status | same interface, backed by an internal queue |
+| Tier | Mechanism                                   | Where it plugs in                            |
+| ---- | ------------------------------------------- | -------------------------------------------- |
+| A    | Real API / state portal integration         | `submitApplication` + `getApplicationStatus` |
+| B    | Authenticated scraping with consent         | same interface, different implementation     |
+| C    | Human-in-the-loop ops agent updating status | same interface, backed by an internal queue  |
 
 All three write through the same path: a provider event → milestone update → notification. Milestones are
 never blocked on automation; manual override always remains available. Status polling runs as a scheduled job
@@ -121,8 +127,16 @@ integration lands, to avoid collecting sensitive data with no use.
 interface InverterMonitoringProvider {
   id: string;
   listVendors(): Promise<VendorInfo[]>;
-  connect(input: { projectId: string; vendor: string; credentials: unknown }): Promise<ConnectionRef>;
-  fetchDailyGeneration(ref: ConnectionRef, from: Date, to: Date): Promise<DailyGeneration[]>;
+  connect(input: {
+    projectId: string;
+    vendor: string;
+    credentials: unknown;
+  }): Promise<ConnectionRef>;
+  fetchDailyGeneration(
+    ref: ConnectionRef,
+    from: Date,
+    to: Date,
+  ): Promise<DailyGeneration[]>;
   fetchLiveStatus(ref: ConnectionRef): Promise<InverterStatus>;
   disconnect(ref: ConnectionRef): Promise<void>;
 }
@@ -132,6 +146,7 @@ interface InverterMonitoringProvider {
 smart-meter/interval data where DISCOMs expose it.
 
 **Design notes.**
+
 - A nightly job pulls daily generation and rolls it into the existing `GenerationLog` monthly rows with
   `source = INVERTER_API`; manual entries are preserved and marked so a user's numbers are never silently
   overwritten.
@@ -155,8 +170,15 @@ defines the exact target schema.
 ```ts
 interface QuoteParser {
   id: string;
-  parse(input: { documentId: string; mimeType: string; buffer: Buffer })
-    : Promise<{ fields: Partial<QuoteInput>; confidence: Record<string, number>; warnings: string[] }>;
+  parse(input: {
+    documentId: string;
+    mimeType: string;
+    buffer: Buffer;
+  }): Promise<{
+    fields: Partial<QuoteInput>;
+    confidence: Record<string, number>;
+    warnings: string[];
+  }>;
 }
 ```
 
@@ -165,6 +187,7 @@ schema with per-field confidence → **mandatory human confirmation screen** pre
 save through the normal validated create endpoint.
 
 **Guardrails.**
+
 - Parsed values never persist without user confirmation. An LLM that is confidently wrong about a price is
   worse than an empty form.
 - Fields below a confidence threshold render blank and flagged rather than pre-filled.
@@ -195,12 +218,12 @@ separate, labelled surface.
 
 ## 7. Notifications, payments, and analytics
 
-| Concern | Today | Later |
-|---|---|---|
-| Notifications | `ConsoleNotificationProvider` logs the payload | Resend/SES for email, MSG91/WhatsApp Business for India; templates keyed by milestone and alert type |
-| Payments | none; financing fields captured only | Razorpay/Stripe for premium reviews and SaaS; escrowed milestone payments in Phase 3 |
-| Analytics | funnel-computable data persisted; no tracker wired in | self-hosted product analytics with consent gating; funnel definitions already in `business-model.md` §4.1 |
-| Auth providers | email + password | Google OAuth and phone OTP behind the same `AuthProvider` seam |
+| Concern        | Today                                                 | Later                                                                                                     |
+| -------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Notifications  | `ConsoleNotificationProvider` logs the payload        | Resend/SES for email, MSG91/WhatsApp Business for India; templates keyed by milestone and alert type      |
+| Payments       | none; financing fields captured only                  | Razorpay/Stripe for premium reviews and SaaS; escrowed milestone payments in Phase 3                      |
+| Analytics      | funnel-computable data persisted; no tracker wired in | self-hosted product analytics with consent gating; funnel definitions already in `business-model.md` §4.1 |
+| Auth providers | email + password                                      | Google OAuth and phone OTP behind the same `AuthProvider` seam                                            |
 
 ---
 
@@ -209,7 +232,11 @@ separate, labelled surface.
 ```ts
 interface StorageProvider {
   id: string;
-  put(input: { key: string; body: Buffer | Readable; contentType: string }): Promise<{ key: string }>;
+  put(input: {
+    key: string;
+    body: Buffer | Readable;
+    contentType: string;
+  }): Promise<{ key: string }>;
   getStream(key: string): Promise<Readable>;
   getSignedUrl(key: string, expiresInSeconds: number): Promise<string | null>;
   delete(key: string): Promise<void>;

@@ -101,7 +101,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`pointer-events-auto rounded-lg border px-3 py-2 text-sm shadow-card ${ALERT_TONES[toast.tone]}`}
+            className={`pointer-events-auto rounded-lg border px-3 py-2 text-sm shadow-card animate-toast-enter ${ALERT_TONES[toast.tone]}`}
           >
             {toast.message}
           </div>

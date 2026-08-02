@@ -1,0 +1,316 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>How It Works - RoofToGrid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#231a08",
+                    "on-tertiary-container": "#798877",
+                    "surface": "#faf9f7",
+                    "on-primary-fixed-variant": "#474746",
+                    "inverse-on-surface": "#f1f1ef",
+                    "primary-container": "#1c1b1b",
+                    "secondary-container": "#efdec1",
+                    "background": "#faf9f7",
+                    "inverse-surface": "#2f3130",
+                    "secondary-fixed": "#f1e0c3",
+                    "tertiary-fixed": "#d7e7d4",
+                    "outline-variant": "#c4c7c7",
+                    "on-primary-fixed": "#1c1b1b",
+                    "on-error-container": "#93000a",
+                    "outline": "#747878",
+                    "primary": "#000000",
+                    "surface-container-high": "#e9e8e6",
+                    "on-secondary-fixed-variant": "#504530",
+                    "tertiary-fixed-dim": "#bbcbb8",
+                    "surface-dim": "#dadad8",
+                    "inverse-primary": "#c8c6c5",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1a1c1b",
+                    "surface-bright": "#faf9f7",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e3e2e0",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1a1c1b",
+                    "on-surface-variant": "#444748",
+                    "surface-tint": "#5f5e5e",
+                    "secondary-fixed-dim": "#d5c5a9",
+                    "surface-container": "#efeeec",
+                    "tertiary-container": "#121e13",
+                    "on-secondary-container": "#6d614a",
+                    "secondary": "#695d46",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#e5e2e1",
+                    "on-error": "#ffffff",
+                    "tertiary": "#000000",
+                    "on-tertiary-fixed": "#121e13",
+                    "surface-container-highest": "#e3e2e0",
+                    "on-primary-container": "#858383",
+                    "on-tertiary-fixed-variant": "#3d4a3c",
+                    "surface-container-low": "#f4f3f1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max-width": "1280px",
+                    "unit": "8px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "caption": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .hairline {
+            border-bottom: 1px solid theme('colors.outline-variant' / 30%);
+        }
+        .hairline-left {
+            border-left: 1px solid theme('colors.outline-variant' / 30%);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen flex flex-col pt-24">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max-width mx-auto bg-surface/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+            RoofToGrid
+        </div>
+<div class="hidden md:flex space-x-gutter items-center">
+<a class="text-primary font-semibold border-b-2 border-primary pb-1" href="#">How It Works</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Login</a>
+<button class="bg-primary text-on-primary px-4 py-2 rounded font-label-md text-label-md hover:bg-primary/90 transition-colors">
+                Get Started
+            </button>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col w-full max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop pb-24">
+<!-- Header Section -->
+<header class="py-16 md:py-24 max-w-3xl">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-6">
+                The Methodology
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                A structured, four-phase approach to transitioning your infrastructure to distributed energy resources. Designed for clarity, driven by precise data analysis, and focused on long-term systemic stability.
+            </p>
+</header>
+<!-- Timeline Section -->
+<section class="relative">
+<!-- Continuous subtle line connecting steps on desktop -->
+<div class="hidden md:block absolute left-8 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col gap-16 md:gap-24">
+<!-- Step 1: Survey -->
+<article class="relative flex flex-col md:flex-row gap-6 md:gap-16">
+<div class="md:w-16 flex-shrink-0 flex items-start justify-start md:justify-center relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/50 flex items-center justify-center text-primary shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<span class="font-label-md text-label-md">01</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+<div>
+<div class="inline-flex items-center px-3 py-1 bg-secondary-fixed-dim/20 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 0;">satellite_alt</span>
+<span class="font-caption text-caption uppercase tracking-wider text-on-secondary-fixed">Analysis Phase</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Initial Survey &amp; Assessment</h2>
+<p class="text-on-surface-variant mb-6">
+                                We utilize high-resolution geospatial imagery and LIDAR data to conduct a preliminary structural assessment of the intended installation surface. This remote analysis identifies potential obstructions, shading patterns across temporal axes, and overall surface viability before dispatching physical evaluation teams.
+                            </p>
+<ul class="space-y-3">
+<li class="flex items-start">
+<span class="material-symbols-outlined text-outline mr-3 text-base mt-1" style="font-variation-settings: 'FILL' 0;">check</span>
+<span class="text-sm text-on-surface-variant">Topological surface mapping</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-outline mr-3 text-base mt-1" style="font-variation-settings: 'FILL' 0;">check</span>
+<span class="text-sm text-on-surface-variant">Historical irradiance modeling</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-outline mr-3 text-base mt-1" style="font-variation-settings: 'FILL' 0;">check</span>
+<span class="text-sm text-on-surface-variant">Structural integrity pre-qualification</span>
+</li>
+</ul>
+</div>
+<div class="aspect-[4/3] bg-surface-container-low rounded border border-outline-variant/30 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center mix-blend-multiply opacity-80" data-alt="A highly detailed, technical topographic map of a building roof displayed on a minimalist digital screen. The interface is clean and academic, utilizing a sophisticated palette of deep blacks, crisp whites, and subtle topographic contour lines in muted tan and grey. The aesthetic is reminiscent of advanced geospatial analysis software, light mode." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfZdoxZ7WNCQXuJRaVg1U7K7vn5uyUXHkqNDMB6QveSd8n4KYWRw88OO-gQnKVLxoOXAbg5Dt3iyPlFpvxIr8QF7OewWmI1AezBReXBzBmEc63L0Z5xV6B9f-51g9AdKSLETNBQb-R6UoBqfZVg4HsF6oZMPPa6LWWj_Pyr4NNbjw27PU6kJK9Jv6yBE2od3VKnAF9j7IS37MU1mFE8ccDujjc625B0dzWtW_iuTwbYfz2BsrnlMQ')"></div>
+</div>
+</div>
+</article>
+<!-- Step 2: Sizing -->
+<article class="relative flex flex-col md:flex-row gap-6 md:gap-16">
+<div class="md:w-16 flex-shrink-0 flex items-start justify-start md:justify-center relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/50 flex items-center justify-center text-primary shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<span class="font-label-md text-label-md">02</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+<div class="md:order-2">
+<div class="inline-flex items-center px-3 py-1 bg-secondary-fixed-dim/20 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 0;">calculate</span>
+<span class="font-caption text-caption uppercase tracking-wider text-on-secondary-fixed">Engineering Phase</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Capacity Sizing &amp; Modeling</h2>
+<p class="text-on-surface-variant mb-6">
+                                Correlating the spatial data from the survey phase with historical consumption metrics to engineer optimal system parameters. We model various hardware configurations against local climatic probabilities to establish the theoretical maximum yield and baseline operational efficiency.
+                            </p>
+</div>
+<div class="md:order-1 aspect-[4/3] bg-surface-container-lowest rounded border border-outline-variant/30 overflow-hidden relative flex items-center justify-center p-6">
+<!-- Abstract data visualization representation -->
+<div class="w-full h-full flex flex-col gap-4">
+<div class="flex-1 border-b border-outline-variant/20 flex items-end gap-2 pb-2">
+<div class="w-1/6 bg-outline-variant/20 h-1/4 rounded-t"></div>
+<div class="w-1/6 bg-outline-variant/30 h-2/4 rounded-t"></div>
+<div class="w-1/6 bg-primary/80 h-3/4 rounded-t"></div>
+<div class="w-1/6 bg-outline-variant/40 h-1/2 rounded-t"></div>
+<div class="w-1/6 bg-outline-variant/20 h-1/3 rounded-t"></div>
+<div class="w-1/6 bg-outline-variant/30 h-2/3 rounded-t"></div>
+</div>
+<div class="h-1/3 flex justify-between items-center text-outline text-xs">
+<span>Consumption</span>
+<span>Generation</span>
+<span>Offset</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Step 3: Compare -->
+<article class="relative flex flex-col md:flex-row gap-6 md:gap-16">
+<div class="md:w-16 flex-shrink-0 flex items-start justify-start md:justify-center relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest border border-outline-variant/50 flex items-center justify-center text-primary shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<span class="font-label-md text-label-md">03</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+<div>
+<div class="inline-flex items-center px-3 py-1 bg-secondary-fixed-dim/20 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 0;">compare_arrows</span>
+<span class="font-caption text-caption uppercase tracking-wider text-on-secondary-fixed">Evaluation Phase</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Vendor &amp; Component Comparison</h2>
+<p class="text-on-surface-variant mb-6">
+                                The system dynamically generates an agnostic evaluation matrix, cross-referencing our engineered requirements against current market offerings. We synthesize parameters such as degradation rates, thermal coefficients, and localized warranty structures to present a curated subset of viable hardware architectures.
+                            </p>
+<button class="border border-primary text-primary px-4 py-2 rounded font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+                                View Evaluation Methodology
+                            </button>
+</div>
+<div class="aspect-[4/3] bg-surface-container-lowest rounded border border-outline-variant/30 overflow-hidden relative flex flex-col">
+<!-- Simple table representation -->
+<div class="grid grid-cols-3 border-b border-outline-variant/30 p-4 bg-surface/50">
+<div class="font-label-md text-xs text-outline">Component</div>
+<div class="font-label-md text-xs text-outline">Tier 1 Spec</div>
+<div class="font-label-md text-xs text-outline">Tier 2 Spec</div>
+</div>
+<div class="flex-1 flex flex-col">
+<div class="grid grid-cols-3 border-b border-outline-variant/10 p-4">
+<div class="text-sm">Inverter Capacity</div>
+<div class="text-sm text-on-surface-variant">7.6 kW</div>
+<div class="text-sm text-on-surface-variant">6.0 kW</div>
+</div>
+<div class="grid grid-cols-3 border-b border-outline-variant/10 p-4">
+<div class="text-sm">Panel Yield</div>
+<div class="text-sm text-on-surface-variant">400 W</div>
+<div class="text-sm text-on-surface-variant">370 W</div>
+</div>
+<div class="grid grid-cols-3 p-4">
+<div class="text-sm">Degradation</div>
+<div class="text-sm text-on-surface-variant">0.25%/yr</div>
+<div class="text-sm text-on-surface-variant">0.40%/yr</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Step 4: Monitor -->
+<article class="relative flex flex-col md:flex-row gap-6 md:gap-16">
+<div class="md:w-16 flex-shrink-0 flex items-start justify-start md:justify-center relative z-10">
+<div class="w-12 h-12 rounded-full bg-primary border border-primary flex items-center justify-center text-on-primary shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<span class="font-label-md text-label-md">04</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+<div class="md:order-2">
+<div class="inline-flex items-center px-3 py-1 bg-tertiary-fixed/40 rounded-full mb-4">
+<span class="material-symbols-outlined text-sm mr-2 text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 0;">query_stats</span>
+<span class="font-caption text-caption uppercase tracking-wider text-on-tertiary-fixed">Operational Phase</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-4">Telemetry &amp; Monitoring</h2>
+<p class="text-on-surface-variant mb-6">
+                                Post-commissioning, the platform establishes continuous telemetry streams to monitor real-time yield against theoretical models. Diagnostic algorithms identify anomalous production patterns, enabling preemptive maintenance protocols and ensuring the infrastructure operates within specified tolerance bands.
+                            </p>
+</div>
+<div class="md:order-1 aspect-[4/3] bg-surface-container-low rounded border border-outline-variant/30 overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center opacity-90" data-alt="A minimalist, academic interface displaying clean line graphs and telemetry data. The color palette features light mode off-whites, crisp charcoal lines, and subtle data points. The layout is structured like a formal scientific paper or ledger, focusing on clarity, precision, and a high-contrast typographic hierarchy without any loud, gamified UI elements." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYCulqkburNMtqtV9Z0urEnAKejelmunDcjAHSvwh-4hhib-FVQLwBR_8Uc3eIqyX1AiDQCsjtNYPOenaoCDdjs_cS91Z27AaYB-XzsWhW7FnMCRi-Lt5lgwgwTvoGuMC7Xg0gukEMOslzx3BSJQJ-FfsMHewhJskXrZcFUrAKr9lnRLx-ZiYG5guDGpotFpdCgOCd6S_3WCb5i1Mv3HMUFpJNbMlWQGRnUwcA22GftjsZ9QNIWps')"></div>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-margin-desktop px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max-width mx-auto bg-surface dark:bg-surface-container-lowest border-t border-outline-variant/20 mt-auto">
+<div>
+<div class="font-headline-md text-headline-md font-bold text-primary mb-4">RoofToGrid</div>
+<p class="font-caption text-caption text-on-surface-variant">© 2024 RoofToGrid. All rights reserved.</p>
+</div>
+<div class="flex flex-col gap-2 font-caption text-caption">
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Product</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Company</a>
+</div>
+<div class="flex flex-col gap-2 font-caption text-caption">
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Legal</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Privacy</a>
+</div>
+<div class="flex flex-col gap-2 font-caption text-caption">
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Terms</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all focus:ring-2 focus:ring-primary w-fit" href="#">Support</a>
+</div>
+</footer>
+</body></html>

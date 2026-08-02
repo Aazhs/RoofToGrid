@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RoofToGrid - Secure Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#131313",
+                      "surface-variant": "#353534",
+                      "on-primary-container": "#5c5143",
+                      "on-surface-variant": "#cfc5bb",
+                      "background": "#131313",
+                      "secondary-fixed": "#e5e2e1",
+                      "primary-container": "#d4c5b3",
+                      "surface-tint": "#d3c4b2",
+                      "surface-dim": "#131313",
+                      "on-secondary": "#313030",
+                      "tertiary-fixed": "#e4e2e1",
+                      "primary-fixed-dim": "#d3c4b2",
+                      "on-surface": "#e5e2e1",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-tertiary": "#303030",
+                      "on-primary-fixed-variant": "#4f4538",
+                      "outline-variant": "#4c463e",
+                      "tertiary-container": "#c9c7c7",
+                      "inverse-surface": "#e5e2e1",
+                      "inverse-on-surface": "#313030",
+                      "on-secondary-container": "#b7b5b4",
+                      "on-tertiary-container": "#535353",
+                      "on-error-container": "#ffdad6",
+                      "secondary": "#c8c6c5",
+                      "on-primary-fixed": "#221a0f",
+                      "secondary-container": "#474746",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#1c1b1b",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "tertiary": "#e5e3e2",
+                      "outline": "#988f86",
+                      "on-background": "#e5e2e1",
+                      "surface-bright": "#3a3939",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container": "#201f1f",
+                      "on-error": "#690005",
+                      "error-container": "#93000a",
+                      "primary-fixed": "#f0e0cd",
+                      "on-secondary-fixed-variant": "#474746",
+                      "on-primary": "#382f22",
+                      "primary": "#f1e1ce",
+                      "surface-container-highest": "#353534",
+                      "on-tertiary-fixed-variant": "#474746",
+                      "on-tertiary-fixed": "#1b1c1c",
+                      "inverse-primary": "#685d4e",
+                      "surface-container-high": "#2a2a2a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "max-width": "1280px",
+                      "margin-mobile": "16px",
+                      "unit": "4px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0e0e0e; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4c463e; }
+      </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex flex-col items-center justify-center relative overflow-hidden" data-alt="A highly abstract, dark, and sophisticated architectural visualization. Smooth, monumental concrete surfaces in deep charcoal tones, subtly illuminated by stark, precise beams of cool white light. The composition is minimalist and geometric, evoking a sense of calm authority and high-tech security. The overall aesthetic is dark, premium, and purely intellectual, devoid of organic noise." style="background-image: linear-gradient(to bottom, rgba(14, 14, 14, 0.95), rgba(14, 14, 14, 1)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDoa1ev3S00NE14-zYinkwJJx8LR94_unNhr0RPB6ZYeH3FT_fDlXBavGItDPEgR5RoNjw4QxEbTVC0BO2So-dxS-zbQl3KbsxfRufEsq1Mjg-W9BpV4xEJ2pblGefIH64WB-SKkuB09m2iKRF2_znzpoDInYxNM_194f0JcQ_9NQf5fKHMOdWxtpx95Epy0Y9TweLOCXbnoT5J8CWk26gnSIo67RKX92mSe6RZ7B9gMmgNu9j7sl8'); background-size: cover; background-position: center;">
+<!-- 
+      Note: TopNavBar and Footer components are intentionally suppressed per the 
+      "Semantic Shell Mandate" which dictates automatic suppression for Linear/Transactional 
+      pages like Login, Sign-up, and Onboarding to prioritize the focused user journey. 
+    -->
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[440px] px-margin-mobile z-10 relative">
+<!-- Minimalist Brand Identifier -->
+<div class="text-center mb-10 flex flex-col items-center">
+<div class="h-12 w-12 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container text-2xl" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2 tracking-tight">RoofToGrid</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Secure access to your energy portfolio.</p>
+</div>
+<!-- Login Card (Raised Layer) -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-8 md:p-10 w-full shadow-[0_32px_64px_-16px_rgba(0,0,0,0.8)] relative overflow-hidden">
+<!-- Subtle highlight line at top of card -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary-container/20 to-transparent"></div>
+<form action="#" class="space-y-6" method="POST">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest block" for="email">Email Address</label>
+<div class="relative">
+<input autocomplete="email" class="w-full bg-surface-container border border-outline-variant rounded-DEFAULT px-4 py-3.5 pl-11 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/50" id="email" name="email" placeholder="admin@rooftogrid.com" required="" type="email"/>
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[20px]" data-icon="mail">mail</span>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest block" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary-container transition-colors focus:outline-none" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<input autocomplete="current-password" class="w-full bg-surface-container border border-outline-variant rounded-DEFAULT px-4 py-3.5 pl-11 pr-11 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/50" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[20px]" data-icon="key">key</span>
+<!-- Minimalist toggle visibility button -->
+<button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant/70 hover:text-on-surface transition-colors focus:outline-none flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="pt-4">
+<button class="w-full bg-primary-container text-on-primary-fixed font-label-sm text-label-sm uppercase tracking-widest py-4 px-6 rounded-DEFAULT hover:bg-surface-tint active:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container-low" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Technical / Security indicator -->
+<div class="mt-8 pt-6 border-t border-outline-variant/50 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-widest">SECURE 256-BIT ENCRYPTION</span>
+</div>
+</div>
+<!-- Secondary Action / Navigation away from transactional flow -->
+<div class="mt-8 text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Deploying a new array? 
+                <a class="text-on-surface hover:text-primary-container border-b border-primary-container/30 hover:border-primary-container transition-all ml-1" href="#">Request Platform Access</a>
+</p>
+</div>
+</main>
+</body></html>
