@@ -21,7 +21,7 @@ export function CTABanner() {
         </h2>
         
         <p className="text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
-          Free forever for homeowners. Plan your solar transition with data, not guesswork.
+          Plan your solar transition with data, not guesswork.
         </p>
         
         <Link 

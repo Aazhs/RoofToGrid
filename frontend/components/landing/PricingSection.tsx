@@ -22,26 +22,26 @@ export function PricingSection() {
             Open Access for Homeowners.
           </h2>
           <p className="mt-6 text-body-lg text-on-surface-variant">
-            We believe the transition to solar should be transparent and accessible. Our core homeowner tools are completely free, supported by our installer network.
+            We believe the transition to solar should be transparent and accessible. Our core homeowner tools help you plan and evaluate solar options transparently.
           </p>
         </div>
 
         {/* Pricing Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
-          {/* Homeowner Free Plan */}
+          {/* Homeowner Plan */}
           <div className="relative overflow-hidden rounded-2xl border border-surface-container-high bg-surface-container-low p-8 md:col-span-7 lg:p-12">
             {/* Ambient glow */}
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-[80px]" />
             
             <div className="relative z-10">
               <h3 className="font-jakarta text-headline-sm font-semibold text-on-surface">
-                Homeowner Free
+                Homeowner Plan
               </h3>
               <div className="mt-4 flex items-baseline gap-2">
                 <span className="font-jakarta text-display-sm font-bold text-on-surface">
                   ₹0
                 </span>
-                <span className="text-body-lg text-on-surface-variant">/ forever</span>
+                <span className="text-body-lg text-on-surface-variant">/ standard</span>
               </div>
               <p className="mt-4 text-body-md text-on-surface-variant">
                 Everything you need to confidently evaluate and plan your solar transition.

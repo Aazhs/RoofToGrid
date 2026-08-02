@@ -47,7 +47,7 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="text-headline-sm font-semibold text-on-surface font-jakarta">5. Your Rights & Contact</h2>
             <p>
-              You may request a copy of your stored data or request deletion of your account at any time. For privacy inquiries, please contact us at <a href="mailto:privacy@rooftogrid.in" className="text-primary-container font-semibold underline">privacy@rooftogrid.in</a>.
+              You may request a copy of your stored data or request deletion of your account at any time. For privacy inquiries, please contact us at <a href="mailto:aarsh@rooftogrid.in" className="text-primary-container font-semibold underline">aarsh@rooftogrid.in</a>.
             </p>
           </section>
         </div>

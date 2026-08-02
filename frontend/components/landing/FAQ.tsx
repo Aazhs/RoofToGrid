@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: 'Do I have to pay for RoofToGrid?',
-    answer: 'RoofToGrid is completely free for homeowners to use for planning, tracking, and monitoring, and it always will be.'
+    answer: 'Homeowners can access core features to plan their roof potential, track project milestones, and compare installer quotes.'
   },
   {
     question: 'How do you verify installers?',
@@ -43,7 +43,7 @@ export function FAQ() {
   };
 
   return (
-    <section className="py-20 md:py-32 border-t border-outline-variant max-w-[1280px] mx-auto px-4 md:px-16">
+    <section id="faq" className="py-20 md:py-32 border-t border-outline-variant max-w-[1280px] mx-auto px-4 md:px-16">
       <div 
         ref={headerRef}
         className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}

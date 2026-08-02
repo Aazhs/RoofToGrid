@@ -17,12 +17,12 @@ export function LandingFooter() {
               RoofToGrid
             </div>
             <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
-              India&apos;s smartest rooftop solar planning platform. Free forever for homeowners.
+              India&apos;s smartest rooftop solar planning platform.
             </p>
             <div className="mt-5 flex items-center gap-3">
-              <a href="mailto:hello@rooftogrid.in" className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+              <a href="mailto:aarsh@rooftogrid.in" className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="16" fill="currentColor"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></svg>
-                hello@rooftogrid.in
+                aarsh@rooftogrid.in
               </a>
             </div>
           </div>
@@ -31,9 +31,9 @@ export function LandingFooter() {
           <div>
             <h4 className="text-sm font-semibold text-on-surface mb-4">Product</h4>
             <ul className="space-y-3">
-              <li><a href="#features" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Features</a></li>
-              <li><a href="#how-it-works" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">How It Works</a></li>
-              <li><a href="#pricing" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Pricing</a></li>
+              <li><a href="/#features" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Features</a></li>
+              <li><a href="/#how-it-works" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">How It Works</a></li>
+              <li><a href="/#pricing" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Pricing</a></li>
               <li><Link href="/register" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Get Started</Link></li>
             </ul>
           </div>
@@ -44,7 +44,7 @@ export function LandingFooter() {
             <ul className="space-y-3">
               <li><a href="https://www.pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">PM Surya Ghar Portal</a></li>
               <li><a href="https://mnre.gov.in" target="_blank" rel="noopener noreferrer" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">MNRE Guidelines</a></li>
-              <li><a href="#faq" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">FAQ</a></li>
+              <li><a href="/#faq" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">FAQ</a></li>
             </ul>
           </div>
 
