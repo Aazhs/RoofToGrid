@@ -53,6 +53,11 @@ export function createApp(): Express {
     res.json({ data: { status: 'ok', time: new Date().toISOString() } });
   });
 
+  // Root endpoint for default pings (e.g. UptimeRobot checking the root URL).
+  app.get('/', (_req, res) => {
+    res.json({ data: { message: 'RoofToGrid API is running.', status: 'ok' } });
+  });
+
   app.use('/api/v1', apiRouter);
 
   app.use(notFoundHandler);
