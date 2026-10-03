@@ -1,6 +1,7 @@
 import LandingNav from '@/components/landing/LandingNav';
 import HeroSection from '@/components/landing/HeroSection';
 import { StatsCounter } from '@/components/landing/StatsCounter';
+import { RoughCalculator } from '@/components/landing/RoughCalculator';
 import { FeatureGrid } from '@/components/landing/FeatureGrid';
 import HowItWorks from '@/components/landing/HowItWorks';
 import { ComparisonSection } from '@/components/landing/ComparisonSection';
@@ -21,6 +22,7 @@ export default function LandingPage() {
       <main id="main">
         <HeroSection />
         <StatsCounter />
+        <RoughCalculator />
         <FeatureGrid />
         <HowItWorks />
         <ComparisonSection />

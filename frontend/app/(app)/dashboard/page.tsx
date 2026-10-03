@@ -11,13 +11,69 @@ import { formatCurrency, formatKwp, formatNumber, formatYears } from '@/lib/form
 import { api } from '@/lib/api';
 import { useApi } from '@/lib/hooks';
 import { useAuth } from '@/lib/auth-context';
+import type { Summary } from '@/lib/types';
+
+/** Demo data for unauthenticated prototype visitors */
+const DEMO_SUMMARY: Summary = {
+  profile: null,
+  onboarding: {
+    step: 4,
+    completedAt: '2026-09-15T10:00:00Z',
+    hasBills: true,
+    hasRoof: true,
+    hasSizing: true,
+    hasQuotes: true,
+    hasProject: true,
+  },
+  billStats: {
+    monthsCounted: 12,
+    avgMonthlyUnits: 485,
+    weightedTariffPerKwh: 8.2,
+    avgMonthlyBill: 3977,
+    ready: true,
+  },
+  counts: { bills: 12, roofProfiles: 1, quotes: 3, projects: 1, documents: 5 },
+  quoteInsights: {
+    averagePricePerKwp: 58200,
+    bestValueScore: 78,
+    selectedQuoteId: 'demo-quote-1',
+  },
+  latestSizing: {
+    id: 'demo-sizing',
+    createdAt: '2026-09-10T08:00:00Z',
+    suitability: 'GOOD',
+    recommendedKwp: 5,
+    annualSavings: 47760,
+    paybackYears: 4.2,
+  },
+  projects: [
+    {
+      id: 'demo-project',
+      name: '5 kWp Rooftop Solar',
+      status: 'IN_PROGRESS',
+      installerName: 'Solar Sunrise Energy',
+      systemSizeKwp: 5,
+      progressPercent: 44,
+      currentStage: 'DISCOM Application',
+    },
+  ],
+  nextActions: [
+    'Upload the DISCOM acknowledgement receipt to your project documents',
+    'Check net metering status with your DISCOM',
+    'Log this month\'s generation reading from your inverter app',
+  ],
+};
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const { data, error, loading } = useApi(() => api.profile.summary());
+  const isDemo = !user;
+  const { data: apiData, error, loading } = useApi(() => api.profile.summary());
 
-  if (loading) return <Spinner label="Loading your dashboard" />;
-  if (error) return <Alert tone="error">{error}</Alert>;
+  // In demo mode, use fallback data if API fails
+  const data = apiData ?? (isDemo ? DEMO_SUMMARY : null);
+
+  if (loading && !isDemo) return <Spinner label="Loading your dashboard" />;
+  if (error && !isDemo) return <Alert tone="error">{error}</Alert>;
   if (!data) return null;
 
   const { onboarding, counts, billStats, latestSizing, quoteInsights, projects, nextActions } = data;
@@ -32,12 +88,26 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      {isDemo && (
+        <div className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+          <p className="text-sm font-medium text-amber-900">
+            🔬 You are exploring RoofToGrid in prototype mode with sample data.
+          </p>
+          <p className="mt-1 text-xs text-amber-700">
+            This shows what a real user&apos;s dashboard looks like — with 12 months of bills, sizing estimate, 3 quotes compared, and a live project.{' '}
+            <Link href="/register" className="underline font-medium hover:text-amber-900">Create an account</Link> to start with your own data.
+          </p>
+        </div>
+      )}
+
       <div>
         <h1 className="text-2xl font-semibold">
-          Hello{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}
+          {isDemo ? 'Welcome to RoofToGrid' : `Hello${user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}`}
         </h1>
         <p className="mt-1 text-sm text-slate-600">
-          Here is where your solar decision stands and what would move it forward.
+          {isDemo
+            ? 'This is what your solar planning dashboard looks like. Explore every section freely.'
+            : 'Here is where your solar decision stands and what would move it forward.'}
         </p>
       </div>
 
@@ -105,9 +175,11 @@ export default function DashboardPage() {
           <CardHeader
             title="Latest sizing estimate"
             actions={
-              <ButtonLink href={`/sizing/${latestSizing.id}`} variant="secondary" size="sm">
-                View details
-              </ButtonLink>
+              !isDemo ? (
+                <ButtonLink href={`/sizing/${latestSizing.id}`} variant="secondary" size="sm">
+                  View details
+                </ButtonLink>
+              ) : undefined
             }
           />
           <CardBody>

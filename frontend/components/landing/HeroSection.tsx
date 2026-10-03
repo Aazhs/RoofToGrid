@@ -38,16 +38,16 @@ export default function HeroSection() {
             style={{ transitionDelay: '400ms' }}
           >
             <Link
-              href="/register"
+              href="/dashboard"
               className="rounded-xl bg-primary-container px-8 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.02] active:scale-[0.98]"
             >
-              Analyze My Roof &rarr;
+              Try the Platform &rarr;
             </Link>
             <a
-              href="#how-it-works"
+              href="#calculator"
               className="rounded-xl border border-outline-variant px-8 py-4 text-center font-semibold text-on-surface transition-all duration-200 hover:border-primary-container hover:text-primary-container"
             >
-              Read the Methodology
+              Quick Solar Estimate
             </a>
           </div>
           

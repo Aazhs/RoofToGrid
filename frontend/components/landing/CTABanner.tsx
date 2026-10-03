@@ -25,10 +25,10 @@ export function CTABanner() {
         </p>
         
         <Link 
-          href="/register"
+          href="/dashboard"
           className="bg-primary-container text-surface px-10 py-4 rounded-lg text-lg font-semibold hover:bg-surface-tint transition-colors duration-200 ease-in-out inline-flex items-center gap-2"
         >
-          Start My Solar Journey
+          Try the Platform Free
           <span aria-hidden="true">→</span>
         </Link>
       </div>

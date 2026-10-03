@@ -12,10 +12,14 @@ import { PROPERTY_TYPES } from '@/lib/constants';
 import { api } from '@/lib/api';
 import { useApi, useSubmit } from '@/lib/hooks';
 import { useAuth } from '@/lib/auth-context';
+import { useSubscription } from '@/lib/subscription';
+import { UpiCheckoutModal } from '@/components/billing/UpiCheckoutModal';
 
 export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
   const { notify } = useToast();
+  const { isPro, plan, utr, billingCycle, expiresAt, cancel } = useSubscription();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
   const profile = useApi(() => api.profile.get());
   const assumptions = useApi(() => api.sizing.assumptions());
   const integrations = useApi(() => api.health.integrations());
@@ -80,14 +84,97 @@ export default function ProfilePage() {
     }
   };
 
+  const handleCancelSub = () => {
+    if (confirm('Cancel your Pro subscription? You will revert to the free plan.')) {
+      cancel();
+      notify('Subscription cancelled');
+    }
+  };
+
   if (profile.loading) return <Spinner label="Loading your profile" />;
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Your account</h1>
-        <p className="mt-1 text-sm text-slate-600">{user?.email}</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold">Your account</h1>
+          <p className="mt-1 text-sm text-slate-600">{user?.email ?? 'arun.sharma@example.com (Prototype Mode)'}</p>
+        </div>
+        {isPro && (
+          <span className="rounded-full bg-amber-100 border border-amber-300 text-amber-800 px-3 py-1 text-xs font-bold flex items-center gap-1.5 shadow-sm">
+            <span>⭐</span> Pro Active
+          </span>
+        )}
       </div>
+
+      {/* Subscription Card */}
+      <Card className={isPro ? 'border-amber-300 bg-amber-50/20' : ''}>
+        <CardHeader
+          title="Subscription & Membership"
+          description="Access to PDF Feasibility Reports, unlimited quote comparisons, and priority support."
+        />
+        <CardBody>
+          {isPro ? (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded bg-amber-400 text-slate-950 font-black text-xs px-2 py-0.5 uppercase">
+                      PRO PLAN
+                    </span>
+                    <span className="text-sm font-bold text-slate-900">
+                      ₹{billingCycle === 'ANNUAL' ? '4,999/yr' : '499/mo'}
+                    </span>
+                    <Badge tone="good">Active</Badge>
+                  </div>
+                  {utr && (
+                    <p className="text-xs text-slate-500 font-mono">
+                      UPI Ref / UTR: <span className="font-semibold text-slate-700">{utr}</span>
+                    </p>
+                  )}
+                  {expiresAt && (
+                    <p className="text-xs text-slate-500">
+                      Next renewal: {new Date(expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Button variant="secondary" size="sm" onClick={handleCancelSub}>
+                    Cancel Pro
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-slate-900">Free Tier</span>
+                  <Badge tone="muted">Active</Badge>
+                </div>
+                <p className="mt-1 text-xs text-slate-500">
+                  Includes basic sizing estimates and up to 3 quotes. Upgrade to Pro for downloadable PDF Feasibility Reports and unlimited comparisons.
+                </p>
+              </div>
+
+              <Button
+                variant="primary"
+                onClick={() => setCheckoutOpen(true)}
+                className="shrink-0 bg-brand-700 hover:bg-brand-800"
+              >
+                Upgrade to Pro (₹499/mo)
+              </Button>
+            </div>
+          )}
+        </CardBody>
+      </Card>
+
+      <UpiCheckoutModal
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+      />
+
 
       <Card>
         <CardHeader title="Details" description="Used for subsidy rules, DISCOM matching and your documents." />

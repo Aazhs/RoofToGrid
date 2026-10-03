@@ -34,7 +34,7 @@ export function LandingFooter() {
               <li><a href="/#features" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Features</a></li>
               <li><a href="/#how-it-works" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">How It Works</a></li>
               <li><a href="/#pricing" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Pricing</a></li>
-              <li><Link href="/register" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Get Started</Link></li>
+              <li><Link href="/dashboard" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Try It Free</Link></li>
             </ul>
           </div>
 
