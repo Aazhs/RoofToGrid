@@ -8,7 +8,7 @@ home, compare installer quotes on equal terms, and track the project from site s
 - **Database & storage** — Supabase Postgres + a private Supabase Storage bucket
 
 Product and technical documents live in [`docs/`](docs):
-[requirements](docs/requirements.md) · [design]docs/design.md) · [roadmap](docs/roadmap.md) ·
+[requirements](docs/requirements.md) · [design](docs/design.md) · [roadmap](docs/roadmap.md) ·
 [business model](docs/business-model.md) · [testing strategy](docs/testing-strategy.md) ·
 [integration strategy](docs/integration-strategy.md)
 
