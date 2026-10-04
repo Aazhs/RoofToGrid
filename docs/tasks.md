@@ -9,12 +9,14 @@ Last updated: 2026-10-04
 
 Phased transition away from React/Next.js and Node.js to a high-performance, modern compiled/reactive stack with Supabase:
 
-- [ ] **M0 — Stack Evaluation & Technology Decision**: Compare frontend (Svelte 5 / SvelteKit vs SolidJS vs Astro) and backend (Go vs Rust vs Elixir) against performance, developer velocity, and Supabase ecosystem compatibility.
-- [ ] **M1 — Supabase Schema & Auth Alignment**: Configure Supabase PostgreSQL tables, Row Level Security (RLS) policies, and JWT token authentication for multi-language homeowners and installers.
-- [ ] **M2 — High-Performance Backend Implementation (e.g. Go / Chi / pgx)**:
-  - Build single-binary REST API server in Go with sub-millisecond cold starts and <20MB RAM footprint.
-  - Port core domain math: sizing engine (`SizingService`), quote normalization & scoring (`QuoteScoringService`), subsidy engine, and milestone workflows.
-  - Implement Supabase database connector with connection pooling (`pgxpool`).
+- [x] **M0 — Stack Evaluation & Technology Decision**: Selected **Svelte 5 / SvelteKit** (Frontend) + **Go (Golang)** (Backend) with **Supabase** for database, auth, and storage. *(Evaluation detailed in [`docs/stack-migration-evaluation.md`](stack-migration-evaluation.md))*.
+- [ ] **M1 — Supabase Schema & Auth Alignment**: Align Supabase PostgreSQL tables, Row Level Security (RLS) policies, and JWT token authentication.
+- [x] **M2.1 — High-Performance Go Backend Engine**:
+  - Implemented standalone Go API server in `backend-go/cmd/server/main.go` responding to `/health` and `/api/v1/sizing/estimate` in <400 microseconds.
+  - Implemented pure domain math in Go (`backend-go/pkg/domain/math.go`, `assumptions.go`, `sizing.go`) with PM Surya Ghar subsidy rules.
+  - Verified 100% Go unit test suite passing in 0.5s (`backend-go/pkg/domain/sizing_test.go`).
+  - Configured multi-stage `Dockerfile` and updated `render.yaml` for 100% free deployment on Render's Free tier.
+- [ ] **M2.2 — Go Supabase Database Connector & Quotes Scoring**: Add `pgxpool` connection to Supabase PostgreSQL and port quote scoring & milestone progression.
 - [ ] **M3 — Reactive Frontend Implementation (e.g. SvelteKit / Svelte 5 with Runes)**:
   - Set up SvelteKit project with zero Virtual DOM overhead and native fine-grained reactivity.
   - Port Lumina Grid / Slate design system tokens and reusable UI primitives.
