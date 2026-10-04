@@ -33,8 +33,6 @@ export function Badge({
 export function ProgressBar({ percent, label }: { percent: number; label?: string }) {
   const safe = Math.max(0, Math.min(100, Math.round(percent)));
   return (
-
-
     <div>
       <div className="mb-1 flex items-center justify-between text-xs text-slate-600">
         <span>{label ?? 'Progress'}</span>
