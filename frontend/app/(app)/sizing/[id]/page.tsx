@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Alert, Spinner } from '@/components/ui/Feedback';
 import { SizingResultView } from '@/components/domain/SizingResultView';
+import { SolarFinancingCalculator } from '@/components/domain/SolarFinancingCalculator';
 import { SolarFeasibilityReportModal } from '@/components/domain/SolarFeasibilityReportModal';
 import { formatDate, formatKwp, formatNumber } from '@/lib/format';
 import { api } from '@/lib/api';
@@ -61,6 +62,8 @@ export default function SizingRunPage({ params }: { params: Promise<{ id: string
         scenarios={data.scenarios}
         assumptions={data.assumptions}
       />
+
+      <SolarFinancingCalculator scenarios={data.scenarios} />
 
       <Card className="border-brand-200 bg-brand-50">
         <CardBody className="flex flex-wrap items-center justify-between gap-3">

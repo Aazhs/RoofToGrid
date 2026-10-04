@@ -14,6 +14,8 @@ import { useApi, useSubmit } from '@/lib/hooks';
 import { useAuth } from '@/lib/auth-context';
 import { useSubscription } from '@/lib/subscription';
 import { UpiCheckoutModal } from '@/components/billing/UpiCheckoutModal';
+import { NotificationToggle } from '@/components/ui/NotificationToggle';
+import { DataExportCard } from '@/components/ui/DataExportCard';
 
 export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
@@ -373,6 +375,12 @@ export default function ProfilePage() {
           </CardBody>
         </Card>
       )}
+
+      {/* Push Notifications & Alerts */}
+      <NotificationToggle />
+
+      {/* Data Portability (India DPDPA) */}
+      <DataExportCard />
     </div>
   );
 }

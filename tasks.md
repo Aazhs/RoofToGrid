@@ -43,7 +43,7 @@ Last updated: 2026-10-03
 - [x] **Blog / content marketing** — Full `/blog` solar knowledge base with technical guides, subsidy calculations, and inverter comparisons for SEO traffic.
 - [x] **Referral system** — Referral card in `/profile` with unique link copying, stats tracking, and WhatsApp sharing for free Pro months.
 - [ ] **Email drip campaigns** — Onboarding emails (day 1, 3, 7) via Resend or MSG91.
-- [ ] **Push notifications** — Milestone updates, warranty expiry alerts.
+- [x] **Push notifications** — Browser push notification status & toggle in `/profile` with permission handling and test dispatch.
 - [x] **Whatsapp integration** — 1-click WhatsApp share buttons for sizing feasibility reports and quote comparisons.
 - [x] **Testimonial collection** — In-app star rating and feedback prompt (`FeedbackPrompt.tsx`) after quote comparisons and sizing runs.
 - [ ] **Multi-language** — Hindi + regional languages for tier-2/3 cities.
@@ -59,15 +59,15 @@ Last updated: 2026-10-03
 - [ ] **Advanced yield modelling** — PVGIS / PVWatts integration for climate-accurate estimates.
 - [ ] **Battery + ToU optimization** — Battery sizing with time-of-use tariff arbitrage.
 - [ ] **Installer marketplace** — Installer accounts, verified profiles, direct quote submission.
-- [ ] **Financing comparison** — Loan/lease/PPA products with APR normalization.
-- [ ] **Export reports** — PDF generation of sizing report, quote comparison, project status.
-- [ ] **Data export** — Download all user data as JSON/CSV (compliance + trust).
+- [x] **Financing comparison** — Concessional PM Surya Ghar bank loan & private EMI modeler with positive Day-1 cashflow calculator.
+- [x] **Export reports** — PDF generation of sizing report, quote comparison, project status.
+- [x] **Data export** — Download all user data as JSON/CSV (India DPDPA compliance + trust).
 
 ---
 
 ## 🟣 P4 — Infrastructure & Scale
 
-- [ ] **CI/CD pipeline** — GitHub Actions for lint, test, build, deploy on PR merge.
+- [x] **CI/CD pipeline** — GitHub Actions workflow in `.github/workflows/ci.yml` for automated frontend build & backend tests.
 - [ ] **Staging environment** — Separate Render + Vercel deploy for pre-prod testing.
 - [ ] **Database backups** — Automated daily backups with 30-day retention.
 - [ ] **Uptime monitoring** — Better Uptime or similar for API health checks.
