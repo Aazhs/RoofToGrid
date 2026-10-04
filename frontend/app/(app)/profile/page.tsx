@@ -280,6 +280,65 @@ export default function ProfilePage() {
         </CardBody>
       </Card>
 
+      {/* Referral & Rewards Program */}
+      <Card>
+        <CardHeader
+          title="Refer Friends & Earn Free Pro"
+          description="Give friends unbiased solar planning tools. For every 2 friends who sign up and size their roof, you get 1 Month of Pro for free."
+        />
+        <CardBody className="space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-mono text-slate-700 truncate select-all">
+              {typeof window !== 'undefined' ? `${window.location.origin}?ref=${user?.id ? user.id.slice(0, 8) : 'solar-vip'}` : 'https://rooftogrid.in?ref=solar-vip'}
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  const link = `${window.location.origin}?ref=${user?.id ? user.id.slice(0, 8) : 'solar-vip'}`;
+                  void navigator.clipboard.writeText(link);
+                  notify('Referral link copied to clipboard!');
+                }}
+              >
+                <svg className="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy Link
+              </Button>
+              <a
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                  '☀️ I use RoofToGrid to plan my rooftop solar with real numbers and PM Surya Ghar subsidies. Try it with my link: https://rooftogrid.in?ref=solar-vip'
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
+              >
+                <svg className="h-3.5 w-3.5 fill-emerald-600" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                </svg>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <span className="text-[11px] text-slate-500 font-medium">Homeowners Referred</span>
+              <p className="text-xl font-bold text-slate-900 font-jakarta mt-0.5">2</p>
+            </div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <span className="text-[11px] text-slate-500 font-medium">Free Pro Earned</span>
+              <p className="text-xl font-bold text-brand-700 font-jakarta mt-0.5">1 Month</p>
+            </div>
+            <div className="col-span-2 sm:col-span-1 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <span className="text-[11px] text-slate-500 font-medium">Next Reward</span>
+              <p className="text-xs font-semibold text-slate-800 mt-1">1 more invite &rarr; +1 Month</p>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
       {assumptions.data && (
         <div>
           <h2 className="mb-2 text-lg font-semibold">The numbers behind our estimates</h2>

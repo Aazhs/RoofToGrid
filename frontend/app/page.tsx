@@ -1,15 +1,18 @@
+import dynamic from 'next/dynamic';
 import LandingNav from '@/components/landing/LandingNav';
 import HeroSection from '@/components/landing/HeroSection';
 import { StatsCounter } from '@/components/landing/StatsCounter';
 import { QuickCalculator } from '@/components/landing/QuickCalculator';
-import { FeatureGrid } from '@/components/landing/FeatureGrid';
-import HowItWorks from '@/components/landing/HowItWorks';
-import { ComparisonSection } from '@/components/landing/ComparisonSection';
-import { PricingSection } from '@/components/landing/PricingSection';
-import { Testimonials } from '@/components/landing/Testimonials';
-import { FAQ } from '@/components/landing/FAQ';
-import { CTABanner } from '@/components/landing/CTABanner';
-import { LandingFooter } from '@/components/landing/LandingFooter';
+
+// Lazy load below-the-fold sections for performance optimization (Lighthouse 100/100 target)
+const FeatureGrid = dynamic(() => import('@/components/landing/FeatureGrid').then((m) => m.FeatureGrid));
+const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'));
+const ComparisonSection = dynamic(() => import('@/components/landing/ComparisonSection').then((m) => m.ComparisonSection));
+const PricingSection = dynamic(() => import('@/components/landing/PricingSection').then((m) => m.PricingSection));
+const Testimonials = dynamic(() => import('@/components/landing/Testimonials').then((m) => m.Testimonials));
+const FAQ = dynamic(() => import('@/components/landing/FAQ').then((m) => m.FAQ));
+const CTABanner = dynamic(() => import('@/components/landing/CTABanner').then((m) => m.CTABanner));
+const LandingFooter = dynamic(() => import('@/components/landing/LandingFooter').then((m) => m.LandingFooter));
 
 /**
  * Landing page — uses global theme from ThemeProvider (in providers.tsx).
