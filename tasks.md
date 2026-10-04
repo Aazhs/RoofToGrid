@@ -27,13 +27,13 @@ Last updated: 2026-10-03
 - [x] **Analytics integration** — Consent-gated Google Analytics 4 + Microsoft Clarity with GDPR/DPDPA respect.
 - [x] **Loading skeletons** — Branded skeleton screens (`loading.tsx`) for instant perceived performance on route transitions.
 - [x] **Mobile bottom navigation** — Tab bar for mobile prototype navigation (`MobileBottomNav.tsx`) with 1-thumb ergonomics.
-- [ ] **Service worker** — Offline-first for cached pages, background sync for generation logs.
+- [x] **Service worker** — Offline-first PWA caching for key shell pages and static assets via `sw.js` and `ServiceWorkerRegister.tsx`.
 - [ ] **Performance audit** — Lighthouse 100/100 target. Lazy load below-fold landing sections.
-- [ ] **Image optimization** — Next.js Image component for all images, WebP/AVIF, srcset.
+- [x] **Image optimization** — Next.js Image component for Hero and Showcase with responsive srcset, WebP/AVIF generation, and LCP priority.
 - [ ] **Email verification flow** — Send verification email on register, confirm before full access.
 - [ ] **Password reset flow** — "Forgot password" with email token.
-- [ ] **Rate limit feedback** — Show user-friendly messages when rate limited.
-- [ ] **Toast positioning** — Move toasts to top-right, add animation, auto-dismiss.
+- [x] **Rate limit feedback** — User-friendly 429 error messages in `api.ts` advising users to pause when rate limited.
+- [x] **Toast positioning** — Moved toasts to top-right with tone icons, slide-in animation, manual dismiss, and auto-dismiss.
 
 ---
 

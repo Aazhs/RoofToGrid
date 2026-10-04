@@ -133,10 +133,20 @@ async function rawRequest<T>(path: string, options: RequestOptions = {}): Promis
 
   if (!res.ok) {
     const error = payload?.error;
+    let message = error?.message;
+    let code = error?.code ?? 'REQUEST_FAILED';
+
+    if (res.status === 429) {
+      code = 'RATE_LIMITED';
+      message = error?.message ?? 'Too many requests. Please slow down and try again in a few moments.';
+    } else if (!message) {
+      message = `Request failed with status ${res.status}`;
+    }
+
     throw new ApiError(
       res.status,
-      error?.code ?? 'REQUEST_FAILED',
-      error?.message ?? `Request failed with status ${res.status}`,
+      code,
+      message,
       error?.details as Array<{ path?: string; message: string }> | undefined,
     );
   }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
@@ -101,10 +102,14 @@ export default function HeroSection() {
           className={`relative h-[400px] overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-low lg:h-[500px] group ${base} ${mounted ? visible : hidden}`}
           style={{ transitionDelay: '300ms' }}
         >
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-            style={{ backgroundImage: `url('/house.jpg')` }}
+          {/* Optimized Next.js Hero Image */}
+          <Image
+            src="/house.jpg"
+            alt="Rooftop solar installation on Indian home"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
           />
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/35" />

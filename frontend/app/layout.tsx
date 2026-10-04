@@ -3,6 +3,7 @@ import './globals.css';
 import { Providers } from './providers';
 import { CookieConsent } from '@/components/ui/CookieConsent';
 import { Analytics } from '@/components/analytics/Analytics';
+import { ServiceWorkerRegister } from '@/components/pwa/ServiceWorkerRegister';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rooftogrid.in';
 
@@ -179,6 +180,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <CookieConsent />
           <Analytics />
+          <ServiceWorkerRegister />
         </Providers>
       </body>
     </html>
