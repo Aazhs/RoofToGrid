@@ -70,18 +70,6 @@
       bestForBadge: 'Maximum Safety (Low Voltage AC Roof)',
       notes: 'Panel-level MPPT tracking; immune to partial shading from water tanks or chimneys.',
     },
-    {
-      id: 'local-empaneled',
-      name: 'DISCOM Empaneled Local Vendor',
-      tier: 'State Portal Empaneled EPC',
-      baseRatePerKwp: 52000,
-      panelTech: 'Polycrystalline / Mono PERC',
-      panelBrand: 'Vikram / Goldi Solar 450W',
-      inverterBrand: 'Microtek / Usha Shriram',
-      transparencyScore: 7.2,
-      bestForBadge: 'Lowest Upfront Capital Outlay',
-      notes: 'Verify itemized breakdown before paying token advance; check net-metering timeline.',
-    },
   ];
 
   let selectedRegion = $state('ka');
@@ -100,37 +88,47 @@
   let regionMultiplier = $derived(REGIONS[selectedRegion]?.multiplier ?? 1.0);
 </script>
 
-<section id="installers" class="installer-section">
-  <div class="container">
-    <div class="section-header">
-      <div class="badge-pill">
-        <span>📊 Nationwide EPC Price Intelligence</span>
-      </div>
-      <h2 class="section-title">Transparent Indian Solar Rate Comparison</h2>
-      <p class="section-subtitle">
-        Indian solar EPC rates vary wildly between ₹52,000/kWp and ₹82,000/kWp. Compare actual market quotes,
+<section id="installers" class="py-20 md:py-28 bg-surface-container-low border-b border-outline-variant">
+  <div class="max-w-[1280px] mx-auto px-4 md:px-16">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
+        NATIONWIDE PRICE BENCHMARKS
+      </span>
+      <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
+        Transparent Indian Solar EPC Comparison
+      </h2>
+      <p class="text-body-lg text-on-surface-variant font-jakarta">
+        Indian solar EPC rates vary between ₹52,000/kWp and ₹82,000/kWp. Compare actual market quotes,
         equipment warranties, and net costs after PM Surya Ghar ₹78,000 DBT subsidy.
       </p>
     </div>
 
-    <!-- Controls Bar -->
-    <div class="controls-bar">
-      <div class="control-item">
-        <label for="installer-region-select">Select State / DISCOM:</label>
-        <select id="installer-region-select" bind:value={selectedRegion} class="select-box">
+    <!-- Controls Bar * -->
+    <div class="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl border border-outline-variant bg-surface-container mb-10 shadow-sm">
+      <div class="flex items-center gap-3">
+        <label for="state-epc-select" class="text-sm font-semibold text-on-surface">State / DISCOM:</label>
+        <select
+          id="state-epc-select"
+          bind:value={selectedRegion}
+          class="px-3.5 py-2 rounded-xl border border-outline-variant bg-surface text-sm text-on-surface focus:outline-none"
+        >
           {#each Object.entries(REGIONS) as [key, reg]}
             <option value={key}>{reg.label}</option>
           {/each}
         </select>
       </div>
 
-      <div class="control-item">
-        <label for="installer-capacity-select">System Capacity:</label>
-        <div class="btn-group">
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-semibold text-on-surface">System Capacity:</span>
+        <div class="flex gap-1.5">
           {#each [1, 2, 3, 5, 8, 10] as kw}
             <button
               type="button"
-              class="kw-btn {selectedKw === kw ? 'active' : ''}"
+              class={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                selectedKw === kw
+                  ? 'bg-primary-container text-surface'
+                  : 'bg-surface border border-outline-variant text-on-surface-variant hover:text-on-surface'
+              }`}
               onclick={() => selectedKw = kw}
             >
               {kw} kWp
@@ -139,58 +137,67 @@
         </div>
       </div>
 
-      <div class="subsidy-pill">
-        <span class="sub-label">Central DBT Subsidy:</span>
-        <span class="sub-amount">₹{subsidy.toLocaleString('en-IN')}</span>
+      <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-xs font-semibold">
+        <span>PM Surya Ghar Subsidy:</span>
+        <strong class="font-mono text-sm">₹{subsidy.toLocaleString('en-IN')}</strong>
       </div>
     </div>
 
-    <!-- Installer Comparison Cards -->
-    <div class="installers-grid">
+    <!-- Installers Cards Grid * -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each INSTALLERS as item}
         {@const rate = Math.round(item.baseRatePerKwp * regionMultiplier)}
         {@const gross = rate * selectedKw}
         {@const net = Math.max(0, gross - subsidy)}
-        <div class="card installer-card">
-          <div class="card-head">
-            <span class="badge-best">{item.bestForBadge}</span>
-            <div class="transparency-score">
-              <span>★ {item.transparencyScore}/10 Transparency</span>
+        <div class="flex flex-col justify-between rounded-2xl border border-outline-variant bg-surface p-6 shadow-sm hover:border-primary-container transition-all duration-200">
+          <div>
+            <div class="flex justify-between items-start gap-2 mb-3">
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-primary/10 text-primary-container uppercase tracking-wider">
+                {item.bestForBadge}
+              </span>
+              <span class="text-xs font-mono font-bold text-amber-500">
+                ★ {item.transparencyScore}/10
+              </span>
             </div>
-          </div>
 
-          <h3 class="installer-name">{item.name}</h3>
-          <span class="installer-tier">{item.tier}</span>
+            <h3 class="text-lg font-bold font-jakarta text-on-surface leading-snug">
+              {item.name}
+            </h3>
+            <span class="text-xs text-on-surface-variant block mt-0.5 mb-4">{item.tier}</span>
 
-          <div class="price-box">
-            <div class="price-row">
-              <span class="price-label">Net Cost (Post-Subsidy):</span>
-              <span class="price-val text-emerald">₹{net.toLocaleString('en-IN')}</span>
+            <div class="p-3.5 rounded-xl border border-outline-variant/60 bg-surface-container-low mb-4">
+              <div class="flex justify-between items-baseline mb-1">
+                <span class="text-xs text-on-surface-variant font-medium">Net Out-of-Pocket:</span>
+                <span class="text-xl font-bold font-jakarta text-emerald-600 dark:text-emerald-400">
+                  ₹{net.toLocaleString('en-IN')}
+                </span>
+              </div>
+              <div class="flex gap-2 text-[11px] text-on-surface-variant/70 font-mono">
+                <span>Gross: ₹{gross.toLocaleString('en-IN')}</span>
+                <span>·</span>
+                <span>₹{rate.toLocaleString('en-IN')}/kWp</span>
+              </div>
             </div>
-            <div class="price-breakdown">
-              <span>Gross: ₹{gross.toLocaleString('en-IN')}</span>
-              <span>·</span>
-              <span>₹{rate.toLocaleString('en-IN')}/kWp</span>
-            </div>
-          </div>
 
-          <div class="specs-list">
-            <div class="spec-row">
-              <span class="spec-name">Panels:</span>
-              <span class="spec-val">{item.panelBrand} ({item.panelTech})</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-name">Inverter:</span>
-              <span class="spec-val">{item.inverterBrand}</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-name">Notes:</span>
-              <span class="spec-val">{item.notes}</span>
+            <div class="space-y-2 text-xs text-on-surface-variant mb-6">
+              <div>
+                <span class="font-semibold text-on-surface block">Panels:</span>
+                <span>{item.panelBrand} ({item.panelTech})</span>
+              </div>
+              <div>
+                <span class="font-semibold text-on-surface block">Inverter:</span>
+                <span>{item.inverterBrand}</span>
+              </div>
+              <div>
+                <span class="font-semibold text-on-surface block">Notes:</span>
+                <span class="text-[11px] leading-relaxed">{item.notes}</span>
+              </div>
             </div>
           </div>
 
           <button
-            class="btn-select"
+            type="button"
+            class="w-full py-2.5 rounded-xl border border-outline text-xs font-semibold text-on-surface hover:bg-primary-container hover:text-surface hover:border-primary-container transition-all"
             onclick={() => alert(`Selected benchmark quote for ${item.name} (${selectedKw} kWp)!`)}
           >
             Audit Similar Quote
@@ -200,258 +207,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  .installer-section {
-    padding: 4.5rem 0;
-  }
-
-  .section-header {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto 2.5rem;
-  }
-
-  .badge-pill {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
-    background: rgba(217, 119, 6, 0.1);
-    color: var(--brand-amber);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text-main);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .controls-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.25rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--bg-surface-elevated);
-    border: 1px solid var(--border-outline);
-    border-radius: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .control-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-main);
-  }
-
-  .select-box {
-    padding: 0.45rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface);
-    color: var(--text-main);
-    font-size: 0.875rem;
-  }
-
-  .btn-group {
-    display: flex;
-    gap: 0.25rem;
-  }
-
-  .kw-btn {
-    padding: 0.4rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface);
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .kw-btn.active {
-    background: var(--brand-primary);
-    color: var(--bg-surface);
-    border-color: var(--brand-primary);
-  }
-
-  .subsidy-pill {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.45rem 0.9rem;
-    border-radius: 9999px;
-    background: rgba(5, 150, 105, 0.1);
-    color: var(--brand-emerald);
-    font-size: 0.875rem;
-  }
-
-  .sub-label {
-    font-weight: 500;
-  }
-
-  .sub-amount {
-    font-weight: 800;
-  }
-
-  .installers-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .installers-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1100px) {
-    .installers-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .installer-card {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .badge-best {
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.375rem;
-    background: rgba(2, 132, 199, 0.1);
-    color: var(--brand-accent);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .transparency-score {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--brand-amber);
-    white-space: nowrap;
-  }
-
-  .installer-name {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--text-main);
-    line-height: 1.25;
-  }
-
-  .installer-tier {
-    font-size: 0.75rem;
-    color: var(--text-subtle);
-    margin-top: -0.5rem;
-  }
-
-  .price-box {
-    padding: 0.85rem;
-    border-radius: 0.75rem;
-    background: var(--bg-surface-elevated);
-    border: 1px solid var(--border-outline);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  .price-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-muted);
-  }
-
-  .price-val {
-    font-size: 1.375rem;
-    font-weight: 800;
-  }
-
-  .price-breakdown {
-    display: flex;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--text-subtle);
-  }
-
-  .specs-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-  }
-
-  .spec-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .spec-name {
-    font-weight: 600;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .spec-val {
-    color: var(--text-main);
-  }
-
-  .btn-select {
-    margin-top: auto;
-    width: 100%;
-    padding: 0.625rem;
-    border-radius: 0.625rem;
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface);
-    color: var(--text-main);
-    font-weight: 600;
-    font-size: 0.8125rem;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .btn-select:hover {
-    background: var(--brand-primary);
-    color: var(--bg-surface);
-    border-color: var(--brand-primary);
-  }
-
-  .text-emerald {
-    color: var(--brand-emerald);
-  }
-</style>

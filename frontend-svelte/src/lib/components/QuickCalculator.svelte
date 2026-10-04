@@ -1,17 +1,20 @@
 <script lang="ts">
-  let bill = $state(4500);
-  let selectedState = $state('ka');
+  import { i18n } from '#lib';
 
-  const stateTariffs: Record<string, { label: string; tariff: number }> = {
+  const STATE_TARIFFS: Record<string, { label: string; tariff: number }> = {
+    national: { label: 'National Average (₹7.2/kWh)', tariff: 7.2 },
     ka: { label: 'Karnataka / BESCOM (₹7.5/kWh)', tariff: 7.5 },
     mh: { label: 'Maharashtra / MSEDCL (₹8.5/kWh)', tariff: 8.5 },
-    gj: { label: 'Gujarat / UGVCL (₹6.0/kWh)', tariff: 6.0 },
     dl: { label: 'Delhi / BSES (₹6.5/kWh)', tariff: 6.5 },
+    gj: { label: 'Gujarat / UGVCL (₹6.0/kWh)', tariff: 6.0 },
     tn: { label: 'Tamil Nadu / TANGEDCO (₹7.0/kWh)', tariff: 7.0 },
     up: { label: 'Uttar Pradesh / UPPCL (₹7.0/kWh)', tariff: 7.0 },
   };
 
-  let tariff = $derived(stateTariffs[selectedState]?.tariff ?? 7.5);
+  let bill = $state(4500);
+  let selectedState = $state('national');
+
+  let tariff = $derived(STATE_TARIFFS[selectedState]?.tariff ?? 7.2);
   let monthlyUnits = $derived(bill / tariff);
   let dailyUnits = $derived(monthlyUnits / 30);
   let rawSize = $derived(dailyUnits / (4.2 * 0.8));
@@ -20,6 +23,7 @@
   let monthlyGen = $derived(Math.round(systemSizeKw * 4.2 * 30 * 0.8));
   let monthlySavings = $derived(Math.min(bill, Math.round(monthlyGen * tariff)));
   let annualSavings = $derived(monthlySavings * 12);
+
   let subsidy = $derived(
     systemSizeKw <= 1
       ? 30000
@@ -29,235 +33,211 @@
           ? 60000 + Math.round((systemSizeKw - 2) * 18000)
           : 78000
   );
+
   let grossCost = $derived(Math.round(systemSizeKw * 65000));
-  let netCost = $derived(Math.max(0, grossCost - subsidy));
+  let netCost = $derived(Math.max(15000, grossCost - subsidy));
   let paybackYears = $derived(annualSavings > 0 ? (netCost / annualSavings).toFixed(1) : '—');
 </script>
 
-<div class="card calculator-card">
-  <div class="header">
-    <div>
-      <span class="badge badge-amber">⚡ Instant Svelte 5 Reactive Engine</span>
-      <h3 class="title">Calculate your rooftop potential</h3>
-      <p class="subtitle">
-        Zero virtual DOM overhead — adjustments calculate instantaneously.
+<section 
+  id="quick-calculator" 
+  class="py-20 md:py-28 bg-surface-container-low border-b border-outline-variant relative overflow-hidden"
+>
+  <!-- Background ambient gradient * -->
+  <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primary opacity-5 blur-[140px] rounded-full pointer-events-none"></div>
+
+  <div class="max-w-[1280px] mx-auto px-4 md:px-16 relative z-10">
+    
+    <!-- Header * -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
+        {i18n.current !== 'en' ? i18n.t('hero_badge') : 'INSTANT ESTIMATOR · NO SIGNUP NEEDED'}
+      </span>
+      <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
+        {i18n.current !== 'en' ? i18n.t('calc_title') : "Calculate your roof's true potential."}
+      </h2>
+      <p class="text-body-lg text-on-surface-variant font-jakarta">
+        {i18n.current !== 'en'
+          ? i18n.t('calc_subtitle')
+          : 'Adjust your current monthly electricity bill to see your recommended solar capacity, central government subsidy, and estimated savings under PM Surya Ghar.'}
       </p>
     </div>
-  </div>
 
-  <div class="grid-layout">
-    <!-- Sliders and Inputs -->
-    <div class="controls-col">
-      <div class="control-group">
-        <div class="label-row">
-          <label for="bill-slider">Monthly Electricity Bill</label>
-          <span class="value-highlight">₹{bill.toLocaleString('en-IN')}</span>
+    <!-- Interactive Calculator Grid * -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Controls Card * -->
+      <div class="lg:col-span-5 bg-surface-container border border-outline-variant/70 rounded-2xl p-6 md:p-8 shadow-sm">
+        <h3 class="text-lg font-semibold text-on-surface mb-6 font-jakarta flex items-center justify-between">
+          <span>{i18n.current !== 'en' ? i18n.t('calc_monthly_bill') : 'Your Energy Usage'}</span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-mono">
+            Live Model
+          </span>
+        </h3>
+
+        <!-- Bill Slider * -->
+        <div class="mb-8">
+          <div class="flex justify-between items-baseline mb-3">
+            <label for="bill-slider" class="text-sm font-medium text-on-surface">
+              {i18n.current !== 'en' ? i18n.t('calc_monthly_bill') : 'Average Monthly Electricity Bill'}
+            </label>
+            <span class="text-2xl font-bold text-on-surface font-jakarta">
+              ₹{bill.toLocaleString('en-IN')}
+            </span>
+          </div>
+          <input
+            id="bill-slider"
+            type="range"
+            min="1000"
+            max="20000"
+            step="500"
+            bind:value={bill}
+            class="w-full h-2.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-on-surface focus:outline-none"
+          />
+          <div class="flex justify-between text-xs text-on-surface-variant/60 mt-2 font-mono">
+            <span>₹1,000</span>
+            <span>₹10,000</span>
+            <span>₹20,000+</span>
+          </div>
         </div>
-        <input
-          id="bill-slider"
-          type="range"
-          min="1000"
-          max="30000"
-          step="500"
-          bind:value={bill}
-          class="slider"
-        />
-        <div class="slider-marks">
-          <span>₹1k</span>
-          <span>₹15k</span>
-          <span>₹30k</span>
+
+        <!-- State / DISCOM Selector * -->
+        <div class="mb-6">
+          <label for="state-select" class="block text-sm font-medium text-on-surface mb-2">
+            Tariff Region
+          </label>
+          <select
+            id="state-select"
+            bind:value={selectedState}
+            class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-3 text-sm text-on-surface focus:outline-none focus:border-primary transition-colors"
+          >
+            {#each Object.entries(STATE_TARIFFS) as [key, item]}
+              <option value={key}>
+                {item.label}
+              </option>
+            {/each}
+          </select>
         </div>
+
+        <!-- Monthly units estimated * -->
+        <div class="p-4 rounded-xl bg-surface-container-high/60 border border-outline-variant/40 flex items-center justify-between text-sm">
+          <span class="text-on-surface-variant">Estimated Monthly Consumption</span>
+          <span class="font-semibold text-on-surface font-mono">
+            {Math.round(monthlyUnits)} kWh (units)
+          </span>
+        </div>
+
+        <p class="mt-6 text-xs text-on-surface-variant/60 leading-relaxed">
+          Estimates adhere to MNRE standards (IN_2026_07) assuming standard crystalline PV panels (0.5%/yr degradation) with net-metering solar export.
+        </p>
       </div>
 
-      <div class="control-group">
-        <label for="state-select" class="block-label">State / DISCOM Region</label>
-        <select id="state-select" bind:value={selectedState} class="select-input">
-          {#each Object.entries(stateTariffs) as [key, data]}
-            <option value={key}>{data.label}</option>
-          {/each}
-        </select>
+      <!-- Results Display * -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        
+        <!-- Top 2 Key Metrics * -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <!-- Sizing & Area * -->
+          <div class="bg-surface-container border border-outline-variant/70 rounded-2xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs uppercase tracking-wider text-on-surface-variant font-medium">Recommended System</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 font-medium border border-emerald-500/20">
+                Optimal Sizing
+              </span>
+            </div>
+            <div class="text-3xl md:text-4xl font-bold text-on-surface font-jakarta mb-1">
+              {systemSizeKw} <span class="text-xl font-normal text-on-surface-variant">kWp</span>
+            </div>
+            <div class="text-xs text-on-surface-variant mt-2 flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
+                <path d="M120-120v-720h720v720H120Zm80-80h560v-560H200v560Z"/>
+              </svg>
+              Requires ~{roofAreaSqFt} sq. ft. shade-free roof
+            </div>
+          </div>
+
+          <!-- PM Surya Ghar Subsidy * -->
+          <div class="bg-surface-container border border-outline-variant/70 rounded-2xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs uppercase tracking-wider text-on-surface-variant font-medium">Govt Subsidy (DBT)</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 font-medium border border-amber-500/20">
+                PM Surya Ghar
+              </span>
+            </div>
+            <div class="text-3xl md:text-4xl font-bold text-on-surface font-jakarta mb-1">
+              ₹{subsidy.toLocaleString('en-IN')}
+            </div>
+            <div class="text-xs text-on-surface-variant mt-2 flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
+                <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Z"/>
+              </svg>
+              Direct credit into homeowner bank account
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom 3 Detailed Metrics * -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          
+          <!-- Annual Savings * -->
+          <div class="bg-surface-container border border-outline-variant/70 rounded-xl p-5">
+            <span class="text-xs text-on-surface-variant font-medium block mb-1">Annual Savings</span>
+            <span class="text-2xl font-bold text-on-surface font-jakarta">
+              ₹{annualSavings.toLocaleString('en-IN')}
+            </span>
+            <span class="text-xs text-on-surface-variant/70 block mt-1">
+              ~₹{monthlySavings.toLocaleString('en-IN')}/mo bill cut
+            </span>
+          </div>
+
+          <!-- Net Investment * -->
+          <div class="bg-surface-container border border-outline-variant/70 rounded-xl p-5">
+            <span class="text-xs text-on-surface-variant font-medium block mb-1">Est. Net Out-of-Pocket</span>
+            <span class="text-2xl font-bold text-on-surface font-jakarta">
+              ₹{netCost.toLocaleString('en-IN')}
+            </span>
+            <span class="text-xs text-on-surface-variant/70 block mt-1 line-through">
+              ₹{grossCost.toLocaleString('en-IN')} gross
+            </span>
+          </div>
+
+          <!-- Payback * -->
+          <div class="bg-surface-container border border-outline-variant/70 rounded-xl p-5">
+            <span class="text-xs text-on-surface-variant font-medium block mb-1">Payback Period</span>
+            <span class="text-2xl font-bold text-on-surface font-jakarta">
+              {paybackYears} <span class="text-base font-normal">Years</span>
+            </span>
+            <span class="text-xs text-emerald-600 dark:text-emerald-400 font-medium block mt-1">
+              +21 yrs free power
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Call to Action Banner * -->
+        <div class="bg-surface-container-high/80 border border-outline-variant rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 class="text-base font-semibold text-on-surface font-jakarta">
+              Want the full 25-year financial breakdown?
+            </h4>
+            <p class="text-xs text-on-surface-variant mt-1">
+              Includes 3 sizing scenarios (Conservative, Optimal, Max Roof), loan amortization, and 3 quotes comparison.
+            </p>
+          </div>
+
+          <a
+            href="/dashboard"
+            class="whitespace-nowrap rounded-xl bg-primary-container text-surface px-6 py-3.5 text-sm font-semibold hover:bg-surface-tint transition-all duration-200 inline-flex items-center gap-2 shadow-sm"
+          >
+            <span>{i18n.current !== 'en' ? i18n.t('calc_cta') : 'Generate Official Report →'}</span>
+          </a>
+        </div>
+
       </div>
 
-      <div class="info-pill">
-        <span>💡 Tariff: <strong>₹{tariff.toFixed(1)}/unit</strong></span>
-        <span>Consumption: <strong>{Math.round(monthlyUnits)} kWh/mo</strong></span>
-      </div>
     </div>
 
-    <!-- Live Results Display -->
-    <div class="results-col">
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <span class="metric-label">Recommended Capacity</span>
-          <div class="metric-value">{systemSizeKw} <span class="unit">kWp</span></div>
-          <span class="metric-hint">Requires ~{roofAreaSqFt} sq. ft. shade-free roof</span>
-        </div>
-
-        <div class="metric-card highlight-green">
-          <span class="metric-label">PM Surya Ghar Subsidy</span>
-          <div class="metric-value text-emerald">₹{subsidy.toLocaleString('en-IN')}</div>
-          <span class="metric-hint">Direct Bank Transfer (DBT) to account</span>
-        </div>
-
-        <div class="metric-card">
-          <span class="metric-label">Net Investment</span>
-          <div class="metric-value">₹{netCost.toLocaleString('en-IN')}</div>
-          <span class="metric-hint">Gross: ₹{grossCost.toLocaleString('en-IN')}</span>
-        </div>
-
-        <div class="metric-card">
-          <span class="metric-label">Yearly Electricity Savings</span>
-          <div class="metric-value text-emerald">₹{annualSavings.toLocaleString('en-IN')}</div>
-          <span class="metric-hint">~{paybackYears} years estimated payback</span>
-        </div>
-      </div>
-    </div>
   </div>
-</div>
-
-<style>
-  .calculator-card {
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface-card);
-    margin: 2rem 0;
-  }
-
-  .header {
-    margin-bottom: 1.5rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0.5rem 0 0.25rem;
-    color: var(--text-main);
-  }
-
-  .subtitle {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-  }
-
-  .grid-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 900px) {
-    .grid-layout {
-      grid-template-columns: 1fr 1.25fr;
-      gap: 2rem;
-    }
-  }
-
-  .controls-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .value-highlight {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-main);
-  }
-
-  .slider {
-    width: 100%;
-    accent-color: var(--brand-accent);
-    cursor: pointer;
-  }
-
-  .slider-marks {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: var(--text-subtle);
-  }
-
-  .block-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  .select-input {
-    width: 100%;
-    padding: 0.625rem;
-    border-radius: 0.625rem;
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface);
-    color: var(--text-main);
-    font-size: 0.875rem;
-  }
-
-  .info-pill {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    background: var(--bg-surface-elevated);
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-  }
-
-  .metrics-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .metric-card {
-    background: var(--bg-surface-elevated);
-    border: 1px solid var(--border-outline);
-    border-radius: 0.75rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .metric-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-subtle);
-    font-weight: 600;
-  }
-
-  .metric-value {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--text-main);
-  }
-
-  .unit {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-muted);
-  }
-
-  .metric-hint {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-  }
-
-  .text-emerald {
-    color: var(--brand-emerald);
-  }
-</style>
+</section>

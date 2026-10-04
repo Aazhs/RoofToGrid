@@ -92,51 +92,66 @@
   }
 </script>
 
-<section id="balcony" class="balcony-section">
-  <div class="container">
-    <div class="section-header">
-      <div class="badge-pill">
-        <span>🤖 AI Multimodal Vision (Gemini + Spatial CV)</span>
-      </div>
-      <h2 class="section-title">Apartment Balcony Solar Estimator</h2>
-      <p class="section-subtitle">
-        Live in a flat without private rooftop access? Upload 1 or more balcony photos to auto-calibrate railing length,
+<section id="balcony" class="py-20 md:py-28 bg-surface border-b border-outline-variant">
+  <div class="max-w-[1280px] mx-auto px-4 md:px-16">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
+        AI MULTIMODAL VISION · SPATIAL CV
+      </span>
+      <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
+        Apartment Balcony Solar Estimator
+      </h2>
+      <p class="text-body-lg text-on-surface-variant font-jakarta">
+        Live in an apartment without private roof access? Upload balcony photos to auto-calibrate railing length,
         orientation, and calculate plug-and-play balcony solar kit generation.
       </p>
     </div>
 
-    <!-- Preset Selector Tabs -->
-    <div class="preset-tabs">
+    <!-- Preset Selector Tabs * -->
+    <div class="flex flex-wrap gap-3 justify-center mb-10">
       {#each SAMPLE_BALCONIES as preset, idx}
         <button
           type="button"
-          class="preset-btn {selectedIndex === idx ? 'active' : ''}"
+          class={`flex flex-col items-start px-5 py-3 rounded-xl border text-left transition-all duration-200 ${
+            selectedIndex === idx
+              ? 'border-primary-container bg-surface-container shadow-sm'
+              : 'border-outline-variant bg-surface-container-low hover:border-outline'
+          }`}
           onclick={() => selectPreset(idx)}
         >
-          <span class="preset-title">{preset.title}</span>
-          <span class="preset-sub">{preset.subtitle}</span>
+          <span class="text-sm font-bold font-jakarta text-on-surface">{preset.title}</span>
+          <span class="text-xs text-on-surface-variant mt-0.5">{preset.subtitle}</span>
         </button>
       {/each}
     </div>
 
-    <!-- Interactive Workspace Grid -->
-    <div class="workspace-grid">
-      <!-- Upload / Calibration Simulator Card -->
-      <div class="card visual-card">
-        <div class="card-top">
-          <span class="card-badge">Camera & Spatial Calibration</span>
-          <span class="confidence-tag">AI Confidence {currentEstimate.confidence}%</span>
+    <!-- Interactive Workspace Grid * -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Upload / Calibration Simulator Card * -->
+      <div class="lg:col-span-5 rounded-2xl border border-outline-variant bg-surface-container p-6 md:p-8 flex flex-col gap-6 shadow-sm">
+        <div class="flex justify-between items-center">
+          <span class="text-xs uppercase tracking-wider font-semibold text-on-surface-variant">Camera & Spatial Calibration</span>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+            AI Confidence {currentEstimate.confidence}%
+          </span>
         </div>
 
-        <button type="button" class="upload-zone" onclick={simulateAnalysis}>
-          <div class="scan-overlay {isAnalyzing ? 'scanning' : ''}"></div>
-          <div class="camera-icon">
+        <button
+          type="button"
+          class="relative flex flex-col items-center justify-center p-8 border-2 border-dashed border-outline-variant hover:border-primary-container rounded-xl bg-surface-container-low cursor-pointer overflow-hidden transition-all duration-200 text-center"
+          onclick={simulateAnalysis}
+        >
+          {#if isAnalyzing}
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-primary-container to-transparent animate-pulse"></div>
+          {/if}
+
+          <div class="text-primary-container mb-3">
             <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.75">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
               <circle cx="12" cy="13" r="4" />
             </svg>
           </div>
-          <h4 class="upload-title">
+          <h4 class="text-base font-bold font-jakarta text-on-surface mb-1">
             {#if isAnalyzing}
               Detecting spatial anchors (door frame, railing height)...
             {:else if analysisSuccess}
@@ -145,67 +160,73 @@
               Click to Run AI Vision Analysis
             {/if}
           </h4>
-          <p class="upload-hint">Simulates Google Gemini 1.5 Pro Multimodal Vision with metric calibration anchors</p>
+          <p class="text-xs text-on-surface-variant max-w-xs">Simulates Google Gemini 1.5 Pro Multimodal Vision with metric calibration anchors</p>
         </button>
 
-        <div class="anchors-list">
-          <div class="anchor-item">
-            <span class="anchor-dot"></span>
+        <div class="flex flex-col gap-2.5 text-xs text-on-surface-variant">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
             <span>Anchor 1: Railing Height ~1.05m standard</span>
           </div>
-          <div class="anchor-item">
-            <span class="anchor-dot"></span>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
             <span>Anchor 2: Balcony Door Frame ~2.10m</span>
           </div>
-          <div class="anchor-item">
-            <span class="anchor-dot"></span>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
             <span>Anchor 3: Floor Tiles ~600x600mm grid</span>
           </div>
         </div>
       </div>
 
-      <!-- Sizing & Economics Result Card -->
-      <div class="card results-card">
-        <div class="result-header">
-          <div>
-            <span class="kit-badge">{currentEstimate.recommendedKitCapacityWp}W Plug-and-Play Kit</span>
-            <h3 class="kit-title">{currentEstimate.recommendedKitDescription}</h3>
+      <!-- Sizing & Economics Result Card * -->
+      <div class="lg:col-span-7 rounded-2xl border border-outline-variant bg-surface-container p-6 md:p-8 flex flex-col gap-6 shadow-sm">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider mb-2 border border-amber-500/20">
+            {currentEstimate.recommendedKitCapacityWp}W Plug-and-Play Kit
+          </span>
+          <h3 class="text-xl md:text-2xl font-bold font-jakarta text-on-surface">
+            {currentEstimate.recommendedKitDescription}
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl border border-outline-variant/60 bg-surface-container-low">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant block mb-1">Railing Length</span>
+            <span class="text-xl font-bold font-jakarta text-on-surface">{currentEstimate.railingLengthM} m</span>
+          </div>
+          <div class="p-3.5 rounded-xl border border-outline-variant/60 bg-surface-container-low">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant block mb-1">Usable Area</span>
+            <span class="text-xl font-bold font-jakarta text-on-surface">{currentEstimate.usableAreaSqft} sq.ft</span>
+          </div>
+          <div class="p-3.5 rounded-xl border border-outline-variant/60 bg-surface-container-low">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant block mb-1">Daily Yield</span>
+            <span class="text-xl font-bold font-jakarta text-emerald-600 dark:text-emerald-400">{currentEstimate.dailyGenerationKwh} kWh</span>
+          </div>
+          <div class="p-3.5 rounded-xl border border-outline-variant/60 bg-surface-container-low">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant block mb-1">Monthly Cut</span>
+            <span class="text-xl font-bold font-jakarta text-emerald-600 dark:text-emerald-400">₹{currentEstimate.monthlySavingsInr}</span>
           </div>
         </div>
 
-        <div class="stats-row">
-          <div class="mini-stat">
-            <span class="mini-label">Railing Length</span>
-            <span class="mini-val">{currentEstimate.railingLengthM} m</span>
-          </div>
-          <div class="mini-stat">
-            <span class="mini-label">Usable Area</span>
-            <span class="mini-val">{currentEstimate.usableAreaSqft} sq.ft</span>
-          </div>
-          <div class="mini-stat">
-            <span class="mini-label">Daily Yield</span>
-            <span class="mini-val text-emerald">{currentEstimate.dailyGenerationKwh} kWh</span>
-          </div>
-          <div class="mini-stat">
-            <span class="mini-label">Monthly Savings</span>
-            <span class="mini-val text-emerald">₹{currentEstimate.monthlySavingsInr}</span>
-          </div>
-        </div>
-
-        <div class="insights-box">
-          <h5 class="insights-title">AI Vision Spatial Findings</h5>
-          <ul class="insights-list">
+        <div class="p-4 rounded-xl border border-outline-variant/60 bg-surface-container-low">
+          <h5 class="text-xs font-bold uppercase tracking-wider text-on-surface mb-2 font-jakarta">AI Vision Spatial Findings</h5>
+          <ul class="space-y-1.5 text-xs text-on-surface-variant list-disc pl-4">
             {#each currentEstimate.keyInsights as insight}
               <li>{insight}</li>
             {/each}
           </ul>
         </div>
 
-        <div class="action-footer">
-          <div class="plug-hint">
-            <span>🔌 Requires standard 16A socket · No heavy civil work</span>
-          </div>
-          <button class="btn-primary" onclick={() => alert(`Saved ${currentEstimate.title} (${currentEstimate.recommendedKitCapacityWp}W) to your profile!`)}>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <span class="text-xs text-on-surface-variant">
+            🔌 Plugs into standard 16A wall socket · Zero civil work required
+          </span>
+          <button
+            type="button"
+            class="w-full sm:w-auto px-6 py-3 rounded-xl bg-primary-container text-surface text-sm font-semibold hover:bg-surface-tint transition-all"
+            onclick={() => alert(`Saved ${currentEstimate.title} (${currentEstimate.recommendedKitCapacityWp}W) to your profile!`)}
+          >
             Save Balcony Profile
           </button>
         </div>
@@ -213,310 +234,3 @@
     </div>
   </div>
 </section>
-
-<style>
-  .balcony-section {
-    padding: 4rem 0;
-    background: var(--bg-surface-elevated);
-    border-top: 1px solid var(--border-outline);
-    border-bottom: 1px solid var(--border-outline);
-  }
-
-  .section-header {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto 2.5rem;
-  }
-
-  .badge-pill {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
-    background: rgba(2, 132, 199, 0.1);
-    color: var(--brand-accent);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text-main);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .preset-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    margin-bottom: 2rem;
-  }
-
-  .preset-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.875rem;
-    border: 1px solid var(--border-outline);
-    background: var(--bg-surface-card);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-  }
-
-  .preset-btn:hover {
-    border-color: var(--border-outline-strong);
-  }
-
-  .preset-btn.active {
-    border-color: var(--brand-accent);
-    background: rgba(2, 132, 199, 0.05);
-    box-shadow: 0 0 0 1px var(--brand-accent);
-  }
-
-  .preset-title {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--text-main);
-  }
-
-  .preset-sub {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 0.15rem;
-  }
-
-  .workspace-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 960px) {
-    .workspace-grid {
-      grid-template-columns: 1fr 1.2fr;
-    }
-  }
-
-  .visual-card {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .card-badge {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-subtle);
-  }
-
-  .confidence-tag {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--brand-emerald);
-    background: rgba(5, 150, 105, 0.1);
-    padding: 0.2rem 0.5rem;
-    border-radius: 9999px;
-  }
-
-  .upload-zone {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2.5rem 1.5rem;
-    border: 2px dashed var(--border-outline-strong);
-    border-radius: 1rem;
-    background: var(--bg-surface);
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    text-align: center;
-  }
-
-  .upload-zone:hover {
-    border-color: var(--brand-accent);
-  }
-
-  .scan-overlay.scanning {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, #0284c7, transparent);
-    animation: scanAnim 1s infinite alternate;
-  }
-
-  @keyframes scanAnim {
-    0% { top: 0; }
-    100% { top: 98%; }
-  }
-
-  .camera-icon {
-    color: var(--brand-accent);
-    margin-bottom: 0.75rem;
-  }
-
-  .upload-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 0.25rem;
-  }
-
-  .upload-hint {
-    font-size: 0.75rem;
-    color: var(--text-subtle);
-    max-width: 320px;
-  }
-
-  .anchors-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-  }
-
-  .anchor-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .anchor-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--brand-accent);
-  }
-
-  .results-card {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .kit-badge {
-    display: inline-block;
-    padding: 0.25rem 0.6rem;
-    border-radius: 0.5rem;
-    background: rgba(217, 119, 6, 0.1);
-    color: var(--brand-amber);
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .kit-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--text-main);
-  }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .stats-row {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .mini-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.75rem;
-    background: var(--bg-surface-elevated);
-    border-radius: 0.75rem;
-    border: 1px solid var(--border-outline);
-  }
-
-  .mini-label {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-subtle);
-    font-weight: 600;
-  }
-
-  .mini-val {
-    font-size: 1.125rem;
-    font-weight: 800;
-    color: var(--text-main);
-  }
-
-  .insights-box {
-    padding: 1rem;
-    border-radius: 0.75rem;
-    background: var(--bg-surface-elevated);
-    border: 1px solid var(--border-outline);
-  }
-
-  .insights-title {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-  }
-
-  .insights-list {
-    margin: 0;
-    padding-left: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-  }
-
-  .action-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: auto;
-  }
-
-  @media (min-width: 640px) {
-    .action-footer {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  .plug-hint {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-  }
-
-  .text-emerald {
-    color: var(--brand-emerald);
-  }
-</style>

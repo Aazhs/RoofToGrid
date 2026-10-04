@@ -1,233 +1,194 @@
 <script lang="ts">
-  import { i18n } from '#lib/i18n.svelte';
+  import { onMount } from 'svelte';
+  import { i18n } from '#lib';
   import LanguageSelector from './LanguageSelector.svelte';
+  import ThemeToggle from './ThemeToggle.svelte';
 
-  let mobileMenuOpen = $state(false);
+  const NAV_LINKS = [
+    { href: '#quick-calculator', label: 'Estimator', sectionId: 'quick-calculator' },
+    { href: '#features', label: 'Features', sectionId: 'features' },
+    { href: '#how-it-works', label: 'How It Works', sectionId: 'how-it-works' },
+    { href: '#pricing', label: 'Pricing', sectionId: 'pricing' },
+    { href: '#faq', label: 'FAQ', sectionId: 'faq' },
+  ];
 
-  function toggleMobile() {
-    mobileMenuOpen = !mobileMenuOpen;
+  let isScrolled = $state(false);
+  let isMobileMenuOpen = $state(false);
+  let activeSection = $state<string | null>(null);
+
+  onMount(() => {
+    const handleScroll = () => {
+      isScrolled = window.scrollY > 50;
+
+      // Scroll-spy: track which section is currently in view
+      const sectionIds = NAV_LINKS.map((link) => link.sectionId);
+      const sections = sectionIds
+        .map((id) => ({ id, el: document.getElementById(id) }))
+        .filter((s): s is { id: string; el: HTMLElement } => s.el !== null)
+        .sort((a, b) => a.el.getBoundingClientRect().top - b.el.getBoundingClientRect().top);
+
+      let current: string | null = null;
+      for (const { id, el } of sections) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 80) {
+          current = id;
+        }
+      }
+      activeSection = current;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') isMobileMenuOpen = false;
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  });
+
+  function closeMobile() {
+    isMobileMenuOpen = false;
   }
 </script>
 
-<header class="navbar">
-  <div class="container nav-container">
-    <a href="/" class="brand">
-      <div class="brand-logo">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5" stroke="#f59e0b" fill="#fef3c7" />
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#d97706" />
-        </svg>
-      </div>
-      <div class="brand-text">
-        <span class="brand-name">RoofToGrid</span>
-        <span class="brand-tag">Svelte 5 · Go</span>
-      </div>
+<nav
+  class={`sticky top-0 z-50 border-b transition-all duration-300 ${
+    isScrolled
+      ? 'border-outline-variant/60 bg-surface/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
+      : 'border-outline-variant/30 bg-surface'
+  }`}
+>
+  <div class="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:px-16">
+    <!-- Left: Logo * -->
+    <a href="/" class="font-jakarta text-headline-lg-mobile font-bold text-on-surface md:text-headline-lg">
+      RoofToGrid
     </a>
 
-    <nav class="desktop-nav">
-      <a href="#calculator" class="nav-link">{i18n.t('nav_estimator')}</a>
-      <a href="#balcony" class="nav-link">{i18n.t('nav_balcony')}</a>
-      <a href="#installers" class="nav-link">{i18n.t('nav_quotes')}</a>
-      <a href="#subsidy" class="nav-link">PM Surya Ghar</a>
-    </nav>
+    <!-- Center: Desktop Links with scroll-spy active indicator * -->
+    <div class="hidden items-center gap-1 md:flex">
+      {#each NAV_LINKS as link}
+        {@const isActive = activeSection === link.sectionId}
+        {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label}
+        <a
+          href={link.href}
+          class={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+            isActive ? 'text-on-surface' : 'text-on-surface-variant hover:text-on-surface'
+          }`}
+        >
+          {#if isActive}
+            <span
+              class="absolute inset-0 rounded-full bg-surface-container border border-outline-variant/50 shadow-sm"
+              style="animation: fade-in-up 0.2s ease-out;"
+            ></span>
+          {/if}
+          <span class="relative z-10">{label}</span>
+        </a>
+      {/each}
+    </div>
 
-    <div class="nav-actions">
-      <LanguageSelector />
-      <a href="#calculator" class="btn-cta">
-        <span>{i18n.t('nav_get_started')}</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
+    <!-- Right: Login + CTA + Mobile Toggle * -->
+    <div class="flex items-center gap-2">
+      <a
+        href="/login"
+        class="hidden rounded-full px-4 py-2 text-sm font-medium text-on-surface-variant transition-colors duration-200 hover:text-on-surface md:block"
+      >
+        {i18n.t('nav_login')}
       </a>
+      <LanguageSelector />
+      <ThemeToggle />
+      <a
+        href="/dashboard"
+        class="hidden rounded-xl bg-primary-container px-6 py-2.5 text-sm font-semibold text-surface transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] md:block"
+      >
+        {i18n.t('nav_get_started')}
+      </a>
+
+      <!-- Hamburger / X toggle * -->
       <button
         type="button"
-        class="mobile-toggle"
-        onclick={toggleMobile}
-        aria-label="Toggle Navigation Menu"
+        class="relative flex h-10 w-10 items-center justify-center rounded-lg text-on-surface transition-colors hover:bg-surface-container md:hidden"
+        onclick={() => isMobileMenuOpen = !isMobileMenuOpen}
+        aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={isMobileMenuOpen}
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          {#if mobileMenuOpen}
-            <path d="M18 6L6 18M6 6l12 12" />
-          {:else}
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          {/if}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+          fill="currentColor"
+          class={`absolute transition-all duration-300 ${
+            isMobileMenuOpen ? 'rotate-90 opacity-0 scale-75' : 'rotate-0 opacity-100 scale-100'
+          }`}
+        >
+          <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+          fill="currentColor"
+          class={`absolute transition-all duration-300 ${
+            isMobileMenuOpen ? 'rotate-0 opacity-100 scale-100' : '-rotate-90 opacity-0 scale-75'
+          }`}
+        >
+          <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
         </svg>
       </button>
     </div>
   </div>
 
-  {#if mobileMenuOpen}
-    <div class="mobile-drawer">
-      <a href="#calculator" class="mobile-link" onclick={() => mobileMenuOpen = false}>
-        {i18n.t('nav_estimator')}
-      </a>
-      <a href="#balcony" class="mobile-link" onclick={() => mobileMenuOpen = false}>
-        {i18n.t('nav_balcony')}
-      </a>
-      <a href="#installers" class="mobile-link" onclick={() => mobileMenuOpen = false}>
-        {i18n.t('nav_quotes')}
-      </a>
-      <a href="#subsidy" class="mobile-link" onclick={() => mobileMenuOpen = false}>
-        PM Surya Ghar Subsidy
-      </a>
+  <!-- Mobile Menu — animated slide-down * -->
+  <div
+    class={`overflow-hidden transition-all duration-300 ease-out md:hidden ${
+      isMobileMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
+    }`}
+  >
+    <div class="border-t border-outline-variant/40 bg-surface/95 backdrop-blur-xl px-4 py-4">
+      <div class="flex flex-col gap-1">
+        {#each NAV_LINKS as link}
+          {@const isActive = activeSection === link.sectionId}
+          {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label}
+          <a
+            href={link.href}
+            class={`relative rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+              isActive
+                ? 'text-on-surface bg-on-surface/[0.06]'
+                : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container'
+            }`}
+            onclick={closeMobile}
+          >
+            {label}
+          </a>
+        {/each}
+        <div class="flex items-center justify-between border-t border-outline-variant/30 pt-3">
+          <span class="text-xs text-on-surface-variant">Language & Theme</span>
+          <div class="flex items-center gap-2">
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
+        </div>
+        <a
+          href="/login"
+          class="rounded-xl px-4 py-3 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface hover:bg-surface-container"
+          onclick={closeMobile}
+        >
+          {i18n.t('nav_login')}
+        </a>
+        <a
+          href="/dashboard"
+          class="mt-2 w-full rounded-xl bg-primary-container px-6 py-3.5 text-center text-sm font-semibold text-surface transition-all hover:opacity-90"
+          onclick={closeMobile}
+        >
+          {i18n.t('nav_get_started')}
+        </a>
+      </div>
     </div>
-  {/if}
-</header>
-
-<style>
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    width: 100%;
-    background: rgba(250, 249, 247, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-outline);
-    transition: all 0.2s ease;
-  }
-
-  :global(.dark) .navbar {
-    background: rgba(11, 15, 25, 0.85);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .navbar {
-      background: rgba(11, 15, 25, 0.85);
-    }
-  }
-
-  .nav-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 4rem;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-  }
-
-  .brand-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.625rem;
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-  }
-
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .brand-name {
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text-main);
-  }
-
-  .brand-tag {
-    font-size: 0.625rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--brand-accent);
-  }
-
-  .desktop-nav {
-    display: none;
-    align-items: center;
-    gap: 1.75rem;
-  }
-
-  @media (min-width: 840px) {
-    .desktop-nav {
-      display: flex;
-    }
-  }
-
-  .nav-link {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  .nav-link:hover {
-    color: var(--text-main);
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .btn-cta {
-    display: none;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.45rem 0.9rem;
-    border-radius: 9999px;
-    background: var(--brand-primary);
-    color: var(--bg-surface);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity 0.15s ease;
-  }
-
-  @media (min-width: 640px) {
-    .btn-cta {
-      display: inline-flex;
-    }
-  }
-
-  .btn-cta:hover {
-    opacity: 0.9;
-  }
-
-  .mobile-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.4rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-outline);
-    background: transparent;
-    color: var(--text-main);
-    cursor: pointer;
-  }
-
-  @media (min-width: 840px) {
-    .mobile-toggle {
-      display: none;
-    }
-  }
-
-  .mobile-drawer {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border-outline);
-    background: var(--bg-surface-card);
-    gap: 0.75rem;
-  }
-
-  .mobile-link {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-main);
-    text-decoration: none;
-    padding: 0.5rem 0;
-  }
-</style>
+  </div>
+</nav>

@@ -1,163 +1,338 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Global Theme System — CSS Custom Properties
+   
+   Light mode = :root (default)
+   Dark mode  = html.dark
+   
+   ALL Tailwind slate-* colors and semantic design tokens are backed by
+   these variables, so every component automatically adapts to both themes.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* Lumina Grid Light Palette */
-  --bg-surface: #faf9f7;
-  --bg-surface-card: #ffffff;
-  --bg-surface-elevated: #f4f3f1;
-  --bg-surface-container: #efeeec;
-  --border-outline: #e2e8f0;
-  --border-outline-strong: #cbd5e1;
+  /* ── Slate scale (standard Tailwind slate values) ── */
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
 
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-subtle: #94a3b8;
+  /* ── White (cards, containers) ── */
+  --white: #ffffff;
 
-  --brand-primary: #0f172a;
-  --brand-primary-hover: #1e293b;
-  --brand-accent: #0284c7;
-  --brand-amber: #d97706;
-  --brand-emerald: #059669;
+  /* ── Shadows ── */
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.10);
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  /* ── Semantic design tokens (Lumina Grid Redesign — Light) ── */
+  --surface: #faf9f7;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f4f3f1;
+  --surface-container: #efeeec;
+  --surface-container-high: #e9e8e6;
+  --surface-container-highest: #e3e2e0;
+  --surface-bright: #faf9f7;
+  --surface-variant: #e3e2e0;
+
+  --on-surface: #1a1c1b;
+  --on-surface-variant: #444748;
+  --on-background: #1a1c1b;
+
+  --primary: #000000;
+  --primary-fixed: #e5e2e1;
+  --primary-fixed-dim: #c8c6c5;
+  --primary-container: #1c1b1b;
+  --on-primary-container: #858383;
+  --on-primary: #ffffff;
+  --surface-tint: #5f5e5e;
+
+  --outline: #747878;
+  --outline-variant: #c4c7c7;
+
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --secondary: #695d46;
+  --secondary-container: #efdec1;
+  --on-secondary-container: #6d614a;
+  --on-secondary: #ffffff;
+
+  --inverse-surface: #2f3130;
+  --inverse-on-surface: #f1f1ef;
+  --inverse-primary: #c8c6c5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-surface: #0b0f19;
-    --bg-surface-card: #111827;
-    --bg-surface-elevated: #1f2937;
-    --bg-surface-container: #1e293b;
-    --border-outline: #1e293b;
-    --border-outline-strong: #334155;
+html.dark {
+  /* ── Slate scale → Nocturnal Intellect mapping ── */
+  --slate-50: #131313;
+  --slate-100: #1c1b1b;
+  --slate-200: #4c463e;
+  --slate-300: #4c463e;
+  --slate-400: #988f86;
+  --slate-500: #988f86;
+  --slate-600: #cfc5bb;
+  --slate-700: #cfc5bb;
+  --slate-800: #e5e2e1;
+  --slate-900: #e5e2e1;
+  --slate-950: #0e0e0e;
 
-    --text-main: #f8fafc;
-    --text-muted: #cbd5e1;
-    --text-subtle: #64748b;
+  /* ── White → dark card surface ── */
+  --white: #201f1f;
 
-    --brand-primary: #f8fafc;
-    --brand-primary-hover: #ffffff;
+  /* ── Shadows (subtler in dark mode) ── */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.20), 0 1px 3px rgba(0, 0, 0, 0.15);
+
+  /* ── Semantic tokens (Nocturnal Intellect — Dark) ── */
+  --surface: #131313;
+  --surface-container-lowest: #0e0e0e;
+  --surface-container-low: #1c1b1b;
+  --surface-container: #201f1f;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #353534;
+  --surface-bright: #3a3939;
+  --surface-variant: #353534;
+
+  --on-surface: #e5e2e1;
+  --on-surface-variant: #cfc5bb;
+  --on-background: #e5e2e1;
+
+  --primary: #f1e1ce;
+  --primary-fixed: #f0e0cd;
+  --primary-fixed-dim: #d3c4b2;
+  --primary-container: #d4c5b3;
+  --on-primary-container: #5c5143;
+  --on-primary: #382f22;
+  --surface-tint: #d3c4b2;
+
+  --outline: #988f86;
+  --outline-variant: #4c463e;
+
+  --error: #ffb4ab;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+
+  --secondary: #c8c6c5;
+  --secondary-container: #474746;
+  --on-secondary-container: #b7b5b4;
+  --on-secondary: #313030;
+
+  --inverse-surface: #e5e2e1;
+  --inverse-on-surface: #313030;
+  --inverse-primary: #685d4e;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Base Layer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* Visible focus rings everywhere (NFR-U5). */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-600 ring-offset-2;
+  }
+
+  /* Dark mode: adjust focus ring offset color */
+  html.dark :focus-visible {
+    --tw-ring-offset-color: var(--surface);
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply text-slate-900;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: var(--secondary-container);
+    color: var(--on-secondary-container);
   }
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   Component Layer
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-surface);
-  color: var(--text-main);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+@layer components {
+  .skip-link {
+    @apply absolute left-4 top-2 z-50 -translate-y-20 rounded bg-white px-3 py-2 text-sm font-medium text-brand-700 shadow focus:translate-y-0;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  letter-spacing: -0.02em;
-}
+  .label {
+    @apply mb-1 block text-sm font-medium text-slate-700;
+  }
 
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-}
+  .hint {
+    @apply mt-1 text-xs text-slate-500;
+  }
 
-@media (min-width: 768px) {
-  .container {
-    padding: 0 2.5rem;
+  .field-error {
+    @apply mt-1 text-xs font-medium text-red-700;
   }
 }
 
-.card {
-  background: var(--bg-surface-card);
-  border: 1px solid var(--border-outline);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
+/* ═══════════════════════════════════════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.card:hover {
-  border-color: var(--border-outline-strong);
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: var(--brand-primary);
-  color: var(--bg-surface);
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.75rem;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.btn-primary:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
 }
 
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: transparent;
-  color: var(--text-main);
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-outline);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease;
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out both;
+  overflow: hidden;
 }
 
-.btn-secondary:hover {
-  background: var(--bg-surface-elevated);
-  border-color: var(--border-outline-strong);
+.animate-toast-enter {
+  animation: toast-enter 0.3s ease-out both;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border: 1px solid transparent;
+/* ═══════════════════════════════════════════════════════════════════════════
+   Dark mode overrides for red/emerald/green that don't map through slate
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html.dark .field-error {
+  color: var(--error);
 }
 
-.badge-green {
-  background: rgba(5, 150, 105, 0.1);
-  color: var(--brand-emerald);
-  border-color: rgba(5, 150, 105, 0.2);
+/* Red variants used in buttons, badges, etc. */
+html.dark .text-red-700 {
+  color: #ffb4ab;
+}
+html.dark .border-red-300 {
+  border-color: #93000a;
+}
+html.dark .bg-red-50,
+html.dark .hover\:bg-red-50:hover {
+  background-color: rgba(147, 0, 10, 0.15);
 }
 
-.badge-amber {
-  background: rgba(217, 119, 6, 0.1);
-  color: var(--brand-amber);
-  border-color: rgba(217, 119, 6, 0.2);
+/* Emerald/green (used in status badges, comparison highlights) */
+html.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.12);
+}
+html.dark .text-emerald-900,
+html.dark .text-emerald-700 {
+  color: #6ee7b7;
+}
+html.dark .bg-emerald-600 {
+  background-color: #059669;
 }
 
-.badge-blue {
-  background: rgba(2, 132, 199, 0.1);
-  color: var(--brand-accent);
-  border-color: rgba(2, 132, 199, 0.2);
+/* Brand adjustments for dark backgrounds */
+html.dark .bg-brand-50,
+html.dark .hover\:bg-brand-50:hover {
+  background-color: rgba(255, 125, 18, 0.12);
+}
+
+/* Amber (warn badges, alerts) */
+html.dark .bg-amber-50 {
+  background-color: rgba(217, 119, 6, 0.12);
+}
+html.dark .text-amber-900,
+html.dark .text-amber-800,
+html.dark .text-amber-700 {
+  color: #fbbf24;
+}
+html.dark .border-amber-200 {
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+/* Sky (info badges, alerts) */
+html.dark .bg-sky-50 {
+  background-color: rgba(14, 165, 233, 0.12);
+}
+html.dark .text-sky-900,
+html.dark .text-sky-800 {
+  color: #7dd3fc;
+}
+html.dark .border-sky-200 {
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+/* Emerald completion for dark (border was missing) */
+html.dark .border-emerald-200 {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+html.dark .text-emerald-800 {
+  color: #6ee7b7;
+}
+
+/* Brand badge dark overrides */
+html.dark .text-brand-800 {
+  color: #ffc071;
+}
+html.dark .border-brand-200 {
+  border-color: rgba(255, 125, 18, 0.3);
+}
+
+/* Red badge dark completion */
+html.dark .text-red-800 {
+  color: #ffb4ab;
+}
+html.dark .border-red-200 {
+  border-color: rgba(147, 0, 10, 0.3);
+}
+
+/* ── Animations ── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
 }
