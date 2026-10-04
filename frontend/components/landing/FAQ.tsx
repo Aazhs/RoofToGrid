@@ -34,7 +34,7 @@ const faqs = [
   },
   {
     question: 'Who builds RoofToGrid?',
-    answer: 'RoofToGrid is an independent, bootstrapped startup focused on bringing transparency and data-driven planning to India\'s residential solar market. We are not affiliated with any installer, manufacturer, or financing company — our recommendations are unbiased by design. The codebase is open source on GitHub.'
+    answer: 'RoofToGrid is an independent, bootstrapped startup focused on bringing transparency and data-driven planning to India\'s residential solar market. We are not affiliated with any installer, manufacturer, or financing company — our recommendations are unbiased by design.'
   }
 ];
 

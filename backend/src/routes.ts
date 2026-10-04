@@ -27,7 +27,7 @@ apiRouter.get('/', (_req, res) => {
     data: {
       name: 'RoofToGrid API',
       version: 'v1',
-      docs: 'https://github.com/rooftogrid/rooftogrid/blob/main/docs/design.md#4-api-surface',
+      status: 'operational',
       endpoints: [
         '/api/v1/health',
         '/api/v1/auth',
