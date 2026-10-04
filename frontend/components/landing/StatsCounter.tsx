@@ -67,16 +67,35 @@ export function StatsCounter() {
       </div>
 
       <div className="mt-12 max-w-[1280px] mx-auto px-4 md:px-16">
-        <div className="flex items-center justify-center gap-3 text-sm text-on-surface-variant/60">
-          <span>Plan</span>
-          <span className="text-primary-container">→</span>
-          <span>Compare</span>
-          <span className="text-primary-container">→</span>
-          <span>Track</span>
-          <span className="text-primary-container">→</span>
-          <span>Monitor</span>
-          <span className="mx-3 text-outline-variant">|</span>
-          <span className="text-primary-container/80">Your complete solar journey</span>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-3 text-sm text-on-surface-variant/60">
+            <span>Plan</span>
+            <span className="text-primary-container">→</span>
+            <span>Compare</span>
+            <span className="text-primary-container">→</span>
+            <span>Track</span>
+            <span className="text-primary-container">→</span>
+            <span>Monitor</span>
+          </div>
+          <span className="hidden sm:block mx-3 text-outline-variant">|</span>
+          <span className="text-sm text-primary-container/80">Your complete solar journey</span>
+        </div>
+      </div>
+
+      {/* Technology & credibility strip */}
+      <div className="mt-10 max-w-[1280px] mx-auto px-4 md:px-16">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-on-surface-variant/50 font-medium uppercase tracking-wider">
+          <span>Next.js</span>
+          <span className="text-outline-variant/30">·</span>
+          <span>TypeScript</span>
+          <span className="text-outline-variant/30">·</span>
+          <span>Supabase</span>
+          <span className="text-outline-variant/30">·</span>
+          <span>Prisma ORM</span>
+          <span className="text-outline-variant/30">·</span>
+          <span>Vercel</span>
+          <span className="text-outline-variant/30">·</span>
+          <span>Render</span>
         </div>
       </div>
     </section>

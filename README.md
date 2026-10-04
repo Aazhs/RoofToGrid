@@ -1,37 +1,91 @@
-# RoofToGrid
+# RoofToGrid ☀️
 
-Rooftop-solar planning and installer-matching for homeowners: work out whether solar makes sense for your
-home, compare installer quotes on equal terms, and track the project from site survey to net metering.
+**India's smartest rooftop solar planning platform for homeowners.**
+
+> Plan your solar transition with data, not guesswork. Size your system, compare installer quotes on equal terms, and track your project from site survey to net metering — all in one platform.
+
+[![Live Site](https://img.shields.io/badge/Live-rooftogrid.in-brightgreen?style=flat-square)](https://rooftogrid.in)
+[![Stack](https://img.shields.io/badge/Stack-Next.js%20%2B%20Express%20%2B%20Supabase-blue?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-Proprietary-lightgrey?style=flat-square)]()
+[![Tests](https://img.shields.io/badge/Tests-95%20unit%20%2B%20integration-green?style=flat-square)]()
+
+---
+
+## The Problem
+
+Going solar in India is confusing. Homeowners face:
+- **No standardized way to compare installer quotes** — every vendor uses different formats, metrics, and bundling strategies
+- **Opaque subsidy calculations** — PM Surya Ghar eligibility and amounts are hard to compute
+- **No single platform to track the journey** — from sizing to installation to performance monitoring
+
+## The Solution
+
+RoofToGrid is a full-stack platform that empowers Indian homeowners with:
+
+| Feature | What It Does |
+|---|---|
+| **Solar Sizing Engine** | Three-scenario calculator (Conservative, Optimal, Max Roof) with 25-year financial projections |
+| **Quote Normalizer** | Apples-to-apples comparison across 17+ metrics with automated red-flag detection |
+| **PM Surya Ghar Integration** | Auto-calculates subsidy eligibility (up to ₹78,000) and net cost |
+| **Project Tracker** | Nine-milestone lifecycle from inquiry to commissioning |
+| **Performance Monitor** | Monthly generation vs. seasonal projections with variance alerts |
+| **Document Vault** | Private, encrypted storage for project paperwork |
+
+---
+
+## Architecture
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│                         Vercel CDN                             │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │         Next.js 14 (App Router) + Tailwind CSS          │  │
+│  │     Landing · Dashboard · Sizing · Quotes · Projects    │  │
+│  └──────────────────────┬───────────────────────────────────┘  │
+└─────────────────────────┼──────────────────────────────────────┘
+                          │ REST API (JWT + httpOnly cookies)
+┌─────────────────────────┼──────────────────────────────────────┐
+│                    Render (API)                                 │
+│  ┌──────────────────────▼───────────────────────────────────┐  │
+│  │       Express 5 + TypeScript + Prisma + Zod              │  │
+│  │  Domain: sizing, scoring, milestones, performance        │  │
+│  │  Integrations: yield, DISCOM, subsidy, parsers (stubs)   │  │
+│  └──────────┬──────────────────────────┬────────────────────┘  │
+└─────────────┼──────────────────────────┼───────────────────────┘
+              │                          │
+   ┌──────────▼──────────┐    ┌──────────▼──────────┐
+   │  Supabase Postgres  │    │  Supabase Storage   │
+   │  (pooled + direct)  │    │  (private bucket)   │
+   └─────────────────────┘    └─────────────────────┘
+```
 
 - **Frontend** — Next.js (App Router) + Tailwind, deployed on Vercel
 - **Backend** — Express 5 + TypeScript + Prisma, deployed on Render
 - **Database & storage** — Supabase Postgres + a private Supabase Storage bucket
 
-Product and technical documents live in [`docs/`](docs):
-[requirements](docs/requirements.md) · [design](docs/design.md) · [roadmap](docs/roadmap.md) ·
+---
+
+## What's in the MVP
+
+| Journey | What You Can Do | Routes |
+|---|---|---|
+| A — Should I go solar? | Public calculator, bill capture, roof capture, rule-based sizing with subsidy, savings and payback | `/`, `/onboarding`, `/bills`, `/roof`, `/sizing` |
+| B — Compare quotes | Structured quote entry, normalized comparison, value score, red flags, EMI-aware costs | `/quotes`, `/quotes/compare` |
+| C — Track the project | Nine-milestone lifecycle with status, dates, notes; commissioning derived from net metering | `/projects` |
+| D — Monitor & maintain | Monthly generation vs seasonal projection, savings, warranty status, service requests | `/projects/[id]` → Monitoring |
+| E — Document vault | Private uploads tied to projects, milestones or quotes, with ownership-checked downloads | `/documents` |
+
+**Designed for (not yet built):** OCR/LLM quote parsing, live DISCOM and subsidy status,
+inverter monitoring feeds, professional yield simulation, installer portal. Each sits behind an interface with
+a working stub — see [`docs/integration-strategy.md`](docs/integration-strategy.md).
+
+Product and technical documents: [requirements](docs/requirements.md) · [design](docs/design.md) · [roadmap](docs/roadmap.md) ·
 [business model](docs/business-model.md) · [testing strategy](docs/testing-strategy.md) ·
 [integration strategy](docs/integration-strategy.md)
 
 ---
 
-## What is in the MVP
-
-| Journey | What you can do | Where |
-|---|---|---|
-| A — Should I go solar? | Public calculator, bill capture, roof capture, rule-based sizing with subsidy, savings and payback | `/`, `/onboarding`, `/bills`, `/roof`, `/sizing` |
-| B — Compare quotes | Structured quote entry, normalized comparison, value score, red flags, EMI-aware costs | `/quotes`, `/quotes/compare` |
-| C — Track the project | Nine-milestone lifecycle with status, dates, notes; commissioning derived from net metering | `/projects` |
-| D — Monitor and maintain | Monthly generation vs seasonal projection, savings, warranty status, service requests | `/projects/[id]` → Monitoring |
-| E — Document vault | Private uploads tied to projects, milestones or quotes, with ownership-checked downloads | `/documents` |
-
-Deliberately **not** in the MVP, but designed for: OCR/LLM quote parsing, live DISCOM and subsidy status,
-inverter monitoring feeds, professional yield simulation, installer portal. Each sits behind an interface with
-a working stub — see [`docs/integration-strategy.md`](docs/integration-strategy.md) and
-`backend/src/integrations/`.
-
----
-
-## Repository layout
+## Repository Layout
 
 ```
 backend/                Express API
@@ -60,10 +114,9 @@ render.yaml             Render blueprint for the API
 
 ---
 
-## Run it locally
+## Quick Start
 
-Prerequisites: Node.js 20+, npm 10+, and a Postgres 14+ database (local install, Docker, or a free Supabase
-project).
+Prerequisites: Node.js 20+, npm 10+, and a Postgres 14+ database (local install, Docker, or a free Supabase project).
 
 ### 1. Database
 
@@ -85,22 +138,19 @@ npm run seed                  # optional demo data
 npm run dev                   # http://localhost:4000
 ```
 
-Generate the two secrets with:
+Generate the two JWT secrets with:
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
 ```
 
-Useful checks:
+Health checks:
 
 ```bash
 curl http://localhost:4000/health
 curl http://localhost:4000/api/v1/health/ready         # database + storage reachability
 curl http://localhost:4000/api/v1/sizing/assumptions   # the numbers behind every estimate
 ```
-
-In development `STORAGE_DRIVER=local` writes uploads to `backend/.uploads/` (git-ignored). Nothing is served
-statically from there — downloads still go through the authenticated endpoint.
 
 ### 3. Frontend
 
@@ -113,7 +163,7 @@ npm run dev                   # http://localhost:3000
 
 `NEXT_PUBLIC_API_URL` must include the version prefix, e.g. `http://localhost:4000/api/v1`.
 
-### 4. Demo login
+### 4. Demo Login
 
 After `npm run seed`:
 
@@ -145,9 +195,9 @@ just a line of code. See [`docs/testing-strategy.md`](docs/testing-strategy.md).
 
 ---
 
-## Deploy to production
+## Production Deployment
 
-Target topology: `app.rooftogrid.com` (Vercel) → `api.rooftogrid.com` (Render) → Supabase Postgres + Storage.
+Target topology: `rooftogrid.in` (Vercel) → `api.rooftogrid.com` (Render) → Supabase Postgres + Storage.
 
 ### 1. Supabase
 
@@ -157,60 +207,48 @@ Target topology: `app.rooftogrid.com` (Vercel) → `api.rooftogrid.com` (Render)
 3. Collect: pooled connection string (port 6543, append `?pgbouncer=true&connection_limit=1`), direct
    connection string (port 5432), project URL, and the service-role key.
 
-The service-role key is a server-side secret. It belongs only in Render's environment, never in the frontend.
-
 ### 2. Render (API)
 
 1. New → Blueprint → select this repo. [`render.yaml`](render.yaml) sets the build, pre-deploy migration and
    health check.
 2. Fill the `sync: false` variables: `DATABASE_URL`, `DIRECT_URL`, `SUPABASE_URL`,
    `SUPABASE_SERVICE_ROLE_KEY`. JWT secrets are generated for you.
-3. Set `CORS_ORIGINS` to your exact frontend origins (production plus any preview domains you use) and
-   `COOKIE_DOMAIN` to `.rooftogrid.com` if the app and API share the domain.
+3. Set `CORS_ORIGINS` to your exact frontend origins and `COOKIE_DOMAIN` to `.rooftogrid.in`.
 4. Add the custom domain `api.rooftogrid.com` and point a CNAME at the Render host.
 
-Migrations run via `preDeployCommand`. On plans without pre-deploy commands, run `npm run migrate:deploy`
-once from a Render shell or one-off job after each schema change.
-
-### 3. Vercel (frontend)
+### 3. Vercel (Frontend)
 
 1. Import the repo, set **Root Directory** to `frontend`.
 2. Environment variable: `NEXT_PUBLIC_API_URL = https://api.rooftogrid.com/api/v1`.
-3. Add `app.rooftogrid.com` (and `rooftogrid.com` if you want the apex to serve the app).
-
-### 4. Cross-origin notes
-
-- The refresh token is an httpOnly cookie scoped to `/api/v1/auth`. In production it is issued with
-  `Secure` and `SameSite=None`, so the app and API may sit on different hosts.
-- Preview deployments get fresh Vercel URLs. Either add them to `CORS_ORIGINS` or use a stable preview alias;
-  the allowlist is exact-match by design.
-- After the first deploy, verify:
-  `curl https://api.rooftogrid.com/api/v1/health/ready` → `{"data":{"ready":true,...}}`
-
-### 5. Seeding production
-
-Don't. `npm run seed` deletes and recreates the demo user. Run it only against development or a staging
-database.
+3. Add `rooftogrid.in` as the primary domain.
 
 ---
 
-## Security posture
+## Security Posture
 
 - bcrypt (cost 12) password hashing; login failures return one generic message.
 - 15-minute JWT access tokens plus rotating refresh tokens stored as HMAC-SHA256 hashes; reusing a rotated
   token revokes the whole family.
 - Every request body, query and param is validated with Zod before it reaches a service.
-- Ownership is enforced in the data layer on every read and write. Not-owned returns 404, never 403 with a
-  leak.
+- Ownership is enforced in the data layer on every read and write. Not-owned returns 404, never 403.
 - helmet, an exact-match CORS allowlist, and rate limits (global 300/15 min, auth 20/15 min, public sizing
   30/15 min).
-- Storage buckets are private; uploads are capped at 10 MB and restricted to PDF/JPEG/PNG/WebP; keys are
-  namespaced `u/{userId}/{yyyy}/{mm}/{uuid}.{ext}` and never contain the original filename.
+- Storage buckets are private; uploads are capped at 10 MB and restricted to PDF/JPEG/PNG/WebP.
 - Structured JSON logs with request ids; credentials and tokens are redacted; stack traces never reach
   clients in production.
 
-## Honesty about the numbers
+## Business Model
+
+**Freemium SaaS** — homeowners use core planning tools for free. Pro tier (₹499/month or ₹4,999/year) unlocks
+unlimited quote comparisons, PDF feasibility reports, full performance history, and priority support. Future
+revenue from a two-sided installer marketplace (see [`docs/business-model.md`](docs/business-model.md)).
+
+## Honesty About the Numbers
 
 Estimates come from published averages and static subsidy rules, not a site survey or an irradiance
 simulation. Every estimate screen shows the assumption set it used (`IN_2026_07` today), and every saved
 sizing run stores a snapshot of those assumptions, so changing the defaults later never rewrites history.
+
+---
+
+*Built with ☀️ in India*

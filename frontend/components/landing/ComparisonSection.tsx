@@ -40,9 +40,9 @@ export function ComparisonSection() {
         ref={headerRef} 
         className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
       >
-        <h2 className="text-headline-lg md:text-display-lg font-semibold mb-4 font-jakarta">Why RoofToGrid?</h2>
+        <h2 className="text-headline-lg md:text-display-lg font-semibold mb-4 font-jakarta">Why RoofToGrid Exists</h2>
         <p className="text-body-lg text-on-surface-variant mb-12 max-w-2xl">
-          The traditional way to go solar is broken, opaque, and confusing. We built RoofToGrid to give homeowners back control of their energy journey.
+          The traditional way to go solar in India is broken — opaque pricing, confusing subsidy math, and no standardized comparison. We built RoofToGrid to put homeowners back in control.
         </p>
       </div>
 

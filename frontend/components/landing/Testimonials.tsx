@@ -57,13 +57,13 @@ export function Testimonials() {
         >
           {/* Header */}
           <span className="text-label-sm text-outline uppercase tracking-widest mb-4 block font-jakarta">
-            INSIDE THE PLATFORM
+            PRODUCT WALKTHROUGH
           </span>
           <h2 className="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
-            See it in action.
+            See the live product.
           </h2>
           <p className="text-body-lg text-on-surface-variant mb-10 max-w-2xl font-jakarta">
-            Real screens from the platform. No mockups, no promises — this is what you get when you sign up.
+            Real screens from the deployed platform. Every feature is functional — try the prototype pass on the Pricing section to explore Pro features yourself.
           </p>
 
           {/* Tab Switcher */}

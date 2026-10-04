@@ -17,6 +17,18 @@ export default function HeroSection() {
         
         {/* LEFT column */}
         <div>
+          {/* Live product badge */}
+          <div
+            className={`mb-6 inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-xs font-medium text-on-surface-variant ${base} ${mounted ? visible : hidden}`}
+            style={{ transitionDelay: '50ms' }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            Live Product · Free to Start
+          </div>
+
           <h1
             className={`font-jakarta text-headline-lg md:text-display-lg font-semibold tracking-tight text-on-surface ${base} ${mounted ? visible : hidden}`}
             style={{ transitionDelay: '100ms' }}
@@ -30,7 +42,7 @@ export default function HeroSection() {
             className={`mt-6 max-w-xl text-body-lg text-on-surface-variant ${base} ${mounted ? visible : hidden}`}
             style={{ transitionDelay: '250ms' }}
           >
-            Maximize your rooftop solar potential with intelligent planning, integrated with PM Surya Ghar subsidies. The smartest way for Indian homeowners to transition to clean energy.
+            India&apos;s first independent rooftop solar planning platform. Size your system, compare installer quotes fairly, and track your project end-to-end — with PM Surya Ghar subsidies calculated automatically.
           </p>
           
           <div
@@ -41,13 +53,13 @@ export default function HeroSection() {
               href="/dashboard"
               className="rounded-xl bg-primary-container px-8 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.02] active:scale-[0.98]"
             >
-              Analyze My Roof &rarr;
+              Start Planning — It&apos;s Free &rarr;
             </Link>
             <a
               href="#how-it-works"
               className="rounded-xl border border-outline-variant px-8 py-4 text-center font-semibold text-on-surface transition-all duration-200 hover:border-primary-container hover:text-primary-container"
             >
-              Read the Methodology
+              See How It Works
             </a>
           </div>
           
@@ -65,7 +77,7 @@ export default function HeroSection() {
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container-low px-4 py-2 text-sm text-on-surface-variant">
               <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="16" fill="currentColor" className="text-primary-container"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-              Independent & Unbiased
+              Independent &amp; Unbiased
             </span>
           </div>
         </div>

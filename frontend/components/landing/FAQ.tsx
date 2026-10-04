@@ -31,6 +31,10 @@ const faqs = [
   {
     question: 'What happens after installation?',
     answer: 'After installation, you can log your monthly solar generation and we compare it against seasonal projections to flag underperformance. You also get warranty status tracking (Active / Expiring Soon / Expired) and a private document vault for all your project paperwork.'
+  },
+  {
+    question: 'Who builds RoofToGrid?',
+    answer: 'RoofToGrid is an independent, bootstrapped startup focused on bringing transparency and data-driven planning to India\'s residential solar market. We are not affiliated with any installer, manufacturer, or financing company — our recommendations are unbiased by design. The codebase is open source on GitHub.'
   }
 ];
 

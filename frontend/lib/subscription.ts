@@ -20,7 +20,7 @@ export interface SubscriptionState {
 }
 
 export const UPI_CONFIG = {
-  vpa: process.env.NEXT_PUBLIC_UPI_ID ?? 'rooftogrid@okaxis',
+  vpa: process.env.NEXT_PUBLIC_UPI_ID ?? '9834961796@upi',
   merchantName: 'RoofToGrid Technologies',
   monthlyPrice: 499,
   annualPrice: 4999,
