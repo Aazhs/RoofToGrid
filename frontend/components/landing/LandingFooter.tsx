@@ -42,6 +42,7 @@ export function LandingFooter() {
           <div>
             <h4 className="text-sm font-semibold text-on-surface mb-4">Resources</h4>
             <ul className="space-y-3">
+              <li><Link href="/blog" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Solar Guides &amp; Blog</Link></li>
               <li><a href="https://www.pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">PM Surya Ghar Portal</a></li>
               <li><a href="https://mnre.gov.in" target="_blank" rel="noopener noreferrer" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">MNRE Guidelines</a></li>
               <li><a href="/#faq" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">FAQ</a></li>

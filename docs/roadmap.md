@@ -1,14 +1,14 @@
 # RoofToGrid — Roadmap
 
 Status: Living document
-Last updated: 2026-07-29
+Last updated: 2026-10-04
 
 Each phase lists what ships, the acceptance signal we use to call it done, and the exit criteria that must be
 true before we start the next phase. Story ids reference `docs/requirements.md`.
 
 ---
 
-## Phase 1 — MVP: India homeowner pilot (shipped in this repo)
+## Phase 1 — MVP: India homeowner pilot (Shipped & Live)
 
 **Thesis:** a homeowner can get trustworthy numbers and run a project end-to-end with manual data entry and
 rule-based math. No external dependency is on the critical path.
@@ -17,13 +17,15 @@ rule-based math. No external dependency is on the critical path.
 
 | Area | Ships | Stories |
 |---|---|---|
-| Auth & profile | email/password, JWT + rotating refresh, profile with location/DISCOM, onboarding step tracking | US-A2, US-A3 |
+| Auth & profile | email/password, JWT + rotating refresh, profile with location/DISCOM, onboarding step tracking, password reset flow, email verification | US-A2, US-A3 |
 | Bill capture | upload PDF/image, manual monthly units + tariff, 12-month stats for pre-fill | US-A4, US-A5 |
 | Roof capture | guided form (type, usable area, orientation, tilt, shading), optional photos | US-A6 |
-| Sizing | rule-based suitability + 3 scenarios, subsidy, payback, versioned assumptions, public guest estimate | US-A1, US-A7–US-A10 |
-| Quotes | structured entry, derived price/kWp, equipment tier, value score, red flags, financing-adjusted cost, comparison view | US-B1–US-B8 |
+| Sizing & Estimator | rule-based suitability + 3 scenarios, subsidy, payback, versioned assumptions, public guest estimator with DISCOM tariffs | US-A1, US-A7–US-A10 |
+| Quotes | structured entry, derived price/kWp, equipment tier, value score, red flags, financing-adjusted cost, comparison view, WhatsApp share | US-B1–US-B8 |
 | Projects | create from quote, 9 seeded milestones, status/dates/notes, progress + current stage, auto-commissioning | US-C1–US-C6 |
 | Monitoring | manual monthly generation logs, actual vs seasonality-adjusted projection, savings vs baseline, warranties with expiry status, service requests | US-D1–US-D5 |
+| Monetization | Direct UPI Pro checkout (₹499/mo or ₹4,999/yr), instant QR, mobile app intents, official PDF Feasibility Report export, friend referrals | US-MON-1 |
+| Content & SEO | Solar Knowledge Base (`/blog`), automated JSON-LD schemas, sitemap, robots, Open Graph social cards, PWA service worker | NFR-SEO-1 |
 | Documents | private upload, category tagging, association to project/milestone/quote, ownership-checked download, delete | US-E1–US-E4 |
 | Ops | health + readiness, Prisma migrations, seed script, Render/Vercel/Supabase deployment on custom domain | NFR-O1–NFR-O4 |
 

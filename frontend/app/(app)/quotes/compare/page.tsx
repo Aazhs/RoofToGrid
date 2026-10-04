@@ -10,6 +10,7 @@ import { Card, CardBody } from '@/components/ui/Card';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { ComparisonTable } from '@/components/domain/ComparisonTable';
 import { UpiCheckoutModal } from '@/components/billing/UpiCheckoutModal';
+import { FeedbackPrompt } from '@/components/ui/FeedbackPrompt';
 import { useSubscription } from '@/lib/subscription';
 import { api } from '@/lib/api';
 import { useApi } from '@/lib/hooks';
@@ -133,6 +134,8 @@ export default function ComparePage() {
               </div>
             </CardBody>
           </Card>
+
+          <FeedbackPrompt context="quotes" />
         </>
       )}
 

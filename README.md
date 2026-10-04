@@ -24,10 +24,16 @@ RoofToGrid is a full-stack platform that empowers Indian homeowners with:
 
 | Feature | What It Does |
 |---|---|
+| **Quick Solar Estimator** | No-signup interactive bill slider with state DISCOM tariffs & instant subsidy calculation |
 | **Solar Sizing Engine** | Three-scenario calculator (Conservative, Optimal, Max Roof) with 25-year financial projections |
 | **Quote Normalizer** | Apples-to-apples comparison across 17+ metrics with automated red-flag detection |
-| **PM Surya Ghar Integration** | Auto-calculates subsidy eligibility (up to ₹78,000) and net cost |
-| **Project Tracker** | Nine-milestone lifecycle from inquiry to commissioning |
+| **PM Surya Ghar Integration** | Auto-calculates central subsidy eligibility (up to ₹78,000) and net out-of-pocket investment |
+| **Project Tracker** | Nine-milestone visual lifecycle from inquiry to net meter grid commissioning |
+| **Official PDF Feasibility Report** | Printable bank-loan ready engineering & subsidy feasibility documentation |
+| **Pro UPI Subscription Engine** | Direct instant UPI QR code & mobile app intents (GPay/PhonePe/Paytm) with UTR audit verification |
+| **PWA & Offline Service Worker** | Installable to home screen on mobile with offline-first static shell caching |
+| **Solar Education & Blog** | Technical deep dives on subsidy policies, TOPCon vs Mono PERC, and installer red flags |
+| **WhatsApp Sharing & Referrals** | 1-click viral sharing of sizing runs and quote comparisons, plus friend referral rewards |
 | **Performance Monitor** | Monthly generation vs. seasonal projections with variance alerts |
 | **Document Vault** | Private, encrypted storage for project paperwork |
 

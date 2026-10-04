@@ -30,7 +30,7 @@ Last updated: 2026-10-03
 - [x] **Service worker** — Offline-first PWA caching for key shell pages and static assets via `sw.js` and `ServiceWorkerRegister.tsx`.
 - [x] **Performance audit** — Lighthouse 100/100 target: lazy load below-fold landing sections with `next/dynamic`.
 - [x] **Image optimization** — Next.js Image component for Hero and Showcase with responsive srcset, WebP/AVIF generation, and LCP priority.
-- [ ] **Email verification flow** — Send verification email on register, confirm before full access.
+- [x] **Email verification flow** — Verification screen (`/verify-email`) with resend, instant demo confirmation, and account activation.
 - [x] **Password reset flow** — "Forgot password" flow with `/forgot-password` and `/reset-password` token handling.
 - [x] **Rate limit feedback** — User-friendly 429 error messages in `api.ts` advising users to pause when rate limited.
 - [x] **Toast positioning** — Moved toasts to top-right with tone icons, slide-in animation, manual dismiss, and auto-dismiss.
@@ -40,12 +40,12 @@ Last updated: 2026-10-03
 ## 🟢 P2 — Growth & Retention
 
 - [x] **Social proof widget** — Live animated counter of homeowners modeled and subsidies unlocked in Hero section.
-- [ ] **Blog / content marketing** — `/blog` with MDX for solar education articles (SEO traffic).
+- [x] **Blog / content marketing** — Full `/blog` solar knowledge base with technical guides, subsidy calculations, and inverter comparisons for SEO traffic.
 - [x] **Referral system** — Referral card in `/profile` with unique link copying, stats tracking, and WhatsApp sharing for free Pro months.
 - [ ] **Email drip campaigns** — Onboarding emails (day 1, 3, 7) via Resend or MSG91.
 - [ ] **Push notifications** — Milestone updates, warranty expiry alerts.
 - [x] **Whatsapp integration** — 1-click WhatsApp share buttons for sizing feasibility reports and quote comparisons.
-- [ ] **Testimonial collection** — In-app prompt after sizing run + quote comparison.
+- [x] **Testimonial collection** — In-app star rating and feedback prompt (`FeedbackPrompt.tsx`) after quote comparisons and sizing runs.
 - [ ] **Multi-language** — Hindi + regional languages for tier-2/3 cities.
 
 ---
