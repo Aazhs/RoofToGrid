@@ -30,89 +30,87 @@
   });
 </script>
 
-<section class="py-20 md:py-24 border-y border-outline-variant bg-surface-container-lowest overflow-hidden">
+<section class="py-8 md:py-10 border-y border-outline-variant/60 bg-surface-container-lowest/60 overflow-hidden">
   <div class="max-w-[1280px] mx-auto px-4 md:px-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      <div class="text-center font-jakarta">
-        <div class="text-[40px] md:text-[48px] font-bold text-on-surface mb-2">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="p-3">
+        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
           {count1}
         </div>
-        <div class="text-sm font-semibold text-on-surface mb-1">
+        <div class="text-xs sm:text-sm font-semibold text-on-surface">
           Sizing Scenarios
         </div>
-        <div class="text-xs text-on-surface-variant">
+        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
           Conservative · Optimal · Max Roof
         </div>
       </div>
 
-      <div class="text-center font-jakarta">
-        <div class="text-[40px] md:text-[48px] font-bold text-on-surface mb-2">
+      <div class="p-3">
+        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
           {count2}+
         </div>
-        <div class="text-sm font-semibold text-on-surface mb-1">
+        <div class="text-xs sm:text-sm font-semibold text-on-surface">
           Comparison Metrics
         </div>
-        <div class="text-xs text-on-surface-variant">
+        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
           Normalized quote analysis
         </div>
       </div>
 
-      <div class="text-center font-jakarta">
-        <div class="text-[40px] md:text-[48px] font-bold text-on-surface mb-2">
+      <div class="p-3">
+        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
           {count3}
         </div>
-        <div class="text-sm font-semibold text-on-surface mb-1">
+        <div class="text-xs sm:text-sm font-semibold text-on-surface">
           Red Flag Checks
         </div>
-        <div class="text-xs text-on-surface-variant">
+        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
           Automated quote screening
         </div>
       </div>
 
-      <div class="text-center font-jakarta">
-        <div class="text-[40px] md:text-[48px] font-bold text-on-surface mb-2">
+      <div class="p-3">
+        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
           {count4}
         </div>
-        <div class="text-sm font-semibold text-on-surface mb-1">
+        <div class="text-xs sm:text-sm font-semibold text-on-surface">
           Project Milestones
         </div>
-        <div class="text-xs text-on-surface-variant">
+        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
           Inquiry to commissioning
         </div>
       </div>
     </div>
   </div>
 
-  <div class="mt-12 max-w-[1280px] mx-auto px-4 md:px-16">
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-      <div class="flex items-center gap-3 text-sm text-on-surface-variant/60">
+  <div class="mt-6 max-w-[1280px] mx-auto px-4 md:px-16">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 text-xs text-on-surface-variant/70">
+      <div class="flex items-center gap-2">
         <span>Plan</span>
-        <span class="text-primary-container">→</span>
+        <span class="text-amber-600 dark:text-amber-400">→</span>
         <span>Compare</span>
-        <span class="text-primary-container">→</span>
+        <span class="text-amber-600 dark:text-amber-400">→</span>
         <span>Track</span>
-        <span class="text-primary-container">→</span>
+        <span class="text-amber-600 dark:text-amber-400">→</span>
         <span>Monitor</span>
       </div>
-      <span class="hidden sm:block mx-3 text-outline-variant">|</span>
-      <span class="text-sm text-primary-container/80">Your complete solar journey</span>
+      <span class="hidden sm:inline text-outline-variant/40">·</span>
+      <span class="font-medium text-on-surface">Complete Solar Journey</span>
     </div>
   </div>
 
-  <!-- Technology & credibility strip * -->
-  <div class="mt-10 max-w-[1280px] mx-auto px-4 md:px-16">
-    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-on-surface-variant/50 font-medium uppercase tracking-wider">
+  <!-- Tech credibility strip -->
+  <div class="mt-4 max-w-[1280px] mx-auto px-4 md:px-16">
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-on-surface-variant/50 font-medium uppercase tracking-wider">
       <span>SvelteKit 5</span>
       <span class="text-outline-variant/30">·</span>
-      <span>Go Binary (&lt;400µs)</span>
+      <span>Go Engine (&lt;400µs)</span>
       <span class="text-outline-variant/30">·</span>
-      <span>Supabase</span>
+      <span>Supabase Storage</span>
       <span class="text-outline-variant/30">·</span>
       <span>Tailwind CSS</span>
       <span class="text-outline-variant/30">·</span>
-      <span>Vercel</span>
-      <span class="text-outline-variant/30">·</span>
-      <span>Render</span>
+      <span>PM Surya Ghar Verified</span>
     </div>
   </div>
 </section>

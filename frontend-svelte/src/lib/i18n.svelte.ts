@@ -16,7 +16,9 @@ export const SUPPORTED_LANGUAGES: LanguageInfo[] = [
 export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   en: {
     nav_estimator: 'Estimator',
+    nav_quick_calculator: 'Estimator',
     nav_features: 'Features',
+    nav_how_it_works: 'How It Works',
     nav_balcony: 'Balcony AI',
     nav_quotes: 'Quote Intelligence',
     nav_pricing: 'Pricing',
@@ -41,7 +43,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   },
   hi: {
     nav_estimator: 'कैलकुलेटर',
+    nav_quick_calculator: 'कैलकुलेटर',
     nav_features: 'सुविधाएं',
+    nav_how_it_works: 'कार्यप्रणाली',
     nav_balcony: 'बालकनी एआई',
     nav_quotes: 'कोटेशन जांच',
     nav_pricing: 'मूल्य',
@@ -66,7 +70,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   },
   gu: {
     nav_estimator: 'કેલ્ક્યુલેટર',
+    nav_quick_calculator: 'કેલ્ક્યુલેટર',
     nav_features: 'વિશેષતાઓ',
+    nav_how_it_works: 'કેવી રીતે કામ કરે છે',
     nav_balcony: 'બાલ્કની AI',
     nav_quotes: 'ક્વોટેશન તપાસ',
     nav_pricing: 'કિંમત',
@@ -91,7 +97,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   },
   mr: {
     nav_estimator: 'कॅल्क्युलेटर',
+    nav_quick_calculator: 'कॅल्क्युलेटर',
     nav_features: 'वैशिष्ट्ये',
+    nav_how_it_works: 'हे कसे कार्य करते',
     nav_balcony: 'बाल्कनी AI',
     nav_quotes: 'कोटेशन पडताळणी',
     nav_pricing: 'दर',
@@ -137,8 +145,10 @@ class I18nManager {
     }
   }
 
-  t(key: string): string {
-    return TRANSLATIONS[this.current]?.[key] ?? TRANSLATIONS['en']?.[key] ?? key;
+  t(key: string, fallback?: string): string {
+    const val = TRANSLATIONS[this.current]?.[key] ?? TRANSLATIONS['en']?.[key];
+    if (val !== undefined) return val;
+    return fallback ?? key;
   }
 }
 

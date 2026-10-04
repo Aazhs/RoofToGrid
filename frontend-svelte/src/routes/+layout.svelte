@@ -17,7 +17,7 @@
   <link rel="icon" href="/favicon.ico" />
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 text-slate-800 antialiased dark:bg-surface dark:text-on-surface">
+<div class="min-h-screen bg-surface text-on-surface antialiased transition-colors duration-200">
   <Navbar />
   <main id="main">
     {@render children()}

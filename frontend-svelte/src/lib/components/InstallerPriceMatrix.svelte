@@ -88,16 +88,16 @@
   let regionMultiplier = $derived(REGIONS[selectedRegion]?.multiplier ?? 1.0);
 </script>
 
-<section id="installers" class="py-20 md:py-28 bg-surface-container-low border-b border-outline-variant">
+<section id="installers" class="py-10 md:py-16 bg-surface-container-low border-b border-outline-variant/60">
   <div class="max-w-[1280px] mx-auto px-4 md:px-16">
-    <div class="text-center max-w-3xl mx-auto mb-14">
-      <span class="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-600/20 bg-amber-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-3">
         NATIONWIDE PRICE BENCHMARKS
       </span>
-      <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
-        Transparent Indian Solar EPC Comparison
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface tracking-tight mb-3">
+        Transparent Indian Solar <span class="font-serif italic text-amber-700 dark:text-amber-400">EPC Comparison</span>
       </h2>
-      <p class="text-body-lg text-on-surface-variant font-jakarta">
+      <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
         Indian solar EPC rates vary between ₹52,000/kWp and ₹82,000/kWp. Compare actual market quotes,
         equipment warranties, and net costs after PM Surya Ghar ₹78,000 DBT subsidy.
       </p>

@@ -1,15 +1,15 @@
-<footer class="bg-surface-container border-t border-outline-variant">
+<footer class="bg-surface-container-low border-t border-outline-variant/60">
   <div class="max-w-[1280px] mx-auto px-4 md:px-16">
-    <!-- Main footer grid * -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 py-16">
+    <!-- Main footer grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-10 md:py-12">
       
-      <!-- Brand * -->
+      <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
-        <div class="text-headline-lg font-bold text-on-surface font-jakarta">
+        <div class="font-serif text-2xl font-bold tracking-tight text-on-surface">
           RoofToGrid
         </div>
-        <p class="mt-3 text-sm text-on-surface-variant leading-relaxed">
-          India&apos;s smartest rooftop solar planning platform. Built for homeowners, powered by data.
+        <p class="mt-2 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+          India's independent rooftop &amp; balcony solar planning platform. Built for homeowners, powered by data.
         </p>
         <div class="mt-5 flex flex-col gap-2">
           <a href="mailto:aarsh@rooftogrid.in" class="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">

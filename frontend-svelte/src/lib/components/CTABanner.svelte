@@ -1,27 +1,27 @@
-<section class="py-20 md:py-24 relative overflow-hidden bg-surface-container-low">
-  <!-- Subtle ambient glow * -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary opacity-5 blur-[120px] rounded-full pointer-events-none"></div>
+<section class="py-10 md:py-16 relative overflow-hidden bg-surface-container-low border-t border-outline-variant/60">
+  <!-- Subtle ambient glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none"></div>
   
   <div class="max-w-[1280px] mx-auto px-4 md:px-16 text-center relative z-10">
-    <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
-      Your roof is already generating — just not for you. Yet.
+    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-3 tracking-tight">
+      Your roof is already generating — <span class="font-serif italic text-amber-700 dark:text-amber-400">just not for you. Yet.</span>
     </h2>
     
-    <p class="text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto">
+    <p class="text-sm sm:text-base text-on-surface-variant mb-8 max-w-2xl mx-auto leading-relaxed">
       Join the growing number of Indian homeowners who plan their solar transition with data, not guesswork. Start free — upgrade if you need Pro features.
     </p>
     
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
       <a 
         href="/dashboard"
-        class="bg-primary-container text-surface px-10 py-4 rounded-lg text-lg font-semibold hover:bg-surface-tint transition-colors duration-200 ease-in-out inline-flex items-center gap-2"
+        class="bg-on-surface text-surface px-8 py-3.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-all inline-flex items-center gap-2 shadow-sm"
       >
         Start Your Solar Plan
         <span aria-hidden="true">→</span>
       </a>
       <a
         href="#pricing"
-        class="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors"
+        class="text-xs sm:text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors px-4 py-2"
       >
         View pricing →
       </a>

@@ -64,16 +64,21 @@
   }`}
 >
   <div class="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:px-16">
-    <!-- Left: Logo * -->
-    <a href="/" class="font-jakarta text-headline-lg-mobile font-bold text-on-surface md:text-headline-lg">
-      RoofToGrid
+    <!-- Left: Logo -->
+    <a href="/" class="flex items-center gap-2.5 font-serif text-2xl font-bold tracking-tight text-on-surface hover:opacity-90 transition-opacity">
+      <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-400">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
+          <path d="M440-40v-400H280L600-920v400h160L440-40Z"/>
+        </svg>
+      </span>
+      <span>RoofToGrid</span>
     </a>
 
-    <!-- Center: Desktop Links with scroll-spy active indicator * -->
+    <!-- Center: Desktop Links with scroll-spy active indicator -->
     <div class="hidden items-center gap-1 md:flex">
       {#each NAV_LINKS as link}
         {@const isActive = activeSection === link.sectionId}
-        {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label}
+        {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`, link.label)}
         <a
           href={link.href}
           class={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
@@ -154,7 +159,7 @@
       <div class="flex flex-col gap-1">
         {#each NAV_LINKS as link}
           {@const isActive = activeSection === link.sectionId}
-          {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label}
+          {@const label = i18n.t(`nav_${link.sectionId.replace(/-/g, '_')}`, link.label)}
           <a
             href={link.href}
             class={`relative rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${

@@ -1,121 +1,183 @@
-<section id="how-it-works" class="mx-auto max-w-[1280px] px-4 py-20 md:px-16 md:py-32">
-  <div class="mb-20 max-w-3xl">
-    <h2 class="font-jakarta text-headline-lg md:text-display-lg font-semibold text-on-surface">
-      The Methodology.
-    </h2>
-    <p class="mt-6 text-body-lg text-on-surface-variant">
-      A scientific, data-driven approach to planning your rooftop solar installation. We handle the complexity so you can focus on the savings, with built-in support for Indian market realities and PM Surya Ghar subsidies.
-    </p>
-  </div>
+<script lang="ts">
+  import { i18n } from '#lib';
+</script>
 
-  <!-- Phase 01 * -->
-  <div class="mb-24 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <div class="md:col-span-4">
-      <p class="text-label-sm uppercase tracking-widest text-primary">PHASE 01</p>
-      <h3 class="mt-2 font-jakarta text-2xl font-semibold text-on-surface">Analysis</h3>
-      <p class="mt-4 text-on-surface-variant">
-        We process your rooftop dimensions and historical energy bills to establish a precise consumption baseline.
+<section id="how-it-works" class="py-10 md:py-16 border-t border-outline-variant/60 bg-surface">
+  <div class="mx-auto max-w-[1280px] px-4 md:px-16">
+    <!-- Centered Symmetric Section Header -->
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-600/20 bg-amber-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+        METHODOLOGY &amp; WORKFLOW
+      </span>
+      <h2 class="mt-3 font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-on-surface">
+        How RoofToGrid <span class="font-serif italic text-amber-700 dark:text-amber-400">Works</span>
+      </h2>
+      <p class="mt-3 text-sm sm:text-base text-on-surface-variant leading-relaxed">
+        A scientific, 4-phase approach to planning and tracking residential solar in India — eliminating guesswork, biased quotes, and subsidy confusion.
       </p>
     </div>
-    <div class="rounded-xl border border-outline-variant bg-surface-container p-6 md:col-span-8 overflow-x-auto">
-      <div class="grid grid-cols-3 gap-4 border-b border-outline-variant pb-4 text-sm font-semibold text-on-surface">
-        <div>Input</div>
-        <div>Source</div>
-        <div>What We Compute</div>
-      </div>
-      <div class="grid grid-cols-3 gap-4 border-b border-outline-variant py-4 text-sm text-on-surface-variant">
-        <div>Monthly Bills</div>
-        <div>Your electricity bills</div>
-        <div class="text-primary-container">12-month weighted average</div>
-      </div>
-      <div class="grid grid-cols-3 gap-4 border-b border-outline-variant py-4 text-sm text-on-surface-variant">
-        <div>Roof Profile</div>
-        <div>Your description</div>
-        <div class="text-primary-container">Type · Area · Orientation · Shading</div>
-      </div>
-      <div class="grid grid-cols-3 gap-4 py-4 text-sm text-on-surface-variant">
-        <div>Solar Data</div>
-        <div>Published averages</div>
-        <div class="text-primary-container">India IN_2026_07 standards</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Phase 02 * -->
-  <div class="mb-24 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <div class="md:col-span-4">
-      <p class="text-label-sm uppercase tracking-widest text-primary">PHASE 02</p>
-      <h3 class="mt-2 font-jakarta text-2xl font-semibold text-on-surface">Sizing</h3>
-      <p class="mt-4 text-on-surface-variant">
-        Our algorithmic engine determines the optimal system capacity balancing your budget, roof space, and local grid policies.
-      </p>
-    </div>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:col-span-8">
-      <div class="flex h-64 flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-low p-6">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" class="text-primary-container">
-           <path fill="currentColor" d="M160-160v-80h640v80H160Zm320-160L160-640l76-76 244 244 244-244 76 76-320 320Z"/>
-        </svg>
+    <!-- Symmetrical 2x2 Grid of 4 Methodology Phases -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <!-- PHASE 01: Analysis -->
+      <div class="group flex flex-col justify-between rounded-2xl border border-outline-variant/70 bg-surface-container-lowest/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:border-amber-600/40 hover:shadow-md">
         <div>
-          <p class="text-4xl font-light text-on-surface">3-10 kW</p>
-          <p class="mt-2 text-sm text-on-surface-variant">Optimal Capacity Range</p>
+          <div class="flex items-center justify-between border-b border-outline-variant/40 pb-4">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 font-serif text-sm font-bold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">
+              01
+            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">
+              CONSUMPTION &amp; ROOF
+            </span>
+          </div>
+          <h3 class="mt-4 font-serif text-xl sm:text-2xl font-normal text-on-surface">
+            Precise Baseline Analysis
+          </h3>
+          <p class="mt-2 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+            We process your historical electricity bills, rooftop dimensions, shading obstacles, and India IN_2026_07 solar irradiance data.
+          </p>
+        </div>
+
+        <div class="mt-6 rounded-xl border border-outline-variant/50 bg-surface-container-low/70 p-3.5 text-xs">
+          <div class="grid grid-cols-3 gap-2 border-b border-outline-variant/30 pb-2 font-semibold text-on-surface">
+            <div>Input</div>
+            <div>Source</div>
+            <div>Computed</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 border-b border-outline-variant/20 py-2 text-on-surface-variant">
+            <div>Bills</div>
+            <div>DISCOM tariff</div>
+            <div class="font-medium text-amber-700 dark:text-amber-400">12-mo average</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 border-b border-outline-variant/20 py-2 text-on-surface-variant">
+            <div>Rooftop</div>
+            <div>User / satellite</div>
+            <div class="font-medium text-amber-700 dark:text-amber-400">Area &amp; shading</div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-2 text-on-surface-variant">
+            <div>Solar Irradiance</div>
+            <div>National avg</div>
+            <div class="font-medium text-amber-700 dark:text-amber-400">Daily kWh/kWp</div>
+          </div>
         </div>
       </div>
-      <div class="flex h-64 flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-low p-6">
-         <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" class="text-primary-container">
-           <path fill="currentColor" d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
-        </svg>
+
+      <!-- PHASE 02: Sizing -->
+      <div class="group flex flex-col justify-between rounded-2xl border border-outline-variant/70 bg-surface-container-lowest/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:border-amber-600/40 hover:shadow-md">
         <div>
-          <p class="text-4xl font-light text-on-surface">25 yr</p>
-          <p class="mt-2 text-sm text-on-surface-variant">Analysis Period</p>
+          <div class="flex items-center justify-between border-b border-outline-variant/40 pb-4">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 font-serif text-sm font-bold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">
+              02
+            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">
+              ALGORITHMIC ENGINE
+            </span>
+          </div>
+          <h3 class="mt-4 font-serif text-xl sm:text-2xl font-normal text-on-surface">
+            Optimal Sizing &amp; PM Surya Ghar Subsidy
+          </h3>
+          <p class="mt-2 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+            Our engine determines system capacity balancing your budget, roof space, and PM Surya Ghar ₹78,000 DBT eligibility rules.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-outline-variant/50 bg-surface-container-low/70 p-4">
+            <p class="font-serif text-2xl sm:text-3xl font-normal text-on-surface">3 – 10 kWp</p>
+            <p class="mt-1 text-xs text-on-surface-variant">Optimal Capacity Range</p>
+            <span class="mt-2 inline-block rounded bg-amber-600/10 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:text-amber-300">
+              Max ₹78K Subsidy
+            </span>
+          </div>
+          <div class="rounded-xl border border-outline-variant/50 bg-surface-container-low/70 p-4">
+            <p class="font-serif text-2xl sm:text-3xl font-normal text-on-surface">25 Years</p>
+            <p class="mt-1 text-xs text-on-surface-variant">Financial Horizon</p>
+            <span class="mt-2 inline-block rounded bg-emerald-600/10 px-2 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
+              3.5–4.5 Yr Payback
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Phase 03 * -->
-  <div class="mb-24 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <div class="md:col-span-4">
-      <p class="text-label-sm uppercase tracking-widest text-primary">PHASE 03</p>
-      <h3 class="mt-2 font-jakarta text-2xl font-semibold text-on-surface">Comparison</h3>
-      <p class="mt-4 text-on-surface-variant">
-        Evaluate vendor quotes side-by-side. We standardize equipment specs and warranty terms for transparent decision making.
-      </p>
-    </div>
-    <div class="flex h-64 items-end justify-around rounded-xl border border-outline-variant bg-surface-container p-6 md:col-span-8">
-       <!-- Stylized bar chart * -->
-       <div class="w-16 rounded-t-sm bg-surface-container-high transition-all duration-500 hover:bg-outline-variant" style="height: 40%;"></div>
-       <div class="w-16 rounded-t-sm bg-surface-container-high transition-all duration-500 hover:bg-outline-variant" style="height: 60%;"></div>
-       <div class="w-16 rounded-t-sm bg-primary-container transition-all duration-500" style="height: 90%;"></div>
-       <div class="w-16 rounded-t-sm bg-surface-container-high transition-all duration-500 hover:bg-outline-variant" style="height: 70%;"></div>
-    </div>
-  </div>
+      <!-- PHASE 03: Comparison -->
+      <div class="group flex flex-col justify-between rounded-2xl border border-outline-variant/70 bg-surface-container-lowest/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:border-amber-600/40 hover:shadow-md">
+        <div>
+          <div class="flex items-center justify-between border-b border-outline-variant/40 pb-4">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 font-serif text-sm font-bold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">
+              03
+            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">
+              QUOTE AUDIT
+            </span>
+          </div>
+          <h3 class="mt-4 font-serif text-xl sm:text-2xl font-normal text-on-surface">
+            Neutral Vendor Quote Audit
+          </h3>
+          <p class="mt-2 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+            Standardize multiple EPC quotes on an apples-to-apples basis: ₹/kWp pricing, TopCon panel tier, inverter efficiency, and 6 red flags.
+          </p>
+        </div>
 
-  <!-- Phase 04 * -->
-  <div class="mb-24 grid grid-cols-1 gap-6 md:grid-cols-12">
-    <div class="md:col-span-4">
-      <p class="text-label-sm uppercase tracking-widest text-primary">PHASE 04</p>
-      <h3 class="mt-2 font-jakarta text-2xl font-semibold text-on-surface">Monitoring</h3>
-      <p class="mt-4 text-on-surface-variant">
-        Post-installation, log your monthly generation and compare it against seasonal projections. Track warranty status and store project documents securely.
-      </p>
-    </div>
-    <div class="grid grid-cols-2 gap-4 md:col-span-8">
-       <div class="rounded-xl border border-outline-variant bg-surface-container-low p-6">
-          <p class="text-sm text-on-surface-variant">Monthly Tracking</p>
-          <p class="font-mono text-lg text-primary-container mt-2">Actual vs Projected</p>
-       </div>
-       <div class="rounded-xl border border-outline-variant bg-surface-container-low p-6">
-          <p class="text-sm text-on-surface-variant">Health Alerts</p>
-          <p class="font-mono text-lg text-on-surface mt-2">Variance Detection</p>
-       </div>
-       <div class="rounded-xl border border-outline-variant bg-surface-container-low p-6">
-          <p class="text-sm text-on-surface-variant">Warranty Status</p>
-          <p class="font-mono text-lg text-on-surface mt-2">Active · Expiring · Expired</p>
-       </div>
-       <div class="rounded-xl border border-outline-variant bg-surface-container-low p-6">
-          <p class="text-sm text-on-surface-variant">Document Vault</p>
-          <p class="font-mono text-lg text-on-surface mt-2">Private Storage</p>
-       </div>
+        <div class="mt-6 rounded-xl border border-outline-variant/50 bg-surface-container-low/70 p-4">
+          <div class="flex items-center justify-between text-xs text-on-surface-variant mb-2">
+            <span>Market Quote Spread</span>
+            <span class="font-mono text-amber-700 dark:text-amber-400">₹52K – ₹78K / kWp</span>
+          </div>
+          <div class="flex h-20 items-end justify-around gap-2 rounded-lg bg-surface-container px-3 pb-2 pt-2">
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-10 rounded-t bg-surface-container-highest transition-all duration-300" style="height: 38px;"></div>
+              <span class="text-[10px] text-on-surface-variant">Quote A</span>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-10 rounded-t bg-amber-600/70 transition-all duration-300" style="height: 58px;"></div>
+              <span class="text-[10px] font-semibold text-on-surface">Optimal</span>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <div class="w-10 rounded-t bg-surface-container-highest transition-all duration-300" style="height: 48px;"></div>
+              <span class="text-[10px] text-on-surface-variant">Quote B</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 04: Monitoring -->
+      <div class="group flex flex-col justify-between rounded-2xl border border-outline-variant/70 bg-surface-container-lowest/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:border-amber-600/40 hover:shadow-md">
+        <div>
+          <div class="flex items-center justify-between border-b border-outline-variant/40 pb-4">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 font-serif text-sm font-bold text-amber-700 dark:bg-amber-400/15 dark:text-amber-300">
+              04
+            </span>
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">
+              POST-INSTALLATION
+            </span>
+          </div>
+          <h3 class="mt-4 font-serif text-xl sm:text-2xl font-normal text-on-surface">
+            Milestone Tracking &amp; Monitoring
+          </h3>
+          <p class="mt-2 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+            Follow a 9-milestone checklist from net-metering liaison to commissioning, then log monthly output against seasonal models.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-2 text-xs">
+          <div class="rounded-lg border border-outline-variant/40 bg-surface-container-low/70 p-3">
+            <p class="text-[11px] text-on-surface-variant">Monthly Tracking</p>
+            <p class="mt-1 font-medium text-amber-700 dark:text-amber-400">Actual vs Projected</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant/40 bg-surface-container-low/70 p-3">
+            <p class="text-[11px] text-on-surface-variant">Health Alerts</p>
+            <p class="mt-1 font-medium text-on-surface">Variance Detection</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant/40 bg-surface-container-low/70 p-3">
+            <p class="text-[11px] text-on-surface-variant">Warranty Status</p>
+            <p class="mt-1 font-medium text-on-surface">Active · Expiring</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant/40 bg-surface-container-low/70 p-3">
+            <p class="text-[11px] text-on-surface-variant">Document Vault</p>
+            <p class="mt-1 font-medium text-on-surface">Private Storage</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

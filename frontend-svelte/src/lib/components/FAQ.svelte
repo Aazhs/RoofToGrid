@@ -41,9 +41,14 @@
   }
 </script>
 
-<section id="faq" class="py-20 md:py-32 border-t border-outline-variant max-w-[1280px] mx-auto px-4 md:px-16">
-  <div>
-    <h2 class="text-headline-lg md:text-display-lg font-semibold mb-12 font-jakarta">Common Questions</h2>
+<section id="faq" class="py-10 md:py-16 border-t border-outline-variant/60 max-w-[1280px] mx-auto px-4 md:px-16">
+  <div class="mb-8 max-w-2xl">
+    <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-600/20 bg-amber-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-3">
+      FREQUENTLY ASKED
+    </span>
+    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface tracking-tight mb-2">
+      Common <span class="font-serif italic text-amber-700 dark:text-amber-400">Questions</span>
+    </h2>
   </div>
 
   <div class="max-w-3xl">

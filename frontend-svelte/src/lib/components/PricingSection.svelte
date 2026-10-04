@@ -50,36 +50,36 @@
   }
 </script>
 
-<section id="pricing" class="bg-surface py-24 md:py-32">
+<section id="pricing" class="bg-surface py-10 md:py-16 border-t border-outline-variant/60">
   <div class="mx-auto max-w-[1280px] px-4 md:px-16">
-    <!-- Header * -->
-    <div class="mb-16 max-w-2xl">
-      <p class="text-label-sm uppercase tracking-widest text-primary">
-        PRICING
-      </p>
-      <h2 class="mt-4 font-jakarta text-display-lg font-semibold tracking-tight text-on-surface">
-        Plan With Confidence. Scale When Ready.
+    <!-- Header -->
+    <div class="mb-10 max-w-2xl">
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-600/20 bg-amber-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-3">
+        HONEST PRICING
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-on-surface mb-3">
+        Plan With Confidence. <span class="font-serif italic text-amber-700 dark:text-amber-400">Scale When Ready.</span>
       </h2>
-      <p class="mt-6 text-body-lg text-on-surface-variant">
+      <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
         Start free with our core tools. Upgrade to Pro for advanced analytics, priority support, and unlimited document storage.
       </p>
     </div>
 
-    <!-- Pricing Grid * -->
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
-      <!-- Free Plan * -->
-      <div class="relative overflow-hidden rounded-2xl border border-surface-container-high bg-surface-container-low p-8 md:col-span-4 lg:p-10">
+    <!-- Pricing Grid -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
+      <!-- Free Plan -->
+      <div class="relative overflow-hidden rounded-2xl border border-outline-variant/70 bg-surface-container-low p-6 md:col-span-4 lg:p-8 flex flex-col justify-between">
         <div class="relative z-10">
-          <h3 class="font-jakarta text-headline-sm font-semibold text-on-surface">
+          <h3 class="font-serif text-2xl font-normal text-on-surface">
             Free
           </h3>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="font-jakarta text-display-sm font-bold text-on-surface">
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="font-serif text-4xl font-normal text-on-surface">
               ₹0
             </span>
-            <span class="text-body-lg text-on-surface-variant">forever</span>
+            <span class="text-xs text-on-surface-variant">forever</span>
           </div>
-          <p class="mt-4 text-body-md text-on-surface-variant">
+          <p class="mt-3 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
             Everything you need to evaluate whether solar makes sense for your home.
           </p>
 
@@ -117,20 +117,20 @@
         <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-[80px]"></div>
 
         <div class="relative z-10">
-          <h3 class="font-jakarta text-headline-sm font-semibold text-on-surface">
+          <h3 class="font-serif text-2xl font-normal text-on-surface">
             Pro
           </h3>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="font-jakarta text-display-sm font-bold text-on-surface">
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="font-serif text-4xl font-normal text-on-surface">
               ₹499
             </span>
-            <span class="text-body-lg text-on-surface-variant">/ month</span>
+            <span class="text-xs text-on-surface-variant">/ month</span>
           </div>
-          <p class="mt-4 text-body-md text-on-surface-variant">
+          <p class="mt-3 text-xs sm:text-sm text-on-surface-variant leading-relaxed">
             Full power for serious solar buyers tracking their investment end-to-end.
           </p>
 
-          <ul class="mt-8 space-y-4">
+          <ul class="mt-6 space-y-3">
             {#each [
               'Everything in Free',
               'Unlimited quote comparisons',
@@ -141,11 +141,11 @@
               '2 GB document storage',
               'Export reports as PDF',
             ] as feature}
-              <li class="flex items-center gap-3">
-                <svg class="h-5 w-5 shrink-0 text-primary-container" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <li class="flex items-center gap-2.5">
+                <svg class="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="text-body-md text-on-surface">{feature}</span>
+                <span class="text-xs sm:text-sm text-on-surface">{feature}</span>
               </li>
             {/each}
           </ul>
@@ -153,7 +153,7 @@
           {#if isPro}
             <a
               href="/dashboard"
-              class="mt-10 block w-full rounded-xl bg-primary-container px-6 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.01] active:scale-[0.99] font-jakarta"
+              class="mt-8 block w-full rounded-xl bg-on-surface px-6 py-3.5 text-center text-sm font-semibold text-surface transition-all duration-200 hover:opacity-90 hover:scale-[1.01] active:scale-[0.99]"
             >
               ✓ Pro Active · Open Platform
             </a>
@@ -161,23 +161,24 @@
             <button
               type="button"
               onclick={() => checkoutOpen = true}
-              class="mt-10 block w-full rounded-xl bg-primary-container px-6 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.01] active:scale-[0.99] cursor-pointer font-jakarta"
+              class="mt-8 block w-full rounded-xl bg-on-surface px-6 py-3.5 text-center text-sm font-semibold text-surface transition-all duration-200 hover:opacity-90 hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-sm"
             >
               Start Pro — ₹499/mo
             </button>
           {/if}
-          <p class="mt-3 text-center text-xs text-on-surface-variant font-jakarta">Instant UPI activation · Cancel anytime</p>
+          <p class="mt-2.5 text-center text-xs text-on-surface-variant">Instant UPI activation · Cancel anytime</p>
         </div>
       </div>
 
-      <!-- Installer Pro Plan * -->
-      <div class="rounded-2xl border border-surface-container-high bg-surface p-8 md:col-span-4 lg:p-10">
-        <div class="flex items-center gap-3">
-          <h3 class="font-jakarta text-headline-sm font-semibold text-on-surface">
-            Installer Pro
-          </h3>
-          <span class="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary-container uppercase tracking-wider">Coming Soon</span>
-        </div>
+      <!-- Installer Pro Plan -->
+      <div class="rounded-2xl border border-outline-variant/70 bg-surface-container-low p-6 md:col-span-4 lg:p-8 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h3 class="font-serif text-2xl font-normal text-on-surface">
+              Installer Pro
+            </h3>
+            <span class="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Coming Soon</span>
+          </div>
         <div class="mt-4 flex items-baseline gap-2">
           <span class="font-jakarta text-display-sm font-bold text-on-surface">
             ₹4,999
@@ -206,11 +207,12 @@
           {/each}
         </ul>
 
-        <button disabled class="mt-10 block w-full rounded-xl border border-outline px-6 py-4 text-center font-semibold text-on-surface/50 cursor-not-allowed transition-all duration-200">
+        <button disabled class="mt-8 block w-full rounded-xl border border-outline px-6 py-3.5 text-center text-sm font-semibold text-on-surface/50 cursor-not-allowed transition-all duration-200">
           Join Waitlist
         </button>
       </div>
     </div>
+  </div>
 
     <!-- Trust badges * -->
     <div class="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-on-surface-variant">

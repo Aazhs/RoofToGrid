@@ -70,8 +70,10 @@ const config: Config = {
         white: 'var(--white)',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         jakarta: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Newsreader"', 'Georgia', 'Cambria', 'serif'],
+        editorial: ['"Newsreader"', 'Georgia', 'serif'],
       },
       fontSize: {
         'display-lg': ['48px', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '600' }],

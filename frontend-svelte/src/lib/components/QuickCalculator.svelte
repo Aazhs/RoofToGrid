@@ -41,22 +41,25 @@
 
 <section 
   id="quick-calculator" 
-  class="py-20 md:py-28 bg-surface-container-low border-b border-outline-variant relative overflow-hidden"
+  class="py-10 md:py-16 bg-surface-container-low border-b border-outline-variant/60 relative overflow-hidden"
 >
-  <!-- Background ambient gradient * -->
-  <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primary opacity-5 blur-[140px] rounded-full pointer-events-none"></div>
+  <!-- Background ambient gradient -->
+  <div class="absolute top-0 right-1/4 w-[400px] h-[400px] bg-amber-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
   <div class="max-w-[1280px] mx-auto px-4 md:px-16 relative z-10">
     
-    <!-- Header * -->
-    <div class="text-center max-w-3xl mx-auto mb-14">
-      <span class="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-600/20 bg-amber-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-3">
         {i18n.current !== 'en' ? i18n.t('hero_badge') : 'INSTANT ESTIMATOR · NO SIGNUP NEEDED'}
       </span>
-      <h2 class="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
-        {i18n.current !== 'en' ? i18n.t('calc_title') : "Calculate your roof's true potential."}
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface tracking-tight mb-3">
+        {i18n.current !== 'en' ? i18n.t('calc_title') : "Calculate Your Roof's "}
+        {#if i18n.current === 'en'}
+          <span class="font-serif italic text-amber-700 dark:text-amber-400">True Potential</span>
+        {/if}
       </h2>
-      <p class="text-body-lg text-on-surface-variant font-jakarta">
+      <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
         {i18n.current !== 'en'
           ? i18n.t('calc_subtitle')
           : 'Adjust your current monthly electricity bill to see your recommended solar capacity, central government subsidy, and estimated savings under PM Surya Ghar.'}
