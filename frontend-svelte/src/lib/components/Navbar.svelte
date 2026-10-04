@@ -65,13 +65,8 @@
 >
   <div class="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:px-16">
     <!-- Left: Logo -->
-    <a href="/" class="flex items-center gap-2.5 font-serif text-2xl font-bold tracking-tight text-on-surface hover:opacity-90 transition-opacity">
-      <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-400">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" fill="currentColor">
-          <path d="M440-40v-400H280L600-920v400h160L440-40Z"/>
-        </svg>
-      </span>
-      <span>RoofToGrid</span>
+    <a href="/" class="flex items-center font-serif text-2xl font-bold tracking-tight text-on-surface hover:opacity-90 transition-opacity">
+      RoofToGrid
     </a>
 
     <!-- Center: Desktop Links with scroll-spy active indicator -->
