@@ -61,34 +61,38 @@ decision.
 - `BillParser` for electricity bills: units, amount, tariff slab, sanctioned load, consumer number.
 - Success metric: ≥ 80% of fields accepted without edit; median quote entry time under 60 seconds.
 
-### 2.2 Professional yield modelling
+### 2.2 Balcony & Terrace AI Vision Dimension Estimator
+- Multi-angle photo upload of apartment balconies and terraces.
+- **Phase 1 (Immediate)**: Google Gemini Multimodal Vision API (`gemini-1.5-flash` / `gemini-2.0-flash`) leveraging spatial anchor calibration (doors, standard railings, floor tiles) to derive metric dimensions, orientation, shading, and plug-and-play balcony solar kit feasibility (400W–1200W).
+- **Phase 2 (Later)**: Custom edge model (YOLOv11-seg + Depth Anything metric 3D point cloud).
+- Success metric: Estimated dimensions within ±10% of physical measurement; automatic apartment kit recommendation with society NOC guidance.
+
+### 2.3 Professional yield modelling
 - `YieldEngine` swapped to PVGIS / NREL PVWatts, then a shading-aware engine using roof geometry and
   satellite imagery.
 - Monthly yield curves replace the static seasonality table; `assumptionSetId` becomes
   `engine:version:location` so historical runs stay reproducible (NFR-X1).
 - Success metric: back-tested P50 estimate within ±8% of measured first-year generation.
 
-### 2.3 DISCOM and subsidy workflows
+### 2.4 DISCOM and subsidy workflows
 - `DiscomProvider` per state: application submission where portals allow it, status polling elsewhere, with a
   scraper/manual-agent fallback behind the same interface.
 - `SubsidyProvider` for PM Surya Ghar eligibility and disbursement status.
 - Milestones auto-advance from provider events; homeowners get status change notifications.
 - Success metric: 70% of DISCOM milestones updated without homeowner input.
 
-### 2.4 Installer marketplace
-- Installer accounts (`User.role = INSTALLER`), verified profiles, service areas, capacity.
-- Lead routing from completed sizing runs; installers submit quotes directly into the standard schema, which
-  removes the parsing problem at the source.
-- Reputation from delivered outcomes: on-time milestone rate, generation vs promise, service SLA — not stars.
-- Proposal generator so installers stop sending PDFs.
-- Success metric: 30% of quotes originate in-platform; installer NPS > 30.
+### 2.5 Nationwide Installer Price Intelligence & AI RAG Comparison Engine
+- Comprehensive price intelligence across top Indian EPC installers (Tata Power Solar, Waaree Energies, SolarSquare, Loom Solar, Freyr, and DISCOM-empanelled local vendors under PM Surya Ghar).
+- Dual-tier intelligence: (1) Curated database of baseline ₹/kWp benchmarks by state, and (2) Real-time Gemini Search Grounding RAG agent to retrieve live rate cards, customer forums, and tender quotes by PIN code.
+- Normalizes quotes on ₹/Wp, equipment tier (TopCon vs Mono PERC, micro vs string inverters), DISCOM net-metering liaison fees, and net out-of-pocket costs post PM Surya Ghar ₹78,000 subsidy.
+- Success metric: Accurate pricing comparison within 5 seconds for any Indian PIN code with transparency scores.
 
-### 2.5 Live monitoring
+### 2.6 Live monitoring
 - `InverterMonitoringProvider` for SolarEdge, Growatt, Deye, Sungrow, plus smart-meter APIs where available.
 - Automated underperformance detection and alerts; warranty-clock awareness in alerts.
 - Success metric: 60% of commissioned projects with a connected data source.
 
-### 2.6 Platform hardening
+### 2.7 Platform hardening
 - Email verification, password reset, optional 2FA, OAuth.
 - Notifications (email + WhatsApp/SMS in India) via `NotificationProvider`.
 - Audit log, soft deletes, data export, background job queue for polling and parsing.
