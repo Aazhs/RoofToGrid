@@ -3,6 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSubscription, UPI_CONFIG, generateUpiUri, BillingCycle } from '@/lib/subscription';
+import { Card, CardHeader, CardBody } from '@/components/ui/Card';
+import { Button, ButtonLink } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Alert } from '@/components/ui/Feedback';
 
 export default function CheckoutPage() {
   const { isPro, activate } = useSubscription();
@@ -15,19 +19,19 @@ export default function CheckoutPage() {
 
   const amount = cycle === 'ANNUAL' ? UPI_CONFIG.annualPrice : UPI_CONFIG.monthlyPrice;
   const upiUri = generateUpiUri(amount, `RoofToGrid Pro ${cycle === 'ANNUAL' ? 'Annual' : 'Monthly'}`);
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=12&data=${encodeURIComponent(upiUri)}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(upiUri)}`;
 
   const handleCopyVpa = () => {
     navigator.clipboard.writeText(UPI_CONFIG.vpa);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleVerifyUtr = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanUtr = utr.trim().replace(/\s+/g, '');
     if (cleanUtr.length < 8) {
-      setError('Please enter a valid 12-digit UPI reference (UTR) number');
+      setError('Please enter a valid 12-digit UPI transaction reference (UTR) number');
       return;
     }
     setError(null);
@@ -36,7 +40,7 @@ export default function CheckoutPage() {
       activate({ utr: cleanUtr, billingCycle: cycle });
       setSubmitting(false);
       setSuccess(true);
-    }, 800);
+    }, 600);
   };
 
   const handleInstantDemoPass = () => {
@@ -45,183 +49,194 @@ export default function CheckoutPage() {
       activate({ utr: 'DEMO-UTR-' + Math.floor(100000000000 + Math.random() * 900000000000), billingCycle: cycle });
       setSubmitting(false);
       setSuccess(true);
-    }, 400);
+    }, 300);
   };
 
   if (isPro || success) {
     return (
-      <div className="mx-auto max-w-xl py-12 text-center">
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 shadow-sm">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4 animate-bounce">
-            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">RoofToGrid Pro is Active!</h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Thank you for supporting RoofToGrid. All premium features, unlimited quote comparisons, and PDF reports are unlocked.
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/dashboard"
-              className="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 transition-all"
-            >
-              Go to Dashboard →
-            </Link>
-            <Link
-              href="/sizing"
-              className="rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all"
-            >
-              Export Solar Feasibility PDF
-            </Link>
-          </div>
-        </div>
+      <div className="mx-auto max-w-xl py-8">
+        <Card>
+          <CardBody className="p-8 text-center space-y-4">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-1.5 mb-2">
+                <Badge tone="good">Pro Active</Badge>
+              </div>
+              <h1 className="text-xl font-semibold text-slate-900">RoofToGrid Pro Activated</h1>
+              <p className="mt-1 text-sm text-slate-600 max-w-md mx-auto">
+                Thank you for subscribing. All premium features, downloadable PDF Feasibility Reports, and unlimited quote comparisons are now unlocked.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 pt-2">
+              <ButtonLink href="/dashboard" variant="primary">
+                Go to Dashboard
+              </ButtonLink>
+              <ButtonLink href="/sizing" variant="secondary">
+                View Sizing Reports
+              </ButtonLink>
+            </div>
+          </CardBody>
+        </Card>
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <div className="text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 uppercase tracking-wider mb-2">
-          ⭐ Complete Checkout
+      <div>
+        <Link href="/dashboard" className="text-sm font-medium text-brand-700 hover:underline">
+          ← Back to Dashboard
+        </Link>
+        <div className="mt-2 flex items-center gap-2">
+          <h1 className="text-2xl font-semibold text-slate-900">RoofToGrid Pro</h1>
+          <Badge tone="brand">Pro</Badge>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900">Unlock RoofToGrid Pro</h1>
         <p className="mt-1 text-sm text-slate-600">
-          Instant activation via standard UPI payment. Zero transaction fees.
+          Instant activation via standard UPI payment. Zero platform fees.
         </p>
       </div>
 
       {/* Plan selection */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           type="button"
           onClick={() => setCycle('MONTHLY')}
-          className={`rounded-2xl border p-5 text-left transition-all ${
+          className={`rounded-xl border p-4 text-left transition-all ${
             cycle === 'MONTHLY'
-              ? 'border-brand-600 bg-brand-50/40 ring-2 ring-brand-500/20'
+              ? 'border-brand-600 bg-brand-50/50 ring-1 ring-brand-500'
               : 'border-slate-200 bg-white hover:border-slate-300'
           }`}
         >
-          <span className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Monthly Pass</span>
-          <span className="mt-1 block text-2xl font-black text-slate-900">₹499</span>
-          <span className="mt-1 block text-xs text-slate-600">Billed monthly. Cancel anytime.</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Monthly Plan</span>
+            {cycle === 'MONTHLY' && <Badge tone="brand">Selected</Badge>}
+          </div>
+          <div className="mt-2 text-2xl font-bold text-slate-900">₹499<span className="text-xs font-normal text-slate-500">/mo</span></div>
+          <p className="mt-1 text-xs text-slate-600">Billed monthly. Cancel anytime.</p>
         </button>
 
         <button
           type="button"
           onClick={() => setCycle('ANNUAL')}
-          className={`relative rounded-2xl border p-5 text-left transition-all ${
+          className={`rounded-xl border p-4 text-left transition-all ${
             cycle === 'ANNUAL'
-              ? 'border-brand-600 bg-brand-50/40 ring-2 ring-brand-500/20'
+              ? 'border-brand-600 bg-brand-50/50 ring-1 ring-brand-500'
               : 'border-slate-200 bg-white hover:border-slate-300'
           }`}
         >
-          <span className="absolute -top-2.5 right-4 rounded-full bg-emerald-600 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
-            Save 17%
-          </span>
-          <span className="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Annual Pass</span>
-          <span className="mt-1 block text-2xl font-black text-slate-900">₹4,999</span>
-          <span className="mt-1 block text-xs text-slate-600">Full year access (2 months free).</span>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Annual Plan</span>
+            <Badge tone="good">Save 17%</Badge>
+          </div>
+          <div className="mt-2 text-2xl font-bold text-slate-900">₹4,999<span className="text-xs font-normal text-slate-500">/yr</span></div>
+          <p className="mt-1 text-xs text-slate-600">Full year access (2 months free).</p>
         </button>
       </div>
 
-      {/* Payment Box */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
-        <div className="flex flex-col sm:flex-row items-center gap-6">
-          <div className="text-center shrink-0">
-            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 shadow-inner inline-block">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrUrl}
-                alt="Scan UPI QR Code"
-                width={180}
-                height={180}
-                className="rounded-xl"
+      {/* Payment Card */}
+      <Card>
+        <CardHeader
+          title="Scan & Pay via UPI"
+          description="Use any UPI app (Google Pay, PhonePe, Paytm, BHIM) to complete your subscription."
+        />
+        <CardBody className="space-y-6">
+          <div className="flex flex-col sm:flex-row items-center gap-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <div className="text-center shrink-0">
+              <div className="rounded-lg border border-slate-200 bg-white p-2 shadow-sm inline-block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={qrUrl}
+                  alt="Scan UPI QR Code"
+                  width={160}
+                  height={160}
+                  className="rounded"
+                />
+              </div>
+              <p className="mt-1.5 text-xs text-slate-500">Scan using any UPI App</p>
+            </div>
+
+            <div className="flex-1 space-y-3 w-full">
+              <div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Payable Amount</span>
+                <div className="text-2xl font-bold text-slate-900">
+                  ₹{amount}
+                  <span className="text-xs font-normal text-slate-500 ml-2">
+                    ({cycle === 'ANNUAL' ? '12 months access' : '1 month access'})
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">UPI ID (VPA)</span>
+                <div className="flex items-center gap-2 mt-1">
+                  <code className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-mono font-medium text-slate-800 flex-1 truncate">
+                    {UPI_CONFIG.vpa}
+                  </code>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={handleCopyVpa}
+                  >
+                    {copied ? 'Copied' : 'Copy'}
+                  </Button>
+                </div>
+              </div>
+
+              <a
+                href={upiUri}
+                className="block w-full text-center rounded-lg bg-slate-800 py-2.5 text-xs font-medium text-white hover:bg-slate-900 transition-colors sm:hidden"
+              >
+                Open in UPI App
+              </a>
+            </div>
+          </div>
+
+          {/* Verification form */}
+          <form onSubmit={handleVerifyUtr} className="space-y-3">
+            <label htmlFor="checkout-utr-input" className="block text-xs font-semibold text-slate-700">
+              Enter 12-Digit UPI Transaction Reference (UTR)
+            </label>
+            <div className="flex gap-2">
+              <input
+                id="checkout-utr-input"
+                type="text"
+                placeholder="e.g. 427819284712"
+                value={utr}
+                onChange={(e) => setUtr(e.target.value)}
+                maxLength={16}
+                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm font-mono focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
               />
+              <Button type="submit" variant="primary" loading={submitting}>
+                Verify & Unlock
+              </Button>
             </div>
-            <p className="mt-2 text-xs font-medium text-slate-500">Scan using any UPI App</p>
-          </div>
+            {error && <Alert tone="error">{error}</Alert>}
+          </form>
 
-          <div className="flex-1 space-y-4 w-full">
+          {/* Reviewer / Demo Fast Pass */}
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
             <div>
-              <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Payable Total</span>
-              <div className="text-3xl font-black text-slate-900">
-                ₹{amount}
-                <span className="text-xs font-normal text-slate-500 ml-2">
-                  ({cycle === 'ANNUAL' ? '12 Months Access' : '1 Month Access'})
-                </span>
-              </div>
+              <p className="font-semibold text-slate-800">Reviewer & Prototype Pass</p>
+              <p className="text-slate-500">Test the complete Pro workflow without transferring real funds.</p>
             </div>
-
-            <div>
-              <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">UPI ID / VPA</span>
-              <div className="flex items-center gap-2 mt-1">
-                <code className="rounded-xl bg-slate-100 px-3.5 py-2 text-xs font-mono font-bold text-slate-900 border border-slate-200 flex-1 truncate">
-                  {UPI_CONFIG.vpa}
-                </code>
-                <button
-                  type="button"
-                  onClick={handleCopyVpa}
-                  className="shrink-0 rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 active:scale-95 transition-all"
-                >
-                  {copied ? '✓ Copied' : 'Copy'}
-                </button>
-              </div>
-            </div>
-
-            <a
-              href={upiUri}
-              className="block w-full text-center rounded-xl bg-brand-600 py-3 px-4 text-xs font-bold text-white hover:bg-brand-700 shadow-sm transition-all"
-            >
-              Open in GPay / PhonePe / Paytm / BHIM
-            </a>
-          </div>
-        </div>
-
-        {/* Verification */}
-        <form onSubmit={handleVerifyUtr} className="pt-4 border-t border-slate-200 space-y-3">
-          <label htmlFor="utr-input" className="block text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Confirm Payment: Enter 12-Digit UTR / Reference ID
-          </label>
-          <div className="flex gap-2">
-            <input
-              id="utr-input"
-              type="text"
-              placeholder="e.g. 427819284712"
-              value={utr}
-              onChange={(e) => setUtr(e.target.value)}
-              className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-mono focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-            />
-            <button
-              type="submit"
-              disabled={submitting}
-              className="rounded-xl bg-slate-900 px-6 py-2.5 text-xs font-bold text-white hover:bg-slate-800 disabled:opacity-50 transition-all shrink-0"
-            >
-              {submitting ? 'Verifying...' : 'Verify & Unlock'}
-            </button>
-          </div>
-          {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
-        </form>
-
-        {/* Demo Reviewer Fast Pass */}
-        <div className="pt-2 border-t border-slate-100">
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-bold text-emerald-900">Prototype & Reviewer Fast Pass</p>
-              <p className="text-[11px] text-emerald-700">Test the complete Pro upgrade without sending actual payment.</p>
-            </div>
-            <button
+            <Button
               type="button"
+              variant="secondary"
+              size="sm"
               onClick={handleInstantDemoPass}
               disabled={submitting}
-              className="w-full sm:w-auto rounded-lg bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all"
+              className="shrink-0"
             >
-              ⚡ Instant Demo Pass
-            </button>
+              Instant Demo Pass
+            </Button>
           </div>
-        </div>
-      </div>
+        </CardBody>
+      </Card>
     </div>
   );
 }

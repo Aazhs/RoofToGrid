@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 
 const NAV_LINKS = [
-  { href: '#calculator', label: 'Calculator', sectionId: 'calculator' },
   { href: '#features', label: 'Features', sectionId: 'features' },
   { href: '#how-it-works', label: 'How It Works', sectionId: 'how-it-works' },
   { href: '#pricing', label: 'Pricing', sectionId: 'pricing' },
@@ -108,14 +107,20 @@ export default function LandingNav() {
           })}
         </div>
 
-        {/* Right: CTA + Mobile Toggle */}
+        {/* Right: Login + CTA + Mobile Toggle */}
         <div className="flex items-center gap-2">
+          <Link
+            href="/login"
+            className="hidden rounded-full px-4 py-2 text-sm font-medium text-on-surface-variant transition-colors duration-200 hover:text-on-surface md:block"
+          >
+            Login
+          </Link>
           <ThemeToggle />
           <Link
             href="/dashboard"
-            className="hidden rounded-xl bg-primary-container px-6 py-2.5 text-sm font-semibold text-on-primary-container transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] md:block"
+            className="hidden rounded-xl bg-primary-container px-6 py-2.5 text-sm font-semibold text-surface transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] md:block"
           >
-            Try It Free
+            Get Started
           </Link>
           
           {/* Hamburger / X toggle */}
@@ -179,11 +184,18 @@ export default function LandingNav() {
               );
             })}
             <Link
-              href="/dashboard"
-              className="mt-2 w-full rounded-xl bg-primary-container px-6 py-3.5 text-center text-sm font-semibold text-on-primary-container transition-all hover:opacity-90"
+              href="/login"
+              className="rounded-xl px-4 py-3 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface hover:bg-surface-container"
               onClick={closeMobile}
             >
-              Try It Free
+              Login
+            </Link>
+            <Link
+              href="/dashboard"
+              className="mt-2 w-full rounded-xl bg-primary-container px-6 py-3.5 text-center text-sm font-semibold text-surface transition-all hover:opacity-90"
+              onClick={closeMobile}
+            >
+              Get Started
             </Link>
           </div>
         </div>

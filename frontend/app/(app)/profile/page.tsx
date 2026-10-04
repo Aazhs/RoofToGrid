@@ -98,70 +98,62 @@ export default function ProfilePage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <h1 className="text-2xl font-semibold">Your account</h1>
-          <p className="mt-1 text-sm text-slate-600">{user?.email ?? 'arun.sharma@example.com (Prototype Mode)'}</p>
+          <p className="mt-1 text-sm text-slate-600">{user ? user.email : 'demo@rooftogrid.in'}</p>
         </div>
-        {isPro && (
-          <span className="rounded-full bg-amber-100 border border-amber-300 text-amber-800 px-3 py-1 text-xs font-bold flex items-center gap-1.5 shadow-sm">
-            <span>⭐</span> Pro Active
-          </span>
-        )}
+        {isPro && <Badge tone="brand">Pro Active</Badge>}
       </div>
 
       {/* Subscription Card */}
-      <Card className={isPro ? 'border-amber-300 bg-amber-50/20' : ''}>
+      <Card>
         <CardHeader
-          title="Subscription & Membership"
-          description="Access to PDF Feasibility Reports, unlimited quote comparisons, and priority support."
+          title="Plan & Membership"
+          description="Access to downloadable PDF Feasibility Reports, quote comparisons, and priority support."
+          actions={
+            isPro ? (
+              <Badge tone="good">Active</Badge>
+            ) : (
+              <Badge tone="muted">Free Plan</Badge>
+            )
+          }
         />
         <CardBody>
           {isPro ? (
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="rounded bg-amber-400 text-slate-950 font-black text-xs px-2 py-0.5 uppercase">
-                      PRO PLAN
-                    </span>
-                    <span className="text-sm font-bold text-slate-900">
-                      ₹{billingCycle === 'ANNUAL' ? '4,999/yr' : '499/mo'}
-                    </span>
-                    <Badge tone="good">Active</Badge>
-                  </div>
-                  {utr && (
-                    <p className="text-xs text-slate-500 font-mono">
-                      UPI Ref / UTR: <span className="font-semibold text-slate-700">{utr}</span>
-                    </p>
-                  )}
-                  {expiresAt && (
-                    <p className="text-xs text-slate-500">
-                      Next renewal: {new Date(expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </p>
-                  )}
-                </div>
-
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <Button variant="secondary" size="sm" onClick={handleCancelSub}>
-                    Cancel Pro
-                  </Button>
+                  <span className="text-sm font-semibold text-slate-900">
+                    RoofToGrid Pro ({billingCycle === 'ANNUAL' ? 'Annual Pass · ₹4,999/yr' : 'Monthly Pass · ₹499/mo'})
+                  </span>
                 </div>
+                {utr && (
+                  <p className="text-xs text-slate-500 font-mono">
+                    UPI Reference: {utr}
+                  </p>
+                )}
+                {expiresAt && (
+                  <p className="text-xs text-slate-500">
+                    Active through: {new Date(expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </p>
+                )}
               </div>
+
+              <Button variant="secondary" size="sm" onClick={handleCancelSub}>
+                Cancel subscription
+              </Button>
             </div>
           ) : (
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold text-slate-900">Free Tier</span>
-                  <Badge tone="muted">Active</Badge>
-                </div>
+                <p className="text-sm font-semibold text-slate-900">Free Tier</p>
                 <p className="mt-1 text-xs text-slate-500">
-                  Includes basic sizing estimates and up to 3 quotes. Upgrade to Pro for downloadable PDF Feasibility Reports and unlimited comparisons.
+                  Includes sizing estimates and quote comparisons. Upgrade to Pro for official PDF Feasibility & Subsidy Reports.
                 </p>
               </div>
 
               <Button
                 variant="primary"
+                size="sm"
                 onClick={() => setCheckoutOpen(true)}
-                className="shrink-0 bg-brand-700 hover:bg-brand-800"
               >
                 Upgrade to Pro (₹499/mo)
               </Button>

@@ -7,14 +7,14 @@ Last updated: 2026-10-03
 
 ## 🔴 P0 — Ship Now (Azure Review / Go-Live Critical)
 
-- [x] **Demo mode: "Try Prototype" button** — Replace login/signup with a demo bypass that opens the full app immediately with pre-loaded data. Visitors can explore everything without creating an account.
-- [x] **Rough Calculator on landing page** — Inline no-signup solar estimator between StatsCounter and FeatureGrid. Client-side only, instant results, CTA to sign up.
+- [x] **Demo mode: "Try Prototype" bypass** — Full app accessible immediately with Bangalore sample data (bills, 5 kWp sizing, 3 normalized quotes, project tracker). Visitors explore everything freely.
 - [x] **SEO: sitemap.xml + robots.txt** — Auto-generated sitemap for all public pages, proper robots.txt.
 - [x] **SEO: JSON-LD structured data** — Organization + WebApplication + FAQ schema on landing page.
 - [x] **SEO: Enhanced meta tags** — Per-page titles, descriptions, canonical URLs, OG images.
-- [x] **Pricing: Real paid tiers with Direct UPI Checkout** — Free tier + Pro tier (₹499/mo or ₹4,999/yr) with dynamic UPI QR code, 1-click mobile app intents (GPay/PhonePe/Paytm), UTR reference verification, and reviewer instant demo pass.
+- [x] **Pricing: Real paid tiers with Direct UPI Checkout** — Free tier + Pro tier (₹499/mo or ₹4,999/yr) with dynamic UPI QR code, mobile app intents (GPay/PhonePe/Paytm), UTR reference verification, and reviewer instant demo pass.
 - [x] **Pro Feature Gating & PDF Feasibility Report** — Printable/downloadable official Solar Feasibility & PM Surya Ghar Subsidy Report (PDF), comparison PDF export, and active Pro subscription status management in `/profile`.
 - [x] **OG image & Social Cards** — Dynamic branded Open Graph social card generator via `app/opengraph-image.tsx` (1200x630) with solar insolation graphics and PM Surya Ghar badges.
+- [x] **UI Consistency Polish** — Unified all new components (checkout, subscription card, PDF report modals, export buttons) strictly with the original Lumina Grid / Slate design system and `components/ui/` primitives. Removed all mismatched ad-hoc styles.
 
 ---
 

@@ -120,20 +120,20 @@ export function PricingSection() {
                 {isPro ? (
                   <Link
                     href="/dashboard"
-                    className="mt-10 block w-full rounded-xl bg-emerald-600 px-6 py-4 text-center font-semibold text-white transition-all duration-200 hover:bg-emerald-700"
+                    className="mt-10 block w-full rounded-xl bg-primary-container px-6 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.01] active:scale-[0.99] font-jakarta"
                   >
-                    ✓ Pro Active · Open App
+                    ✓ Pro Active · Open Platform
                   </Link>
                 ) : (
                   <button
                     type="button"
                     onClick={() => setCheckoutOpen(true)}
-                    className="mt-10 block w-full rounded-xl bg-primary-container px-6 py-4 text-center font-semibold text-on-primary-container transition-all duration-200 hover:bg-primary-container/90 hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-primary-container/20 cursor-pointer"
+                    className="mt-10 block w-full rounded-xl bg-primary-container px-6 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.01] active:scale-[0.99] cursor-pointer font-jakarta"
                   >
                     Start Pro — ₹499/mo
                   </button>
                 )}
-                <p className="mt-3 text-center text-xs text-on-surface-variant">Instant UPI activation. Cancel anytime.</p>
+                <p className="mt-3 text-center text-xs text-on-surface-variant font-jakarta">Instant UPI activation · Cancel anytime</p>
               </div>
             </div>
 

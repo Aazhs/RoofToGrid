@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, ButtonLink } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { ComparisonTable } from '@/components/domain/ComparisonTable';
@@ -69,23 +70,19 @@ export default function ComparePage() {
         </div>
         <div className="flex items-center gap-2">
           {data.rows.length > 0 && (
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={handleExportPdf}
-              className="rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-800 flex items-center gap-1.5 shadow-sm transition-all"
             >
-              <svg className="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg className="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <span>Export Comparison PDF</span>
-              {!isPro && (
-                <span className="rounded bg-amber-400 text-slate-950 px-1 py-0.2 text-[9px] font-black uppercase">
-                  PRO
-                </span>
-              )}
-            </button>
+              {!isPro && <Badge tone="brand">Pro</Badge>}
+            </Button>
           )}
-          <ButtonLink href="/quotes/new" variant="secondary">
+          <ButtonLink href="/quotes/new" variant="secondary" size="sm">
             Add another quote
           </ButtonLink>
         </div>

@@ -41,13 +41,13 @@ export default function HeroSection() {
               href="/dashboard"
               className="rounded-xl bg-primary-container px-8 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.02] active:scale-[0.98]"
             >
-              Try the Platform &rarr;
+              Analyze My Roof &rarr;
             </Link>
             <a
-              href="#calculator"
+              href="#how-it-works"
               className="rounded-xl border border-outline-variant px-8 py-4 text-center font-semibold text-on-surface transition-all duration-200 hover:border-primary-container hover:text-primary-container"
             >
-              Quick Solar Estimate
+              Read the Methodology
             </a>
           </div>
           
