@@ -1,7 +1,30 @@
 # RoofToGrid — Production Tasks
 
 Status: Living checklist  
-Last updated: 2026-10-03
+Last updated: 2026-10-04
+
+---
+
+## 🚀 Architecture Migration: Non-React & Non-Node/Python Stack (Storage: Supabase)
+
+Phased transition away from React/Next.js and Node.js to a high-performance, modern compiled/reactive stack with Supabase:
+
+- [ ] **M0 — Stack Evaluation & Technology Decision**: Compare frontend (Svelte 5 / SvelteKit vs SolidJS vs Astro) and backend (Go vs Rust vs Elixir) against performance, developer velocity, and Supabase ecosystem compatibility.
+- [ ] **M1 — Supabase Schema & Auth Alignment**: Configure Supabase PostgreSQL tables, Row Level Security (RLS) policies, and JWT token authentication for multi-language homeowners and installers.
+- [ ] **M2 — High-Performance Backend Implementation (e.g. Go / Chi / pgx)**:
+  - Build single-binary REST API server in Go with sub-millisecond cold starts and <20MB RAM footprint.
+  - Port core domain math: sizing engine (`SizingService`), quote normalization & scoring (`QuoteScoringService`), subsidy engine, and milestone workflows.
+  - Implement Supabase database connector with connection pooling (`pgxpool`).
+- [ ] **M3 — Reactive Frontend Implementation (e.g. SvelteKit / Svelte 5 with Runes)**:
+  - Set up SvelteKit project with zero Virtual DOM overhead and native fine-grained reactivity.
+  - Port Lumina Grid / Slate design system tokens and reusable UI primitives.
+  - Build landing page, instant solar estimator, and language selector (English, Hindi, Gujarati, Marathi).
+- [ ] **M4 — Feature Porting to SvelteKit**:
+  - Port Smart Bill OCR Extractor, AI Quote Parser, Inverter Monitoring Telemetry, and Balcony AI Vision Estimator.
+  - Re-implement PWA service worker and DPDPA data export.
+- [ ] **M5 — Quality Verification & Dual-Deploy Cutover**:
+  - Docker multi-stage build for Go backend + static/Node adapter for SvelteKit.
+  - End-to-end verification and migration validation before cutover.
 
 ---
 
