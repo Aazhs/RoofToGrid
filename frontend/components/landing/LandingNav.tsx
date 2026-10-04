@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 
 const NAV_LINKS = [
+  { href: '#quick-calculator', label: 'Estimator', sectionId: 'quick-calculator' },
   { href: '#features', label: 'Features', sectionId: 'features' },
   { href: '#how-it-works', label: 'How It Works', sectionId: 'how-it-works' },
   { href: '#pricing', label: 'Pricing', sectionId: 'pricing' },

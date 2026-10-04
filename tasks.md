@@ -20,11 +20,11 @@ Last updated: 2026-10-03
 
 ## 🟡 P1 — Professional Polish (Next Sprint)
 
+- [x] **Rough Calculator on landing page** — Inline no-signup solar estimator between StatsCounter and FeatureGrid with live bill slider, state tariffs, PM Surya Ghar subsidy calculation, and instant CTA.
+- [x] **Cookie consent banner** — GDPR/India DPDPA compliant consent for analytics cookies with persistent local storage.
+- [x] **Error boundaries** — Graceful error pages (`not-found.tsx`, `error.tsx`) with branded design and recovery actions.
+- [x] **PWA manifest** — `manifest.ts` for Add to Home Screen on mobile with app metadata and icons.
 - [ ] **Analytics integration** — Google Analytics 4 + Microsoft Clarity for heatmaps and session replay.
-- [ ] **Cookie consent banner** — GDPR/India DPDPA compliant consent for analytics cookies.
-- [ ] **Error boundaries** — Graceful error pages (404, 500) with branded design and recovery actions.
-- [ ] **Loading skeletons** — Replace spinners with skeleton screens for perceived performance.
-- [ ] **PWA manifest** — `manifest.json` for Add to Home Screen on mobile.
 - [ ] **Service worker** — Offline-first for cached pages, background sync for generation logs.
 - [ ] **Performance audit** — Lighthouse 100/100 target. Lazy load below-fold landing sections.
 - [ ] **Image optimization** — Next.js Image component for all images, WebP/AVIF, srcset.
