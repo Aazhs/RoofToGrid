@@ -76,62 +76,62 @@
   ];
 </script>
 
-<section class="py-8 md:py-12 border-y border-outline-variant/60 bg-surface-container-lowest/60 overflow-hidden">
+<section class="py-5 md:py-8 border-y border-outline-variant/60 bg-surface-container-lowest/60 overflow-hidden">
   <div class="max-w-[1280px] mx-auto px-4 md:px-16">
     <!-- Top 4 Core Metrics -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="p-3 rounded-2xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
-        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+      <div class="py-2 px-3 rounded-xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
+        <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-on-surface mb-0.5">
           {count1}
         </div>
-        <div class="text-xs sm:text-sm font-semibold text-on-surface">
+        <div class="text-xs sm:text-[13px] font-semibold text-on-surface">
           Sizing Scenarios
         </div>
-        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
+        <div class="text-[10px] sm:text-[11px] text-on-surface-variant mt-0.5">
           Conservative · Optimal · Max Roof
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
-        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
+      <div class="py-2 px-3 rounded-xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
+        <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-on-surface mb-0.5">
           {count2}+
         </div>
-        <div class="text-xs sm:text-sm font-semibold text-on-surface">
+        <div class="text-xs sm:text-[13px] font-semibold text-on-surface">
           Comparison Metrics
         </div>
-        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
+        <div class="text-[10px] sm:text-[11px] text-on-surface-variant mt-0.5">
           Normalized quote analysis
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
-        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
+      <div class="py-2 px-3 rounded-xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
+        <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-on-surface mb-0.5">
           {count3}
         </div>
-        <div class="text-xs sm:text-sm font-semibold text-on-surface">
+        <div class="text-xs sm:text-[13px] font-semibold text-on-surface">
           Red Flag Checks
         </div>
-        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
+        <div class="text-[10px] sm:text-[11px] text-on-surface-variant mt-0.5">
           Automated quote screening
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
-        <div class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-on-surface mb-1">
+      <div class="py-2 px-3 rounded-xl transition-all duration-300 hover:bg-surface-container-low/50 card-hover">
+        <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-on-surface mb-0.5">
           {count4}
         </div>
-        <div class="text-xs sm:text-sm font-semibold text-on-surface">
+        <div class="text-xs sm:text-[13px] font-semibold text-on-surface">
           Project Milestones
         </div>
-        <div class="text-[11px] sm:text-xs text-on-surface-variant mt-0.5">
+        <div class="text-[10px] sm:text-[11px] text-on-surface-variant mt-0.5">
           Inquiry to commissioning
         </div>
       </div>
     </div>
 
     <!-- Solar Journey Pipeline Boxes -->
-    <div class="mt-8 border-t border-outline-variant/40 pt-6">
-      <div class="flex items-center justify-between mb-3 px-1">
+    <div class="mt-5 border-t border-outline-variant/40 pt-4">
+      <div class="flex items-center justify-between mb-2.5 px-1">
         <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant/80">
           Integrated Solar Journey
         </span>
@@ -140,10 +140,10 @@
         </span>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
         {#each JOURNEY_STEPS as step}
-          <div class="flex items-center gap-3 rounded-xl border border-outline-variant/60 bg-surface-container-low/80 p-3 card-hover">
-            <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 font-serif text-xs font-bold text-amber-700 dark:text-amber-300 border border-amber-500/20">
+          <div class="flex items-center gap-2.5 rounded-xl border border-outline-variant/60 bg-surface-container-low/80 p-2.5 card-hover">
+            <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 font-serif text-xs font-bold text-amber-700 dark:text-amber-300 border border-amber-500/20">
               {step.num}
             </span>
             <div class="min-w-0">
@@ -160,8 +160,8 @@
     </div>
 
     <!-- Modern Architecture & Tech Stack Chip Boxes -->
-    <div class="mt-8 border-t border-outline-variant/40 pt-6">
-      <div class="flex items-center justify-between mb-4 px-1">
+    <div class="mt-5 border-t border-outline-variant/40 pt-4">
+      <div class="flex items-center justify-between mb-3 px-1">
         <div class="flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/80">
@@ -173,9 +173,9 @@
         </span>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
         {#each TECH_STACK as tech}
-          <div class="group relative flex flex-col justify-between rounded-xl border border-outline-variant/60 bg-surface-container-low/70 p-3.5 card-hover hover:border-amber-500/40 hover:bg-surface-container-low transition-all duration-300 shadow-sm">
+          <div class="group relative flex flex-col justify-between rounded-xl border border-outline-variant/60 bg-surface-container-low/70 p-2.5 sm:p-3 card-hover hover:border-amber-500/40 hover:bg-surface-container-low transition-all duration-300 shadow-sm">
             <div>
               <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center gap-2">

@@ -100,37 +100,37 @@
       </div>
 
       <!-- Floating Stats Card with rich glassmorphism and clear metrics -->
-      <div class="absolute bottom-4 left-4 right-4 z-20 rounded-xl border border-white/20 bg-slate-950/85 p-4 backdrop-blur-xl text-white shadow-2xl transition-all duration-300 group-hover:border-amber-400/40">
-        <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
-          <span class="text-[11px] font-semibold uppercase tracking-wider text-white/70">
+      <div class="absolute bottom-3 left-3 right-3 z-20 rounded-xl border border-white/20 bg-slate-950/85 p-3 sm:p-3.5 backdrop-blur-xl text-white shadow-2xl transition-all duration-300 group-hover:border-amber-400/40">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <span class="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-white/70">
             5 kWp System Projection
           </span>
-          <span class="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold text-amber-300 border border-amber-500/30">
+          <span class="inline-flex items-center gap-1 rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] sm:text-[10px] font-semibold text-amber-300 border border-amber-500/30">
             ₹78K Subsidy Cap
           </span>
         </div>
-        <div class="mt-3 flex items-end justify-between">
+        <div class="mt-2.5 flex items-end justify-between">
           <div>
-            <div class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white leading-none">
-              12.4 <span class="font-sans text-sm font-normal text-white/70">kWh / day</span>
+            <div class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-white leading-none">
+              12.4 <span class="font-sans text-xs font-normal text-white/70">kWh / day</span>
             </div>
-            <p class="mt-1 text-[11px] text-white/60">~372 units monthly solar yield</p>
+            <p class="mt-1 text-[10px] text-white/60">~372 units monthly solar yield</p>
           </div>
           <div class="text-right">
-            <div class="font-serif text-xl sm:text-2xl font-bold text-amber-400 leading-none">
+            <div class="font-serif text-lg sm:text-xl font-bold text-amber-400 leading-none">
               ₹2,850
             </div>
-            <p class="mt-1 text-[11px] text-white/60">Est. monthly savings</p>
+            <p class="mt-1 text-[10px] text-white/60">Est. monthly savings</p>
           </div>
         </div>
 
         <!-- Diurnal solar power curve sparkline -->
-        <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between">
-          <div class="flex items-center gap-1.5 text-[10px] text-white/70">
+        <div class="mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-1.5 text-[9px] sm:text-[10px] text-white/70">
             <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>Peak 12:30 PM (4.8 kW)</span>
           </div>
-          <div class="flex items-end gap-1 h-3.5 px-1">
+          <div class="flex items-end gap-1 h-3 px-1">
             <span class="w-1 bg-amber-400/40 rounded-full h-[30%]"></span>
             <span class="w-1 bg-amber-400/60 rounded-full h-[60%]"></span>
             <span class="w-1 bg-amber-400/85 rounded-full h-[85%]"></span>
