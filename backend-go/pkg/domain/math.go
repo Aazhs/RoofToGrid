@@ -38,17 +38,21 @@ func PaybackYears(netCost float64, annualSavings float64) float64 {
 	return Round(netCost/annualSavings, 1)
 }
 
-// LinearScore maps a value linearly between worst (0 pts) and best (10 pts).
-func LinearScore(value, worst, best float64) float64 {
-	if worst == best {
-		return 5.0
+// LinearScore maps a value linearly between atBest (100 pts) down to atWorst (0 pts), clamped to [0, 100].
+func LinearScore(value, atBest, atWorst float64) float64 {
+	if atWorst == atBest {
+		if value <= atBest {
+			return 100.0
+		}
+		return 0.0
 	}
-	score := (value - worst) / (best - worst) * 10.0
-	if score < 0 {
-		return 0
+	raw := ((atWorst - value) / (atWorst - atBest)) * 100.0
+	if raw < 0 {
+		return 0.0
 	}
-	if score > 10 {
-		return 10
+	if raw > 100.0 {
+		return 100.0
 	}
-	return Round(score, 1)
+	return Round(raw, 1)
 }
+

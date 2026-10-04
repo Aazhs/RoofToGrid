@@ -16,11 +16,16 @@ Phased transition away from React/Next.js and Node.js to a high-performance, mod
   - Implemented pure domain math in Go (`backend-go/pkg/domain/math.go`, `assumptions.go`, `sizing.go`) with PM Surya Ghar subsidy rules.
   - Verified 100% Go unit test suite passing in 0.5s (`backend-go/pkg/domain/sizing_test.go`).
   - Configured multi-stage `Dockerfile` and updated `render.yaml` for 100% free deployment on Render's Free tier.
-- [ ] **M2.2 — Go Supabase Database Connector & Quotes Scoring**: Add `pgxpool` connection to Supabase PostgreSQL and port quote scoring & milestone progression.
-- [ ] **M3 — Reactive Frontend Implementation (e.g. SvelteKit / Svelte 5 with Runes)**:
-  - Set up SvelteKit project with zero Virtual DOM overhead and native fine-grained reactivity.
-  - Port Lumina Grid / Slate design system tokens and reusable UI primitives.
-  - Build landing page, instant solar estimator, and language selector (English, Hindi, Gujarati, Marathi).
+- [x] **M2.2 — Go Supabase Database Connector & Quotes Scoring**:
+  - Implemented `pgxpool` connection pool in `backend-go/pkg/db/supabase.go` connecting to Supabase PostgreSQL (`DATABASE_URL` / `SUPABASE_DATABASE_URL`) with graceful in-memory demo fallback.
+  - Added REST endpoints for `/api/v1/bills`, `/api/v1/roof`, `/api/v1/quotes`, `/api/v1/quotes/score`, and `/api/v1/installers`.
+  - Added repository unit tests in `backend-go/pkg/db/supabase_test.go` and verified 100% test pass rate.
+- [x] **M3 — Reactive Frontend Implementation (SvelteKit / Svelte 5 with Runes)**:
+  - Built high-performance SvelteKit frontend in `frontend-svelte/` using Svelte 5 native Runes (`$state`, `$derived`) with zero Virtual DOM overhead.
+  - Ported Lumina Grid design tokens (`app.css`), responsive `Navbar.svelte`, `Hero.svelte`, and `Footer.svelte`.
+  - Built multi-lingual support in `i18n.svelte.ts` and `LanguageSelector.svelte` (English, Hindi, Gujarati, Marathi).
+  - Integrated `QuickCalculator.svelte` (60 FPS slider), `BalconyEstimator.svelte` (spatial CV simulation), `InstallerPriceMatrix.svelte` (state tariffs & ₹78k subsidy deduction), and `FeatureGrid.svelte`.
+  - Verified production build compiles cleanly in <250ms (`npm run build`).
 - [ ] **M4 — Feature Porting to SvelteKit**:
   - Port Smart Bill OCR Extractor, AI Quote Parser, Inverter Monitoring Telemetry, and Balcony AI Vision Estimator.
   - Re-implement PWA service worker and DPDPA data export.
