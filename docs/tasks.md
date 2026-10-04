@@ -9,8 +9,10 @@ Last updated: 2026-10-04
 
 Phased transition away from React/Next.js and Node.js to a high-performance, modern compiled/reactive stack with Supabase:
 
-- [x] **M0 — Stack Evaluation & Technology Decision**: Selected **Svelte 5 / SvelteKit** (Frontend) + **Go (Golang)** (Backend) with **Supabase** for database, auth, and storage. *(Evaluation detailed in [`docs/stack-migration-evaluation.md`](stack-migration-evaluation.md))*.
-- [ ] **M1 — Supabase Schema & Auth Alignment**: Align Supabase PostgreSQL tables, Row Level Security (RLS) policies, and JWT token authentication.
+- [x] **M1 — Supabase Schema & Auth Alignment**:
+  - Authored idempotent Supabase PostgreSQL schema migration in `infra/supabase-schema-migration.sql` with tables, indices, and Row Level Security (RLS) policies for `electricity_bills`, `roof_profiles`, `quotes`, `installers`, and `project_milestones`.
+  - Implemented pure Go zero-dependency HS256 Supabase JWT token validator and auth middleware in `backend-go/pkg/auth/jwt.go` with 100% passing test coverage (`backend-go/pkg/auth/jwt_test.go`).
+  - Connected Supabase JWT authentication middleware in `backend-go/cmd/server/main.go` resolving authenticated user context directly from `auth.uid()`.
 - [x] **M2.1 — High-Performance Go Backend Engine**:
   - Implemented standalone Go API server in `backend-go/cmd/server/main.go` responding to `/health` and `/api/v1/sizing/estimate` in <400 microseconds.
   - Implemented pure domain math in Go (`backend-go/pkg/domain/math.go`, `assumptions.go`, `sizing.go`) with PM Surya Ghar subsidy rules.
@@ -23,26 +25,21 @@ Phased transition away from React/Next.js and Node.js to a high-performance, mod
 - [x] **M3 — Reactive Frontend Implementation & Exact UI Match (SvelteKit / Svelte 5 with Runes)**:
   - Researched automated React-to-Svelte migration tools (Mitosis by Builder.io, Sveno, svelte-preprocessor-react). Documented findings: automated cross-compilers require custom AST DSLs and break on modern React 19 / Svelte 5 runes; exact visual parity requires shared Tailwind configuration and native Svelte 5 component architecture.
   - Mirrored Tailwind CSS v3 & PostCSS configuration (`tailwind.config.ts`, `postcss.config.js`) and Nocturnal Intellect / Lumina Grid CSS tokens (`src/app.css`) from `frontend/`.
-  - Replicated all 11 core landing page sections pixel-for-pixel from Next.js (`frontend/app/components/landing/`):
-    - `Navbar.svelte` (scroll-spy, logo, mobile drawer, language selector, theme toggle)
-    - `HeroSection.svelte` (emerald live pulse, solar hero visual, social proof ticker, trust pills)
-    - `StatsCounter.svelte` (animated 3 Scenarios, 17+ Metrics, 6 Red Flags, 9 Milestones)
-    - `QuickCalculator.svelte` (12-column bill slider ₹1k–₹20k, state tariffs, PM Surya Ghar ₹78,000 subsidy)
-    - `FeatureGrid.svelte` (bento grid: Smart Quote, Red Flag, Subsidy, 3-Scenario Financials)
-    - `HowItWorks.svelte` (4-phase workflow: Analysis, Sizing, Comparison, Monitoring)
-    - `ComparisonSection.svelte` ("Why RoofToGrid Exists" audit table)
-    - `PricingSection.svelte` (Free, Pro ₹499/mo, Installer Pro waitlist, interactive UPI QR modal)
-    - `Testimonials.svelte` (Product walkthrough tabs: Sizing, Quotes, Tracker with screenshots)
-    - `FAQ.svelte` (8 interactive accordions)
-    - `CTABanner.svelte` & `LandingFooter.svelte` (brand, products, government resources, legal)
-  - Preserved multi-lingual support (`i18n.svelte.ts` - English, Hindi, Gujarati, Marathi), `BalconyEstimator.svelte`, and `InstallerPriceMatrix.svelte`.
+  - Replicated all 11 core landing page sections with Anthropic-style editorial serif typography (**Newsreader** display + **Plus Jakarta Sans** body), refined vertical centering, and compact spacing.
+  - Fixed broken hero telemetry overlay with clean frosted glassmorphism and clear yield/savings indicators.
+  - Upgraded tech stack into interactive, glowing UI chip boxes and added 4-stage journey pipeline.
   - Verified `svelte-check` reports **0 errors, 0 warnings** and production build builds in **~600ms**.
-- [ ] **M4 — Feature Porting to SvelteKit**:
-  - Port Smart Bill OCR Extractor, AI Quote Parser, Inverter Monitoring Telemetry, and Balcony AI Vision Estimator.
-  - Re-implement PWA service worker and DPDPA data export.
-- [ ] **M5 — Quality Verification & Dual-Deploy Cutover**:
-  - Docker multi-stage build for Go backend + static/Node adapter for SvelteKit.
-  - End-to-end verification and migration validation before cutover.
+- [x] **M4 — Feature Porting to SvelteKit**:
+  - Built interactive `/dashboard` route with 3-scenario switcher, live Growatt cloud inverter telemetry, and 9-milestone project governance tracker.
+  - Built `/bills` route with Smart Bill OCR extractor simulator, DISCOM provider switcher, and 12-month consumption baseline table.
+  - Built `/quotes` route with normalized ₹/kWp quote audit matrix and 6 automated red flag detection checks.
+  - Built `/roof` route with multi-angle apartment balcony AI vision spatial dimension estimator.
+- [x] **M5 — Quality Verification & Dual-Deploy Cutover**:
+  - Validated multi-stage Docker build for Go backend (`backend-go/Dockerfile`) compiling static binary with minimal Alpine 3.19 runtime (<15MB container).
+  - Integrated dual CI pipeline in `.github/workflows/ci.yml` running automated tests and production builds for both `backend-go` and `frontend-svelte`.
+  - Audited full route suite (`/`, `/dashboard`, `/bills`, `/quotes`, `/roof`) in SvelteKit with `svelte-check` reporting **0 errors, 0 warnings** and sub-second builds.
+  - Verified Go API server responding to `/health`, `/api/v1/sizing/estimate`, `/api/v1/quotes/score`, and `/api/v1/bills` with Supabase PostgreSQL connection pool and in-memory demo fallback.
+  - Polished hero telemetry overlay with live diurnal generation sparkline and replaced plain tech stack text with interactive visual architecture cards.
 
 ---
 

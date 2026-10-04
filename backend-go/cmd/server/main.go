@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Aazhs/RoofToGrid/backend-go/pkg/auth"
 	"github.com/Aazhs/RoofToGrid/backend-go/pkg/db"
 	"github.com/Aazhs/RoofToGrid/backend-go/pkg/domain"
 )
@@ -116,7 +117,10 @@ func (s *Server) scoreQuoteHandler(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) billsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	userID := r.URL.Query().Get("userId")
+	userID := auth.UserIDFromContext(r.Context())
+	if userID == "" {
+		userID = r.URL.Query().Get("userId")
+	}
 	if userID == "" {
 		userID = "demo_user"
 	}
@@ -154,7 +158,10 @@ func (s *Server) billsHandler(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) roofHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	userID := r.URL.Query().Get("userId")
+	userID := auth.UserIDFromContext(r.Context())
+	if userID == "" {
+		userID = r.URL.Query().Get("userId")
+	}
 	if userID == "" {
 		userID = "demo_user"
 	}
@@ -192,7 +199,10 @@ func (s *Server) roofHandler(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) quotesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	userID := r.URL.Query().Get("userId")
+	userID := auth.UserIDFromContext(r.Context())
+	if userID == "" {
+		userID = r.URL.Query().Get("userId")
+	}
 	if userID == "" {
 		userID = "demo_user"
 	}
@@ -318,7 +328,16 @@ func main() {
 	mux.HandleFunc("/api/v1/quotes", srv.quotesHandler)
 	mux.HandleFunc("/api/v1/installers", srv.installersHandler)
 
-	handler := loggingMiddleware(corsMiddleware(mux))
+	jwtSecret := os.Getenv("SUPABASE_JWT_SECRET")
+	if jwtSecret == "" {
+		jwtSecret = os.Getenv("JWT_SECRET")
+	}
+	if jwtSecret == "" {
+		jwtSecret = "rooftogrid_dev_jwt_secret_insecure_demo"
+		log.Println("⚠️  SUPABASE_JWT_SECRET not provided, using dev fallback")
+	}
+
+	handler := loggingMiddleware(corsMiddleware(auth.Middleware(jwtSecret)(mux)))
 
 	httpServer := &http.Server{
 		Addr:         ":" + port,
