@@ -7,6 +7,7 @@ import { Card, CardBody, CardHeader, Stat } from '@/components/ui/Card';
 import { TextField } from '@/components/ui/Field';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { DocumentUploader, DocumentList } from '@/components/domain/DocumentPanel';
+import { BillOcrExtractor } from '@/components/domain/BillOcrExtractor';
 import { api } from '@/lib/api';
 import { currentMonth, formatCurrency, formatDate, formatMonth, formatNumber } from '@/lib/format';
 import { useApi, useSubmit } from '@/lib/hooks';
@@ -31,6 +32,14 @@ export default function BillsPage() {
     if (created) {
       notify(`Saved ${formatMonth(created.billMonth)}`);
       setForm({ billMonth: currentMonth(), unitsKwh: '', billAmount: '', tariffPerKwh: '' });
+      await Promise.all([bills.reload(), stats.reload()]);
+    }
+  };
+
+  const handleDirectOcrSave = async (payload: { billMonth: string; unitsKwh: number; billAmount?: number; tariffPerKwh?: number }) => {
+    const created = await run(() => api.bills.create(payload));
+    if (created) {
+      notify(`Extracted & Saved ${formatMonth(created.billMonth)} (${created.unitsKwh} kWh)`);
       await Promise.all([bills.reload(), stats.reload()]);
     }
   };
@@ -64,8 +73,19 @@ export default function BillsPage() {
         </dl>
       )}
 
-      <Card>
-        <CardHeader title="Add a month" description="Units plus either the amount or the tariff." />
+      {/* Smart OCR Extractor */}
+      <BillOcrExtractor
+        onApplyToForm={(extracted) => {
+          setForm(extracted);
+          notify('Pre-filled form with OCR data');
+          // Smooth scroll to manual form
+          document.getElementById('manual-bill-form')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onDirectSave={handleDirectOcrSave}
+      />
+
+      <Card id="manual-bill-form">
+        <CardHeader title="Manual entry" description="Units plus either the amount or the tariff." />
         <CardBody>
           {error && (
             <Alert tone="error" className="mb-3">

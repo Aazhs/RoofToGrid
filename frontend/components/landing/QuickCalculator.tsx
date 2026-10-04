@@ -3,6 +3,7 @@
 import React, { useState, useId } from 'react';
 import Link from 'next/link';
 import { useScrollReveal } from '@/components/landing/useScrollReveal';
+import { useLanguage } from '@/lib/i18n';
 
 const STATE_TARIFFS: Record<string, { label: string; tariff: number }> = {
   national: { label: 'National Average (₹7.2/kWh)', tariff: 7.2 },
@@ -15,6 +16,7 @@ const STATE_TARIFFS: Record<string, { label: string; tariff: number }> = {
 };
 
 export function QuickCalculator() {
+  const { t, language } = useLanguage();
   const { ref, isVisible } = useScrollReveal();
   const [bill, setBill] = useState<number>(4500);
   const [selectedState, setSelectedState] = useState<string>('national');
@@ -82,13 +84,15 @@ export function QuickCalculator() {
           className={`text-center max-w-3xl mx-auto mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
           <span className="text-label-sm text-outline uppercase tracking-widest mb-3 block font-jakarta">
-            INSTANT ESTIMATOR · NO SIGNUP NEEDED
+            {language !== 'en' ? t('hero_badge') : 'INSTANT ESTIMATOR · NO SIGNUP NEEDED'}
           </span>
           <h2 className="text-headline-lg md:text-display-lg font-semibold text-on-surface mb-4 font-jakarta">
-            Calculate your roof&apos;s true potential.
+            {language !== 'en' ? t('calc_title') : 'Calculate your roof\'s true potential.'}
           </h2>
           <p className="text-body-lg text-on-surface-variant font-jakarta">
-            Adjust your current monthly electricity bill to see your recommended solar capacity, central government subsidy, and estimated savings under PM Surya Ghar.
+            {language !== 'en'
+              ? t('calc_subtitle')
+              : 'Adjust your current monthly electricity bill to see your recommended solar capacity, central government subsidy, and estimated savings under PM Surya Ghar.'}
           </p>
         </div>
 
@@ -98,7 +102,7 @@ export function QuickCalculator() {
           {/* Controls Card */}
           <div className="lg:col-span-5 bg-surface-container border border-outline-variant/70 rounded-2xl p-6 md:p-8 shadow-sm">
             <h3 className="text-lg font-semibold text-on-surface mb-6 font-jakarta flex items-center justify-between">
-              <span>Your Energy Usage</span>
+              <span>{language !== 'en' ? t('calc_monthly_bill') : 'Your Energy Usage'}</span>
               <span className="text-xs px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-mono">
                 Live Model
               </span>
@@ -108,7 +112,7 @@ export function QuickCalculator() {
             <div className="mb-8">
               <div className="flex justify-between items-baseline mb-3">
                 <label htmlFor={billInputId} className="text-sm font-medium text-on-surface">
-                  Average Monthly Electricity Bill
+                  {language !== 'en' ? t('calc_monthly_bill') : 'Average Monthly Electricity Bill'}
                 </label>
                 <span className="text-2xl font-bold text-on-surface font-jakarta">
                   ₹{bill.toLocaleString('en-IN')}
@@ -262,8 +266,7 @@ export function QuickCalculator() {
                 href="/dashboard"
                 className="whitespace-nowrap rounded-xl bg-primary-container text-surface px-6 py-3.5 text-sm font-semibold hover:bg-surface-tint transition-all duration-200 inline-flex items-center gap-2 shadow-sm"
               >
-                <span>Generate Official Report</span>
-                <span aria-hidden="true">&rarr;</span>
+                <span>{language !== 'en' ? t('calc_cta') : 'Generate Official Report →'}</span>
               </Link>
             </div>
 

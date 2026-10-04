@@ -6,6 +6,7 @@ import { Badge, ProgressBar } from '@/components/ui/Badge';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody, CardHeader, Stat } from '@/components/ui/Card';
 import { Alert, EmptyState, Spinner } from '@/components/ui/Feedback';
+import { InverterMonitoringCard } from '@/components/domain/InverterMonitoringCard';
 import { PROJECT_STATUS_COPY, SUITABILITY_COPY } from '@/lib/constants';
 import { formatCurrency, formatKwp, formatNumber, formatYears } from '@/lib/format';
 import { api } from '@/lib/api';
@@ -175,6 +176,9 @@ export default function DashboardPage() {
           </CardBody>
         </Card>
       )}
+
+      {/* Inverter Monitoring & Live PR Telemetry */}
+      <InverterMonitoringCard />
 
       <Card>
         <CardHeader

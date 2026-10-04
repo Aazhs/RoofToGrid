@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from '@/lib/i18n';
 
 export default function HeroSection() {
+  const { t, language } = useLanguage();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
@@ -27,7 +29,7 @@ export default function HeroSection() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Live Product · Free to Start
+            {language !== 'en' ? t('hero_badge') : 'Live Product · Free to Start'}
           </div>
 
           <h1
@@ -43,7 +45,9 @@ export default function HeroSection() {
             className={`mt-6 max-w-xl text-body-lg text-on-surface-variant ${base} ${mounted ? visible : hidden}`}
             style={{ transitionDelay: '250ms' }}
           >
-            India&apos;s first independent rooftop solar planning platform. Size your system, compare installer quotes fairly, and track your project end-to-end — with PM Surya Ghar subsidies calculated automatically.
+            {language !== 'en'
+              ? t('hero_subhead')
+              : "India's first independent rooftop solar planning platform. Size your system, compare installer quotes fairly, and track your project end-to-end — with PM Surya Ghar subsidies calculated automatically."}
           </p>
           
           <div
@@ -54,7 +58,7 @@ export default function HeroSection() {
               href="/dashboard"
               className="rounded-xl bg-primary-container px-8 py-4 text-center font-semibold text-surface transition-all duration-200 hover:bg-surface-tint hover:scale-[1.02] active:scale-[0.98]"
             >
-              Start Planning — It&apos;s Free &rarr;
+              {language !== 'en' ? t('hero_cta_primary') : "Start Planning — It's Free →"}
             </Link>
             <a
               href="#how-it-works"
