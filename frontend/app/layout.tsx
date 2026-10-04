@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from './providers';
 import { CookieConsent } from '@/components/ui/CookieConsent';
+import { Analytics } from '@/components/analytics/Analytics';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rooftogrid.in';
 
@@ -177,6 +178,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           {children}
           <CookieConsent />
+          <Analytics />
         </Providers>
       </body>
     </html>

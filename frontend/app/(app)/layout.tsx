@@ -12,6 +12,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useSubscription } from '@/lib/subscription';
 import { UpiCheckoutModal } from '@/components/billing/UpiCheckoutModal';
 import { resetDemoData } from '@/lib/demo-data';
+import { MobileBottomNav } from '@/components/ui/MobileBottomNav';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
@@ -116,9 +117,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main id="main" className="min-w-0 flex-1 bg-slate-50">
+      <main id="main" className="min-w-0 flex-1 bg-slate-50 pb-20 lg:pb-8">
         <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">{children}</div>
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav />
 
       {/* Global UPI Checkout Modal */}
       <UpiCheckoutModal

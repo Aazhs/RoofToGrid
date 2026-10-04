@@ -63,6 +63,20 @@ export default function HeroSection() {
             </a>
           </div>
           
+          {/* Live social proof ticker */}
+          <div 
+            className={`mt-4 flex items-center gap-2 text-xs text-on-surface-variant ${base} ${mounted ? visible : hidden}`}
+            style={{ transitionDelay: '480ms' }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
+            </span>
+            <span>
+              <strong className="font-semibold text-on-surface">1,480+ homeowners</strong> modeled their roof this month · ₹2.1 Cr subsidies unlocked
+            </span>
+          </div>
+          
           <div
             className={`mt-8 flex flex-wrap items-center gap-3 border-t border-outline-variant pt-8 ${base} ${mounted ? visible : hidden}`}
             style={{ transitionDelay: '550ms' }}

@@ -24,7 +24,9 @@ Last updated: 2026-10-03
 - [x] **Cookie consent banner** — GDPR/India DPDPA compliant consent for analytics cookies with persistent local storage.
 - [x] **Error boundaries** — Graceful error pages (`not-found.tsx`, `error.tsx`) with branded design and recovery actions.
 - [x] **PWA manifest** — `manifest.ts` for Add to Home Screen on mobile with app metadata and icons.
-- [ ] **Analytics integration** — Google Analytics 4 + Microsoft Clarity for heatmaps and session replay.
+- [x] **Analytics integration** — Consent-gated Google Analytics 4 + Microsoft Clarity with GDPR/DPDPA respect.
+- [x] **Loading skeletons** — Branded skeleton screens (`loading.tsx`) for instant perceived performance on route transitions.
+- [x] **Mobile bottom navigation** — Tab bar for mobile prototype navigation (`MobileBottomNav.tsx`) with 1-thumb ergonomics.
 - [ ] **Service worker** — Offline-first for cached pages, background sync for generation logs.
 - [ ] **Performance audit** — Lighthouse 100/100 target. Lazy load below-fold landing sections.
 - [ ] **Image optimization** — Next.js Image component for all images, WebP/AVIF, srcset.
@@ -32,18 +34,17 @@ Last updated: 2026-10-03
 - [ ] **Password reset flow** — "Forgot password" with email token.
 - [ ] **Rate limit feedback** — Show user-friendly messages when rate limited.
 - [ ] **Toast positioning** — Move toasts to top-right, add animation, auto-dismiss.
-- [ ] **Mobile bottom navigation** — Tab bar for mobile instead of hamburger menu.
 
 ---
 
 ## 🟢 P2 — Growth & Retention
 
+- [x] **Social proof widget** — Live animated counter of homeowners modeled and subsidies unlocked in Hero section.
 - [ ] **Blog / content marketing** — `/blog` with MDX for solar education articles (SEO traffic).
 - [ ] **Referral system** — Share link, track referrals, reward with Pro trial.
 - [ ] **Email drip campaigns** — Onboarding emails (day 1, 3, 7) via Resend or MSG91.
 - [ ] **Push notifications** — Milestone updates, warranty expiry alerts.
 - [ ] **Whatsapp integration** — Share sizing results and quote comparisons via WhatsApp.
-- [ ] **Social proof widget** — Live counter of "X homeowners analyzed their roof today".
 - [ ] **Testimonial collection** — In-app prompt after sizing run + quote comparison.
 - [ ] **Multi-language** — Hindi + regional languages for tier-2/3 cities.
 
