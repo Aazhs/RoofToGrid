@@ -9,6 +9,7 @@ import { SelectField, TextAreaField, TextField } from '@/components/ui/Field';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { DocumentUploader, DocumentList } from '@/components/domain/DocumentPanel';
 import { Term } from '@/components/domain/Term';
+import { BalconyVisionEstimator } from '@/components/domain/BalconyVisionEstimator';
 import { ORIENTATIONS, ROOF_TYPES, SHADING_LEVELS } from '@/lib/constants';
 import { formatKwp, formatNumber, titleCase } from '@/lib/format';
 import { api } from '@/lib/api';
@@ -33,6 +34,7 @@ export default function RoofPage() {
   const { pending, error, fieldErrors, run } = useSubmit();
   const [form, setForm] = useState(EMPTY);
   const [showForm, setShowForm] = useState(false);
+  const [showBalconyVision, setShowBalconyVision] = useState(false);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -67,20 +69,60 @@ export default function RoofPage() {
     await roofs.reload();
   };
 
+  const handleSaveBalconyProfile = async (profile: {
+    label: string;
+    roofType: RoofType;
+    usableAreaSqft: number;
+    orientation: Orientation;
+    shadingLevel: ShadingLevel;
+    notes: string;
+  }) => {
+    const created = await run(() => api.roof.create(profile));
+    if (created) {
+      notify(`Saved ${created.label} (${created.usableAreaSqft} sq ft)`);
+      setShowBalconyVision(false);
+      await roofs.reload();
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">Your roof</h1>
+          <h1 className="text-2xl font-semibold">Your roof & balcony</h1>
           <p className="mt-1 text-sm text-slate-600">
             Area, direction and shade decide how much <Term term="kWp">capacity</Term> fits and how much it
             will generate.
           </p>
         </div>
-        <Button onClick={() => setShowForm((v) => !v)} variant={showForm ? 'secondary' : 'primary'}>
-          {showForm ? 'Cancel' : 'Add a roof'}
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            onClick={() => {
+              setShowBalconyVision((v) => !v);
+              if (!showBalconyVision) setShowForm(false);
+            }}
+            variant={showBalconyVision ? 'secondary' : 'secondary'}
+            className="border-brand-300 text-brand-800 hover:bg-brand-50"
+          >
+            <span>📐</span>
+            <span>{showBalconyVision ? 'Close Balcony AI' : 'Balcony AI Vision'}</span>
+          </Button>
+          <Button
+            onClick={() => {
+              setShowForm((v) => !v);
+              if (!showForm) setShowBalconyVision(false);
+            }}
+            variant={showForm ? 'secondary' : 'primary'}
+          >
+            {showForm ? 'Cancel' : 'Add a roof'}
+          </Button>
+        </div>
       </div>
+
+      {/* Balcony AI Vision Estimator */}
+      {showBalconyVision && (
+        <BalconyVisionEstimator onSaveProfile={handleSaveBalconyProfile} />
+      )}
 
       {showForm && (
         <Card>
