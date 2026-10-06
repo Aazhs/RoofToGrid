@@ -47,7 +47,7 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-20 md:py-32 border-t border-outline-variant max-w-[1280px] mx-auto px-4 md:px-16">
+    <section id="faq" className="mx-auto max-w-[1180px] border-t border-outline-variant px-4 py-20 md:px-8 md:py-28">
       <div 
         ref={headerRef}
         className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}

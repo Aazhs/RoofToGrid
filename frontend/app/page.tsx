@@ -49,7 +49,7 @@ export default function LandingPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }} />
       <LandingNav />
-      <main id="main">
+      <main id="main" className="landing-page">
         <HeroSection />
         <QuickCalculator />
         <ProductJourney />

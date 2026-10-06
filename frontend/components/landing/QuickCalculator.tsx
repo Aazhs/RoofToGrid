@@ -35,7 +35,9 @@ export function QuickCalculator() {
   const demoHref = `/demo?bill=${bill}&tariff=${tariff}&area=${area}`;
 
   return (
-    <section id="calculator" className="border-y border-outline-variant bg-surface-container-low py-20 md:py-28">
+    <section id="calculator" className="relative overflow-hidden border-y border-[#d8dfda] bg-gradient-to-br from-[#eaf6ef] via-[#fff8ea] to-[#edf4ff] py-20 md:py-28">
+      <div className="pointer-events-none absolute -right-24 top-10 h-72 w-72 rounded-full bg-[#f5b847]/20 blur-[90px]" />
+      <div className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-[#4da97b]/15 blur-[90px]" />
       <div className="mx-auto max-w-[1180px] px-4 md:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div className="lg:sticky lg:top-24">

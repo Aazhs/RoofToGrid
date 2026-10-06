@@ -74,7 +74,7 @@ export default function LandingNav() {
           : 'border-outline-variant/30 bg-surface'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 md:px-16">
+      <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-4 md:px-8">
         {/* Left: Logo */}
         <Link href="/" className="font-jakarta text-headline-lg-mobile font-bold text-on-surface md:text-headline-lg">
           RoofToGrid

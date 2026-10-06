@@ -6,7 +6,7 @@ import Link from 'next/link';
 export function LandingFooter() {
   return (
     <footer className="bg-surface-container border-t border-outline-variant">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-16">
+      <div className="max-w-[1180px] mx-auto px-4 md:px-8">
         
         {/* Main footer grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 py-16">

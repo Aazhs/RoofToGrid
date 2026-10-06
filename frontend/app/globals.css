@@ -143,6 +143,48 @@
     background: #bd4809;
     box-shadow: 0 0 0 1px #943706, 0 2px 5px rgba(0, 0, 0, 0.18);
   }
+
+  .landing-page {
+    background:
+      radial-gradient(circle at 8% 38%, rgba(85, 164, 121, 0.10), transparent 24rem),
+      radial-gradient(circle at 92% 68%, rgba(79, 141, 210, 0.10), transparent 28rem),
+      linear-gradient(180deg, #fbfcfa 0%, #f7faf8 45%, #fffaf1 100%);
+  }
+
+  .landing-glow {
+    position: absolute;
+    z-index: 0;
+    height: 30rem;
+    width: 30rem;
+    pointer-events: none;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.52;
+    animation: landing-glow-drift 14s ease-in-out infinite alternate;
+  }
+
+  .landing-glow-sun {
+    background: rgba(247, 177, 64, 0.42);
+  }
+
+  .landing-glow-sky {
+    background: rgba(83, 151, 220, 0.25);
+    animation-delay: -5s;
+  }
+
+  .landing-glow-leaf {
+    background: rgba(63, 155, 104, 0.25);
+    animation-delay: -9s;
+  }
+}
+
+@keyframes landing-glow-drift {
+  from { transform: translate3d(-2rem, -1rem, 0) scale(0.92); }
+  to { transform: translate3d(3rem, 2rem, 0) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-glow { animation: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
