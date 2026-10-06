@@ -1,8 +1,8 @@
-# Smart Bill OCR & AI Quote Parser
+# Proposed: Smart Bill OCR & Quote Parser
 
 ## Overview
 
-RoofToGrid features intelligent document processing specifically engineered for the Indian residential solar market:
+This document describes planned intelligent document processing for the Indian residential solar market. It is **not implemented in the current product**:
 1. **Smart Bill OCR Extractor**: Ingests monthly electricity bills from any Indian DISCOM to extract energy consumption (kWh), net payable amounts, billing cycles, and effective tariffs.
 2. **AI Quote Parser with Human Confirmation**: Ingests installer proposals (PDFs, images, or raw text) to normalize hardware specifications, pricing, warranties, and hidden clauses.
 

@@ -23,7 +23,6 @@ import type {
   User,
   Warranty,
 } from './types';
-import { handleDemoRequest } from './demo-router';
 
 export const API_BASE_URL = (
   process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1'
@@ -178,11 +177,6 @@ async function refreshSession(): Promise<boolean> {
 }
 
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const token = getAccessToken();
-  if (!token) {
-    return handleDemoRequest<T>(path, options);
-  }
-
   try {
     const { data } = await rawRequest<T>(path, options);
     return data;
@@ -194,8 +188,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
         return data;
       }
     }
-    // If backend is offline or unauthenticated, fall back to demo router
-    return handleDemoRequest<T>(path, options);
+    throw err;
   }
 }
 
@@ -203,11 +196,6 @@ export async function requestWithMeta<T>(
   path: string,
   options: RequestOptions = {},
 ): Promise<{ data: T; meta?: unknown }> {
-  const token = getAccessToken();
-  if (!token) {
-    return { data: handleDemoRequest<T>(path, options) };
-  }
-
   try {
     return await rawRequest<T>(path, options);
   } catch (err) {
@@ -215,7 +203,7 @@ export async function requestWithMeta<T>(
       const refreshed = await refreshSession();
       if (refreshed) return rawRequest<T>(path, { ...options, skipRefresh: true });
     }
-    return { data: handleDemoRequest<T>(path, options) };
+    throw err;
   }
 }
 

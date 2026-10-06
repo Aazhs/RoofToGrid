@@ -1,29 +1,30 @@
 'use client';
 
-/** Authenticated / Prototype shell: sidebar, topbar, and Pro subscription state. */
+/** Authenticated application shell with responsive navigation. */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Spinner } from '@/components/ui/Feedback';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { NAV_ITEMS } from '@/lib/constants';
 import { useAuth } from '@/lib/auth-context';
-import { useSubscription } from '@/lib/subscription';
-import { UpiCheckoutModal } from '@/components/billing/UpiCheckoutModal';
-import { resetDemoData } from '@/lib/demo-data';
 import { MobileBottomNav } from '@/components/ui/MobileBottomNav';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
-  const { isPro } = useSubscription();
   const pathname = usePathname();
+  const router = useRouter();
   const [navOpen, setNavOpen] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   useEffect(() => {
     setNavOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+    }
+  }, [loading, pathname, router, user]);
 
   if (loading) {
     return (
@@ -33,14 +34,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     );
   }
 
-  const isDemo = !user;
-
-  const handleResetData = () => {
-    if (confirm('Reset demo data back to default sample state?')) {
-      resetDemoData();
-      window.location.reload();
-    }
-  };
+  if (!user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner label="Taking you to sign in" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen lg:flex">
@@ -73,7 +73,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Link href="/dashboard" className="text-lg font-semibold">
             Roof<span className="text-brand-700">To</span>Grid
           </Link>
-          {isPro && <Badge tone="brand">Pro</Badge>}
         </div>
 
         {/* Navigation */}
@@ -83,36 +82,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* User Footer */}
         <div className="border-t border-slate-200 px-4 py-3">
-          {user ? (
-            <>
-              <p className="truncate text-sm font-medium text-slate-800">{user.fullName}</p>
-              <p className="truncate text-xs text-slate-500">{user.email}</p>
-              <Button variant="ghost" size="sm" className="mt-2 px-0" onClick={() => void logout()}>
-                Sign out
-              </Button>
-            </>
-          ) : (
-            <>
-              <div className="flex items-center justify-between">
-                <p className="truncate text-sm font-medium text-slate-800">Demo User</p>
-                <Badge tone="muted">Demo</Badge>
-              </div>
-              <p className="truncate text-xs text-slate-500">demo@rooftogrid.in</p>
-              <div className="mt-2 flex items-center justify-between text-xs">
-                <Link href="/login" className="font-medium text-brand-700 hover:underline">
-                  Sign in
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleResetData}
-                  className="text-slate-400 hover:text-slate-600"
-                  title="Reset sample data"
-                >
-                  Reset data
-                </button>
-              </div>
-            </>
-          )}
+          <p className="truncate text-sm font-medium text-slate-800">{user.fullName}</p>
+          <p className="truncate text-xs text-slate-500">{user.email}</p>
+          <Button variant="ghost" size="sm" className="mt-2 px-0" onClick={() => void logout()}>
+            Sign out
+          </Button>
         </div>
       </aside>
 
@@ -124,11 +98,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav />
 
-      {/* Global UPI Checkout Modal */}
-      <UpiCheckoutModal
-        isOpen={checkoutOpen}
-        onClose={() => setCheckoutOpen(false)}
-      />
     </div>
   );
 }

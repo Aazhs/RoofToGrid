@@ -26,7 +26,7 @@ export default function CookiesPage() {
           <section className="space-y-3">
             <h2 className="text-headline-sm font-semibold text-on-surface font-jakarta">2. How We Use Cookies</h2>
             <p>
-              RoofToGrid uses essential cookies for session management, authentication tokens, and theme preferences (light/dark mode). We do not use intrusive third-party tracking cookies to build advertising profiles.
+              RoofToGrid uses essential cookies for session management and authentication tokens. We do not use intrusive third-party tracking cookies to build advertising profiles.
             </p>
           </section>
 

@@ -17,7 +17,7 @@ export function LandingFooter() {
               RoofToGrid
             </div>
             <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
-              India&apos;s smartest rooftop solar planning platform. Built for homeowners, powered by data.
+              Independent rooftop solar planning, quote auditing and project tracking for Indian homeowners.
             </p>
             <div className="mt-5 flex flex-col gap-2">
               <a href="mailto:aarsh@rooftogrid.in" className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
@@ -31,10 +31,10 @@ export function LandingFooter() {
           <div>
             <h4 className="text-sm font-semibold text-on-surface mb-4">Product</h4>
             <ul className="space-y-3">
-              <li><a href="/#features" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Features</a></li>
               <li><a href="/#how-it-works" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">How It Works</a></li>
-              <li><a href="/#pricing" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Pricing</a></li>
-              <li><Link href="/dashboard" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Try It Free</Link></li>
+              <li><a href="/#calculator" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Calculator</a></li>
+              <li><a href="/#principles" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Product principles</a></li>
+              <li><Link href="/demo" className="text-sm text-on-surface-variant hover:text-on-surface transition-colors">Guided demo</Link></li>
             </ul>
           </div>
 

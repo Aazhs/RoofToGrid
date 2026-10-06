@@ -6,7 +6,6 @@ import { Badge, ProgressBar } from '@/components/ui/Badge';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody, CardHeader, Stat } from '@/components/ui/Card';
 import { Alert, EmptyState, Spinner } from '@/components/ui/Feedback';
-import { InverterMonitoringCard } from '@/components/domain/InverterMonitoringCard';
 import { PROJECT_STATUS_COPY, SUITABILITY_COPY } from '@/lib/constants';
 import { formatCurrency, formatKwp, formatNumber, formatYears } from '@/lib/format';
 import { api } from '@/lib/api';
@@ -14,67 +13,12 @@ import { useApi } from '@/lib/hooks';
 import { useAuth } from '@/lib/auth-context';
 import type { Summary } from '@/lib/types';
 
-/** Demo data for unauthenticated prototype visitors */
-const DEMO_SUMMARY: Summary = {
-  profile: null,
-  onboarding: {
-    step: 4,
-    completedAt: '2026-09-15T10:00:00Z',
-    hasBills: true,
-    hasRoof: true,
-    hasSizing: true,
-    hasQuotes: true,
-    hasProject: true,
-  },
-  billStats: {
-    monthsCounted: 12,
-    avgMonthlyUnits: 485,
-    weightedTariffPerKwh: 8.2,
-    avgMonthlyBill: 3977,
-    ready: true,
-  },
-  counts: { bills: 12, roofProfiles: 1, quotes: 3, projects: 1, documents: 5 },
-  quoteInsights: {
-    averagePricePerKwp: 58200,
-    bestValueScore: 78,
-    selectedQuoteId: 'demo-quote-1',
-  },
-  latestSizing: {
-    id: 'demo-sizing',
-    createdAt: '2026-09-10T08:00:00Z',
-    suitability: 'GOOD',
-    recommendedKwp: 5,
-    annualSavings: 47760,
-    paybackYears: 4.2,
-  },
-  projects: [
-    {
-      id: 'demo-project',
-      name: '5 kWp Rooftop Solar',
-      status: 'IN_PROGRESS',
-      installerName: 'Solar Sunrise Energy',
-      systemSizeKwp: 5,
-      progressPercent: 44,
-      currentStage: 'DISCOM Application',
-    },
-  ],
-  nextActions: [
-    'Upload the DISCOM acknowledgement receipt to your project documents',
-    'Check net metering status with your DISCOM',
-    'Log this month\'s generation reading from your inverter app',
-  ],
-};
-
 export default function DashboardPage() {
   const { user } = useAuth();
-  const isDemo = !user;
-  const { data: apiData, error, loading } = useApi(() => api.profile.summary());
+  const { data, error, loading } = useApi<Summary>(() => api.profile.summary());
 
-  // In demo mode, use fallback data if API fails
-  const data = apiData ?? (isDemo ? DEMO_SUMMARY : null);
-
-  if (loading && !isDemo) return <Spinner label="Loading your dashboard" />;
-  if (error && !isDemo) return <Alert tone="error">{error}</Alert>;
+  if (loading) return <Spinner label="Loading your dashboard" />;
+  if (error) return <Alert tone="error">{error}</Alert>;
   if (!data) return null;
 
   const { onboarding, counts, billStats, latestSizing, quoteInsights, projects, nextActions } = data;
@@ -176,9 +120,6 @@ export default function DashboardPage() {
           </CardBody>
         </Card>
       )}
-
-      {/* Inverter Monitoring & Live PR Telemetry */}
-      <InverterMonitoringCard />
 
       <Card>
         <CardHeader

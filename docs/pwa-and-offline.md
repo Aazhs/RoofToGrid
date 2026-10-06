@@ -10,7 +10,7 @@ RoofToGrid is architected as an installable Progressive Web App (PWA) compliant 
 - Configured dynamically via Next.js metadata route:
   - **Name**: RoofToGrid — India's Rooftop Solar Platform
   - **Short Name**: RoofToGrid
-  - **Start URL**: `/dashboard`
+  - **Start URL**: `/`
   - **Display**: `standalone` (removes browser navigation chrome)
   - **Theme Color**: `#0F172A` (Slate 900)
   - **Background Color**: `#FFFFFF`
@@ -22,7 +22,7 @@ RoofToGrid is architected as an installable Progressive Web App (PWA) compliant 
 
 ### Caching Strategy
 - **Static Core Assets & Shell**: Cache-first strategy for app shell assets, fonts, icons, and CSS bundles.
-- **Dynamic API Routes**: Network-first strategy with fallback to cached responses for critical screens (e.g. latest sizing report, bill summaries).
+- **Authenticated and API routes**: Network-only. Private or stale account data is not placed in the public app-shell cache.
 - **Offline Fallback Page**: If network is entirely unavailable and asset is not yet cached, serves a branded offline fallback screen advising user to reconnect.
 
 ### Lifecycle Management (`ServiceWorkerRegister.tsx`)
@@ -34,8 +34,8 @@ RoofToGrid is architected as an installable Progressive Web App (PWA) compliant 
 ## 3. Mobile Ergonomics (`MobileBottomNav.tsx`)
 - Sticky bottom navigation bar optimized for 1-thumb mobile navigation:
   - **Dashboard** (`/dashboard`)
-  - **Bills** (`/bills`)
   - **Sizing** (`/sizing`)
   - **Quotes** (`/quotes`)
+  - **Tracker** (`/projects`)
   - **Profile** (`/profile`)
 - Automatically hidden on desktop viewports (`hidden md:flex`).

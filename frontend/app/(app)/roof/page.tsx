@@ -9,7 +9,6 @@ import { SelectField, TextAreaField, TextField } from '@/components/ui/Field';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { DocumentUploader, DocumentList } from '@/components/domain/DocumentPanel';
 import { Term } from '@/components/domain/Term';
-import { BalconyVisionEstimator } from '@/components/domain/BalconyVisionEstimator';
 import { ORIENTATIONS, ROOF_TYPES, SHADING_LEVELS } from '@/lib/constants';
 import { formatKwp, formatNumber, titleCase } from '@/lib/format';
 import { api } from '@/lib/api';
@@ -34,7 +33,6 @@ export default function RoofPage() {
   const { pending, error, fieldErrors, run } = useSubmit();
   const [form, setForm] = useState(EMPTY);
   const [showForm, setShowForm] = useState(false);
-  const [showBalconyVision, setShowBalconyVision] = useState(false);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -69,22 +67,6 @@ export default function RoofPage() {
     await roofs.reload();
   };
 
-  const handleSaveBalconyProfile = async (profile: {
-    label: string;
-    roofType: RoofType;
-    usableAreaSqft: number;
-    orientation: Orientation;
-    shadingLevel: ShadingLevel;
-    notes: string;
-  }) => {
-    const created = await run(() => api.roof.create(profile));
-    if (created) {
-      notify(`Saved ${created.label} (${created.usableAreaSqft} sq ft)`);
-      setShowBalconyVision(false);
-      await roofs.reload();
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -98,19 +80,7 @@ export default function RoofPage() {
         <div className="flex flex-wrap gap-2">
           <Button
             onClick={() => {
-              setShowBalconyVision((v) => !v);
-              if (!showBalconyVision) setShowForm(false);
-            }}
-            variant={showBalconyVision ? 'secondary' : 'secondary'}
-            className="border-brand-300 text-brand-800 hover:bg-brand-50"
-          >
-            <span>📐</span>
-            <span>{showBalconyVision ? 'Close Balcony AI' : 'Balcony AI Vision'}</span>
-          </Button>
-          <Button
-            onClick={() => {
               setShowForm((v) => !v);
-              if (!showForm) setShowBalconyVision(false);
             }}
             variant={showForm ? 'secondary' : 'primary'}
           >
@@ -119,10 +89,10 @@ export default function RoofPage() {
         </div>
       </div>
 
-      {/* Balcony AI Vision Estimator */}
-      {showBalconyVision && (
-        <BalconyVisionEstimator onSaveProfile={handleSaveBalconyProfile} />
-      )}
+      <Alert tone="info" title="A rough measurement is enough to start">
+        Measure only the shade-free area you are willing to cover and leave room for access. Roof-photo
+        measurement is not automated; an installer must confirm dimensions and structural safety on site.
+      </Alert>
 
       {showForm && (
         <Card>

@@ -1,7 +1,7 @@
 # Technical Specification: Balcony AI Vision & Installer Price Intelligence RAG
 
 ## Document Overview
-This document specifies the technical architecture, prompt design, data schema, and phased delivery plan for two upcoming capabilities in RoofToGrid:
+This research document describes two possible future capabilities. Neither is implemented or offered in the current product:
 1. **Balcony & Terrace AI Vision Dimension Estimator**: Multi-angle computer vision system estimating physical dimensions and plug-and-play solar feasibility for Indian apartment balconies.
 2. **Nationwide Solar Installer Price Intelligence & AI RAG Comparison Engine**: Comprehensive price benchmark database combined with real-time web retrieval to provide realistic, localized installer comparisons across India.
 

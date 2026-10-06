@@ -8,7 +8,7 @@ true before we start the next phase. Story ids reference `docs/requirements.md`.
 
 ---
 
-## Phase 1 — MVP: India homeowner pilot (Shipped & Live)
+## Phase 1 — MVP: India homeowner pilot (Current)
 
 **Thesis:** a homeowner can get trustworthy numbers and run a project end-to-end with manual data entry and
 rule-based math. No external dependency is on the critical path.
@@ -17,15 +17,15 @@ rule-based math. No external dependency is on the critical path.
 
 | Area | Ships | Stories |
 |---|---|---|
-| Auth & profile | email/password, JWT + rotating refresh, profile with location/DISCOM, onboarding step tracking, password reset flow, email verification | US-A2, US-A3 |
+| Auth & profile | email/password, JWT + rotating refresh, profile with location/DISCOM and onboarding step tracking | US-A2, US-A3 |
 | Bill capture | upload PDF/image, manual monthly units + tariff, 12-month stats for pre-fill | US-A4, US-A5 |
 | Roof capture | guided form (type, usable area, orientation, tilt, shading), optional photos | US-A6 |
 | Sizing & Estimator | rule-based suitability + 3 scenarios, subsidy, payback, versioned assumptions, public guest estimator with DISCOM tariffs | US-A1, US-A7–US-A10 |
 | Quotes | structured entry, derived price/kWp, equipment tier, value score, red flags, financing-adjusted cost, comparison view, WhatsApp share | US-B1–US-B8 |
 | Projects | create from quote, 9 seeded milestones, status/dates/notes, progress + current stage, auto-commissioning | US-C1–US-C6 |
 | Monitoring | manual monthly generation logs, actual vs seasonality-adjusted projection, savings vs baseline, warranties with expiry status, service requests | US-D1–US-D5 |
-| Monetization | Direct UPI Pro checkout (₹499/mo or ₹4,999/yr), instant QR, mobile app intents, official PDF Feasibility Report export, friend referrals | US-MON-1 |
-| Content & SEO | Solar Knowledge Base (`/blog`), automated JSON-LD schemas, sitemap, robots, Open Graph social cards, PWA service worker | NFR-SEO-1 |
+| Public demo | Four-step browser-only workflow with a downloadable decision brief and clearly labelled fictional quotes | US-A1, US-B4, US-C2, US-D2 |
+| Content & SEO | Solar Knowledge Base (`/blog`), JSON-LD schemas, sitemap, robots and Open Graph social cards | NFR-SEO-1 |
 | Documents | private upload, category tagging, association to project/milestone/quote, ownership-checked download, delete | US-E1–US-E4 |
 | Ops | health + readiness, Prisma migrations, seed script, Render/Vercel/Supabase deployment on custom domain | NFR-O1–NFR-O4 |
 
@@ -38,7 +38,7 @@ battery/ToU modelling, payments, notifications. Each has an interface and a stub
 ### Done signal
 
 - All acceptance criteria AC-A1 … AC-E6 pass in automated tests.
-- A seeded demo account walks all four journeys without a dead end.
+- The public guided demo walks all four journeys without an account or a dead end.
 - Deployed on `app.rooftogrid.com` + `api.rooftogrid.com` with TLS and private storage.
 
 ### Exit criteria before Phase 2
@@ -61,9 +61,9 @@ decision.
 - `BillParser` for electricity bills: units, amount, tariff slab, sanctioned load, consumer number.
 - Success metric: ≥ 80% of fields accepted without edit; median quote entry time under 60 seconds.
 
-### 2.2 Balcony & Terrace AI Vision Dimension Estimator
+### 2.2 Balcony & Terrace Vision Dimension Estimator
 - Multi-angle photo upload of apartment balconies and terraces.
-- **Phase 1 (Immediate)**: Google Gemini Multimodal Vision API (`gemini-1.5-flash` / `gemini-2.0-flash`) leveraging spatial anchor calibration (doors, standard railings, floor tiles) to derive metric dimensions, orientation, shading, and plug-and-play balcony solar kit feasibility (400W–1200W).
+- **Research first**: validate whether image-only spatial estimation is safe enough for homeowner guidance. No production model or claimed accuracy exists today.
 - **Phase 2 (Later)**: Custom edge model (YOLOv11-seg + Depth Anything metric 3D point cloud).
 - Success metric: Estimated dimensions within ±10% of physical measurement; automatic apartment kit recommendation with society NOC guidance.
 
@@ -81,9 +81,9 @@ decision.
 - Milestones auto-advance from provider events; homeowners get status change notifications.
 - Success metric: 70% of DISCOM milestones updated without homeowner input.
 
-### 2.5 Nationwide Installer Price Intelligence & AI RAG Comparison Engine
+### 2.5 Installer price intelligence
 - Comprehensive price intelligence across top Indian EPC installers (Tata Power Solar, Waaree Energies, SolarSquare, Loom Solar, Freyr, and DISCOM-empanelled local vendors under PM Surya Ghar).
-- Dual-tier intelligence: (1) Curated database of baseline ₹/kWp benchmarks by state, and (2) Real-time Gemini Search Grounding RAG agent to retrieve live rate cards, customer forums, and tender quotes by PIN code.
+- Start with a dated, cited benchmark dataset by state. Consider retrieval only after source provenance and update ownership are defined.
 - Normalizes quotes on ₹/Wp, equipment tier (TopCon vs Mono PERC, micro vs string inverters), DISCOM net-metering liaison fees, and net out-of-pocket costs post PM Surya Ghar ₹78,000 subsidy.
 - Success metric: Accurate pricing comparison within 5 seconds for any Indian PIN code with transparency scores.
 

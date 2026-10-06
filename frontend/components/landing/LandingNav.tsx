@@ -2,20 +2,15 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ThemeToggle } from './ThemeToggle';
-import { LanguageSelector } from './LanguageSelector';
-import { useLanguage } from '@/lib/i18n';
 
 const NAV_LINKS = [
-  { href: '#quick-calculator', label: 'Estimator', sectionId: 'quick-calculator' },
-  { href: '#features', label: 'Features', sectionId: 'features' },
+  { href: '#calculator', label: 'Calculator', sectionId: 'calculator' },
   { href: '#how-it-works', label: 'How It Works', sectionId: 'how-it-works' },
-  { href: '#pricing', label: 'Pricing', sectionId: 'pricing' },
+  { href: '#principles', label: 'Principles', sectionId: 'principles' },
   { href: '#faq', label: 'FAQ', sectionId: 'faq' },
 ];
 
 export default function LandingNav() {
-  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -89,7 +84,7 @@ export default function LandingNav() {
         <div className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.sectionId;
-            const label = t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label;
+            const label = link.label;
             return (
               <a
                 key={link.href}
@@ -119,15 +114,13 @@ export default function LandingNav() {
             href="/login"
             className="hidden rounded-full px-4 py-2 text-sm font-medium text-on-surface-variant transition-colors duration-200 hover:text-on-surface md:block"
           >
-            {t('nav_login')}
+            Sign in
           </Link>
-          <LanguageSelector />
-          <ThemeToggle />
           <Link
-            href="/dashboard"
+            href="/demo"
             className="hidden rounded-xl bg-primary-container px-6 py-2.5 text-sm font-semibold text-surface transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] md:block"
           >
-            {t('nav_get_started')}
+            Try the demo
           </Link>
           
           {/* Hamburger / X toggle */}
@@ -175,7 +168,7 @@ export default function LandingNav() {
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.sectionId;
-              const label = t(`nav_${link.sectionId.replace(/-/g, '_')}`) || link.label;
+              const label = link.label;
               return (
                 <a
                   key={link.href}
@@ -191,26 +184,19 @@ export default function LandingNav() {
                 </a>
               );
             })}
-            <div className="flex items-center justify-between border-t border-outline-variant/30 pt-3">
-              <span className="text-xs text-on-surface-variant">Language & Theme</span>
-              <div className="flex items-center gap-2">
-                <LanguageSelector />
-                <ThemeToggle />
-              </div>
-            </div>
             <Link
               href="/login"
               className="rounded-xl px-4 py-3 text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface hover:bg-surface-container"
               onClick={closeMobile}
             >
-              {t('nav_login')}
+              Sign in
             </Link>
             <Link
-              href="/dashboard"
+              href="/demo"
               className="mt-2 w-full rounded-xl bg-primary-container px-6 py-3.5 text-center text-sm font-semibold text-surface transition-all hover:opacity-90"
               onClick={closeMobile}
             >
-              {t('nav_get_started')}
+              Try the demo
             </Link>
           </div>
         </div>

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { Button, ButtonLink } from '@/components/ui/Button';
@@ -8,16 +7,12 @@ import { Card, CardBody, CardHeader } from '@/components/ui/Card';
 import { Alert, EmptyState, Spinner, useToast } from '@/components/ui/Feedback';
 import { TIER_COPY } from '@/lib/constants';
 import { formatCurrency, formatCurrencyShort, formatKwp, formatYears } from '@/lib/format';
-import { InstallerPriceIntelligence } from '@/components/domain/InstallerPriceIntelligence';
-import { quoteFormToPayload, EMPTY_QUOTE, type QuoteFormValues } from '@/components/domain/QuoteForm';
 import { api } from '@/lib/api';
-import { useApi, useSubmit } from '@/lib/hooks';
+import { useApi } from '@/lib/hooks';
 
 export default function QuotesPage() {
   const { notify } = useToast();
   const quotes = useApi(() => api.quotes.list());
-  const { run } = useSubmit();
-  const [showIntelligence, setShowIntelligence] = useState<boolean>(false);
 
   const select = async (id: string) => {
     await api.quotes.select(id);
@@ -31,17 +26,6 @@ export default function QuotesPage() {
     await quotes.reload();
   };
 
-  const handleImportQuote = async (quote: Partial<QuoteFormValues>) => {
-    const fullQuote: QuoteFormValues = {
-      ...EMPTY_QUOTE,
-      ...quote,
-    };
-    const created = await run(() => api.quotes.create(quoteFormToPayload(fullQuote)));
-    if (created) {
-      await quotes.reload();
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -53,14 +37,6 @@ export default function QuotesPage() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button
-            variant={showIntelligence ? 'secondary' : 'secondary'}
-            className="border-brand-300 text-brand-800 hover:bg-brand-50"
-            onClick={() => setShowIntelligence((v) => !v)}
-          >
-            <span>🇮🇳</span>
-            <span>{showIntelligence ? 'Hide Market Intelligence' : 'Market Price Intelligence'}</span>
-          </Button>
           {(quotes.data?.length ?? 0) > 1 && (
             <ButtonLink href="/quotes/compare" variant="secondary">
               Compare side by side
@@ -70,10 +46,10 @@ export default function QuotesPage() {
         </div>
       </div>
 
-      {/* Installer Price Intelligence Component */}
-      {showIntelligence && (
-        <InstallerPriceIntelligence onImportQuote={handleImportQuote} />
-      )}
+      <Alert tone="info" title="We score quotes you actually received">
+        RoofToGrid does not rank or claim to verify installers. Add the written scope, equipment and warranty
+        terms from each proposal; the comparison then applies the same rules to every quote.
+      </Alert>
 
       {quotes.error && <Alert tone="error">{quotes.error}</Alert>}
 

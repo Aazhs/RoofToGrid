@@ -3,19 +3,15 @@ import type { Config } from 'tailwindcss';
 /**
  * RoofToGrid Tailwind Configuration
  *
- * All semantic and grey-scale colors map to CSS custom properties defined
- * in globals.css. Light/dark mode is controlled by toggling `class="dark"`
- * on <html>; the CSS variables swap automatically, which means every
- * existing component that uses slate-*, bg-white, etc. gains dark-mode
- * support without any per-component changes.
+ * All semantic and grey-scale colors map to the light-mode CSS custom
+ * properties defined in globals.css.
  */
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // ── Brand accent (same in both modes) ──
+        // ── Brand accent ──
         brand: {
           50: '#fff8ed',
           100: '#ffefd4',
@@ -30,8 +26,7 @@ const config: Config = {
         },
 
         // ── Slate scale mapped to CSS variables ──
-        // In light mode these resolve to standard Tailwind slate.
-        // In dark mode they flip to Nocturnal Intellect equivalents.
+        // These resolve to the standard light slate palette.
         slate: {
           50: 'var(--slate-50)',
           100: 'var(--slate-100)',
@@ -46,7 +41,7 @@ const config: Config = {
           950: 'var(--slate-950)',
         },
 
-        // ── Nocturnal Intellect / Lumina Grid semantic tokens ──
+        // ── Light interface semantic tokens ──
         // Used by landing components. Also backed by CSS vars.
         'surface': 'var(--surface)',
         'surface-container-lowest': 'var(--surface-container-lowest)',

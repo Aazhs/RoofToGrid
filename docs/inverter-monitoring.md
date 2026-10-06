@@ -1,8 +1,8 @@
-# Inverter Monitoring & Live Solar Telemetry
+# Proposed: Inverter Monitoring & Live Solar Telemetry
 
 ## Overview
 
-A major risk for residential solar adopters is inverter downtime or module degradation going unnoticed for months. RoofToGrid bridges the gap between hardware telemetry and homeowner awareness through unified inverter monitoring.
+A major risk for residential solar adopters is inverter downtime or module degradation going unnoticed for months. RoofToGrid plans to bridge that gap through unified inverter monitoring. **No live inverter provider is connected in the current product; monthly readings are entered manually.**
 
 ---
 
@@ -16,7 +16,7 @@ A major risk for residential solar adopters is inverter downtime or module degra
 
 ---
 
-## Key Metrics Tracked (`InverterMonitoringCard.tsx`)
+## Planned metrics
 
 | Metric | Unit | Description |
 |---|---|---|

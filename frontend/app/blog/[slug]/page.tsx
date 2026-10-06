@@ -148,27 +148,93 @@ const ARTICLE_CONTENT: Record<string, ArticleData> = {
   },
 };
 
+const ARTICLE_META: Record<string, { description: string; publishedTime: string }> = {
+  'pm-surya-ghar-subsidy-guide-2026': {
+    description: 'Understand PM Surya Ghar rooftop solar subsidy slabs, required documents and example calculations for Indian homeowners.',
+    publishedTime: '2026-10-02T00:00:00+05:30',
+  },
+  'how-to-compare-solar-quotes-red-flags': {
+    description: 'Compare Indian rooftop solar installer quotes using price per kWp, equipment, warranties, scope exclusions and seven practical red-flag checks.',
+    publishedTime: '2026-09-28T00:00:00+05:30',
+  },
+  'topcon-vs-mono-perc-solar-panels-india': {
+    description: 'A homeowner-focused comparison of TOPCon and Mono PERC solar panels for Indian roofs, including efficiency, heat and warranty tradeoffs.',
+    publishedTime: '2026-09-20T00:00:00+05:30',
+  },
+};
+
 export function generateStaticParams() {
   return Object.keys(ARTICLE_CONTENT).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Metadata {
-  // Synchronous resolution in static export
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const article = ARTICLE_CONTENT[slug];
+  const meta = ARTICLE_META[slug];
+  if (!article || !meta) return {};
+
   return {
-    title: 'Solar Guide — RoofToGrid',
+    title: article.title,
+    description: meta.description,
+    alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      type: 'article',
+      title: article.title,
+      description: meta.description,
+      url: `/blog/${slug}`,
+      publishedTime: meta.publishedTime,
+      authors: [article.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: meta.description,
+    },
   };
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = ARTICLE_CONTENT[slug];
+  const meta = ARTICLE_META[slug];
 
   if (!article) {
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rooftogrid.in';
+  const articleUrl = `${baseUrl}/blog/${slug}`;
+  const structuredData = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: meta?.description,
+      datePublished: meta?.publishedTime,
+      dateModified: meta?.publishedTime,
+      mainEntityOfPage: articleUrl,
+      inLanguage: 'en-IN',
+      author: { '@type': 'Person', name: article.author },
+      publisher: {
+        '@type': 'Organization',
+        name: 'RoofToGrid Technologies',
+        logo: { '@type': 'ImageObject', url: `${baseUrl}/icon.png` },
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+        { '@type': 'ListItem', position: 2, name: 'Solar Guides', item: `${baseUrl}/blog` },
+        { '@type': 'ListItem', position: 3, name: article.title, item: articleUrl },
+      ],
+    },
+  ];
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <LandingNav />
       <main className="min-h-screen bg-surface pt-28 pb-20 px-4 md:px-16 text-on-surface">
         <article className="max-w-3xl mx-auto">
@@ -206,17 +272,17 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="mt-12 rounded-2xl bg-surface-container border border-outline-variant p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <h4 className="text-base font-semibold text-on-surface font-jakarta">
-                Calculate your exact PM Surya Ghar savings
+                Estimate your PM Surya Ghar savings
               </h4>
               <p className="text-xs text-on-surface-variant mt-1">
-                Enter your monthly electricity bill for an instant, data-backed feasibility report.
+                Enter your bill and roof details for a transparent planning estimate.
               </p>
             </div>
             <Link
-              href="/dashboard"
+              href="/demo"
               className="rounded-xl bg-primary-container text-surface px-6 py-3 text-xs font-semibold hover:bg-surface-tint whitespace-nowrap transition-colors"
             >
-              Start Free Plan &rarr;
+              Try the guided calculator &rarr;
             </Link>
           </div>
 
@@ -224,8 +290,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <Link href="/blog" className="font-semibold text-on-surface hover:text-primary-container">
               &larr; Back to all guides
             </Link>
-            <Link href="/quotes/compare" className="text-on-surface-variant hover:text-on-surface">
-              Compare quotes prototype &rarr;
+            <Link href="/demo" className="text-on-surface-variant hover:text-on-surface">
+              Try the quote audit demo &rarr;
             </Link>
           </div>
         </article>

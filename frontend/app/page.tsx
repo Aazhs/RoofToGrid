@@ -1,38 +1,59 @@
-import dynamic from 'next/dynamic';
+import type { Metadata } from 'next';
 import LandingNav from '@/components/landing/LandingNav';
 import HeroSection from '@/components/landing/HeroSection';
-import { StatsCounter } from '@/components/landing/StatsCounter';
 import { QuickCalculator } from '@/components/landing/QuickCalculator';
+import { ProductJourney } from '@/components/landing/ProductJourney';
+import { FAQ } from '@/components/landing/FAQ';
+import { LandingFooter } from '@/components/landing/LandingFooter';
 
-// Lazy load below-the-fold sections for performance optimization (Lighthouse 100/100 target)
-const FeatureGrid = dynamic(() => import('@/components/landing/FeatureGrid').then((m) => m.FeatureGrid));
-const HowItWorks = dynamic(() => import('@/components/landing/HowItWorks'));
-const ComparisonSection = dynamic(() => import('@/components/landing/ComparisonSection').then((m) => m.ComparisonSection));
-const PricingSection = dynamic(() => import('@/components/landing/PricingSection').then((m) => m.PricingSection));
-const Testimonials = dynamic(() => import('@/components/landing/Testimonials').then((m) => m.Testimonials));
-const FAQ = dynamic(() => import('@/components/landing/FAQ').then((m) => m.FAQ));
-const CTABanner = dynamic(() => import('@/components/landing/CTABanner').then((m) => m.CTABanner));
-const LandingFooter = dynamic(() => import('@/components/landing/LandingFooter').then((m) => m.LandingFooter));
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rooftogrid.in';
 
-/**
- * Landing page — uses global theme from ThemeProvider (in providers.tsx).
- * No scoped wrapper needed; CSS variables on :root / html.dark handle everything.
- */
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
+
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How accurate are RoofToGrid solar savings estimates?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'RoofToGrid provides rule-based planning estimates using disclosed India averages and homeowner inputs. Results are not a site survey or guaranteed generation figure.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is the PM Surya Ghar rooftop solar subsidy?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The planning rule provides ₹30,000 per kW for the first 2 kW and ₹18,000 for the third kW, capped at ₹78,000 for eligible residential systems. Final eligibility must be confirmed through the official programme.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does RoofToGrid compare solar installer quotes?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'RoofToGrid normalizes user-entered quotes by price per kWp, equipment tier, warranty coverage, financing and written scope, then identifies explicit red flags.',
+      },
+    },
+  ],
+  mainEntityOfPage: BASE_URL,
+};
+
 export default function LandingPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }} />
       <LandingNav />
       <main id="main">
         <HeroSection />
-        <StatsCounter />
         <QuickCalculator />
-        <FeatureGrid />
-        <HowItWorks />
-        <ComparisonSection />
-        <PricingSection />
-        <Testimonials />
+        <ProductJourney />
         <FAQ />
-        <CTABanner />
       </main>
       <LandingFooter />
     </>

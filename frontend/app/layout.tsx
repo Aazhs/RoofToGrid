@@ -9,11 +9,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rooftogrid.in';
 
 export const metadata: Metadata = {
   title: {
-    default: 'RoofToGrid — India\'s Smartest Rooftop Solar Planning Platform',
+    default: 'Rooftop Solar Calculator & Quote Comparison India — RoofToGrid',
     template: '%s · RoofToGrid',
   },
   description:
-    'Plan your rooftop solar with clear numbers. Compare installer quotes fairly, track your project end-to-end, and monitor system performance — all in one platform built for Indian homeowners.',
+    'Estimate rooftop solar size, PM Surya Ghar subsidy, cost and payback. Compare installer quotes fairly and track installation milestones with RoofToGrid.',
   applicationName: 'RoofToGrid',
   keywords: [
     'rooftop solar', 'solar panel', 'solar calculator', 'India solar', 'PM Surya Ghar',
@@ -25,12 +25,9 @@ export const metadata: Metadata = {
   creator: 'RoofToGrid Technologies',
   publisher: 'RoofToGrid Technologies',
   metadataBase: new URL(BASE_URL),
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
-    title: 'RoofToGrid — India\'s Smartest Rooftop Solar Planning Platform',
-    description: 'Plan your rooftop solar with clear numbers. Compare quotes, track projects, monitor performance. Built for Indian homeowners.',
+    title: 'Rooftop Solar Calculator & Quote Comparison India — RoofToGrid',
+    description: 'Estimate solar size, subsidy, cost and payback. Audit installer quotes and track your rooftop project.',
     type: 'website',
     url: BASE_URL,
     siteName: 'RoofToGrid',
@@ -40,18 +37,30 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: 'RoofToGrid — India\'s Smartest Rooftop Solar Planning Platform',
+        alt: 'RoofToGrid rooftop solar calculator and quote comparison for India',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RoofToGrid — India\'s Smartest Rooftop Solar Planning Platform',
-    description: 'Plan your rooftop solar with clear numbers. Compare quotes, track projects, monitor performance.',
+    title: 'Rooftop Solar Calculator & Quote Comparison India — RoofToGrid',
+    description: 'Estimate solar size, subsidy, cost and payback. Audit installer quotes and track your rooftop project.',
     creator: '@rooftogrid',
     images: [`${BASE_URL}/opengraph-image`],
   },
-  robots: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+  robots: {
+    index: true,
+    follow: true,
+    'max-image-preview': 'large',
+    'max-snippet': -1,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   icons: {
     icon: '/icon.png',
     shortcut: '/favicon.ico',
@@ -70,41 +79,46 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Organization',
+      '@id': `${BASE_URL}/#organization`,
       name: 'RoofToGrid Technologies',
       url: BASE_URL,
       logo: `${BASE_URL}/icon.png`,
-      sameAs: [],
-      description: 'India\'s smartest rooftop solar planning platform for homeowners.',
+      description: 'Independent rooftop solar planning and quote auditing for Indian homeowners.',
       contactPoint: {
         '@type': 'ContactPoint',
         email: 'aarsh@rooftogrid.in',
         contactType: 'customer service',
-        availableLanguage: ['English', 'Hindi'],
+        availableLanguage: ['English'],
       },
     },
     {
+      '@type': 'WebSite',
+      '@id': `${BASE_URL}/#website`,
+      name: 'RoofToGrid',
+      url: BASE_URL,
+      inLanguage: 'en-IN',
+      description: 'Independent rooftop solar sizing, subsidy estimation, installer quote auditing and project tracking for Indian homeowners.',
+      publisher: { '@id': `${BASE_URL}/#organization` },
+    },
+    {
       '@type': 'WebApplication',
+      '@id': `${BASE_URL}/#application`,
       name: 'RoofToGrid',
       url: BASE_URL,
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Web',
-      offers: [
-        {
-          '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'INR',
-          name: 'Free Plan',
-          description: 'Core solar planning tools for homeowners',
-        },
-        {
-          '@type': 'Offer',
-          price: '499',
-          priceCurrency: 'INR',
-          name: 'Pro Plan',
-          description: 'Full power for serious solar buyers with unlimited features',
-          billingIncrement: 'P1M',
-        },
-      ],
+      inLanguage: 'en-IN',
+      isAccessibleForFree: true,
+      audience: {
+        '@type': 'Audience',
+        audienceType: 'Indian residential electricity consumers considering rooftop solar',
+      },
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'INR',
+        name: 'Guided planning demo',
+      },
       featureList: [
         'Solar sizing calculator',
         'PM Surya Ghar subsidy calculator',
@@ -114,48 +128,13 @@ const jsonLd = {
         'Private document vault',
       ],
     },
-    {
-      '@type': 'FAQPage',
-      mainEntity: [
-        {
-          '@type': 'Question',
-          name: 'How much does rooftop solar cost in India?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'A typical residential rooftop solar system costs ₹48,000–₹65,000 per kWp before subsidy. Under PM Surya Ghar, you can get up to ₹78,000 subsidy, bringing the net cost for a 3 kWp system to around ₹1,18,000.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'What is the PM Surya Ghar subsidy?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'PM Surya Ghar provides ₹30,000/kW for the first 2 kW and ₹18,000 for the 3rd kW, with a maximum subsidy of ₹78,000 per household for residential rooftop solar systems.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'How long does a solar system take to pay back?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Most residential systems pay back in 4–6 years after subsidy, depending on your electricity tariff and consumption. After payback, you save on electricity for the remaining 20+ years of the system\'s life.',
-          },
-        },
-      ],
-    },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        {/* Prevent flash of wrong theme on initial load */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('rtg-theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}})()`,
-          }}
-        />
         {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
@@ -171,6 +150,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="RoofToGrid information for AI assistants" />
       </head>
       <body>
         <a href="#main" className="skip-link">

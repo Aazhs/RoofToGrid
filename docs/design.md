@@ -337,6 +337,7 @@ frontend/
     layout.tsx                     root shell, metadata, skip link
     providers.tsx                  AuthProvider + ToastProvider (client boundary)
     page.tsx                       Landing + inline public sizing calculator (US-A1)
+    demo/page.tsx                  Browser-only four-stage product walkthrough
     (auth)/layout.tsx              minimal shell for signed-out pages
     (auth)/login, (auth)/register
     (app)/layout.tsx               authenticated shell: sidebar, mobile menu, route guard

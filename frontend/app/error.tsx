@@ -39,7 +39,7 @@ export default function ErrorBoundary({
           </h1>
 
           <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-            An unexpected error occurred while rendering this section. Your solar data is safe in session storage.
+            An unexpected error occurred while rendering this section. Please retry; unsaved form changes may need to be entered again.
           </p>
 
           {error?.digest && (

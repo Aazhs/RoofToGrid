@@ -24,13 +24,7 @@ export function createApp(): Express {
       origin(origin, callback) {
         if (!origin) return callback(null, true); // curl, health checks, server-to-server
         const normalized = origin.replace(/\/+$/, '');
-        if (
-          env.corsOrigins.includes(normalized) ||
-          env.corsOrigins.includes('*') ||
-          normalized.endsWith('rooftogrid.in') ||
-          normalized.endsWith('rooftogrid.com') ||
-          env.corsOrigins.some((allowed) => allowed.includes('vercel.app') && normalized.endsWith('.vercel.app'))
-        ) {
+        if (env.corsOrigins.includes(normalized) || env.corsOrigins.includes('*')) {
           return callback(null, true);
         }
         return callback(new Error(`Origin ${origin} is not allowed`));

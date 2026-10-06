@@ -5,7 +5,7 @@ import LandingNav from '@/components/landing/LandingNav';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 
 export const metadata: Metadata = {
-  title: 'Solar Knowledge Base & Guides — RoofToGrid',
+  title: 'Solar Knowledge Base & Guides',
   description:
     'Unbiased guides, subsidy breakdowns, and insider tips to help Indian homeowners navigate rooftop solar installation with total confidence.',
   alternates: {
@@ -111,13 +111,13 @@ export default function BlogIndexPage() {
               Ready to see what your roof can produce?
             </h3>
             <p className="text-sm text-on-surface-variant max-w-xl mx-auto mb-6">
-              Our automated solar modeling engine calculates your optimal system size, PM Surya Ghar subsidy, and 25-year financial returns in 30 seconds.
+              Use the public calculator to estimate a starting system size, PM Surya Ghar subsidy and payback range with every assumption disclosed.
             </p>
             <Link
-              href="/dashboard"
+              href="/demo"
               className="inline-flex items-center gap-2 rounded-xl bg-primary-container text-surface px-8 py-3.5 text-sm font-semibold hover:bg-surface-tint transition-all"
             >
-              <span>Launch Free Prototype</span>
+              <span>Try the guided calculator</span>
               <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>

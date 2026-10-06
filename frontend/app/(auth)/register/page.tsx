@@ -106,6 +106,12 @@ export default function RegisterPage() {
             Sign in
           </Link>
         </p>
+        <p className="mt-2 text-sm text-slate-600">
+          Not ready to sign up?{' '}
+          <Link href="/demo" className="font-medium text-brand-700 hover:underline">
+            Try the four-step demo first
+          </Link>
+        </p>
       </CardBody>
     </Card>
   );

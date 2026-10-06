@@ -1,10 +1,8 @@
 // RoofToGrid Service Worker — Offline-First PWA Cache
-const CACHE_NAME = 'rooftogrid-v1';
+const CACHE_NAME = 'rooftogrid-v2';
 const PRECACHE_URLS = [
   '/',
-  '/dashboard',
-  '/sizing',
-  '/quotes',
+  '/demo',
   '/manifest.webmanifest',
   '/icon.png',
   '/favicon.ico',

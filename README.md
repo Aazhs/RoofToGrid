@@ -24,17 +24,14 @@ RoofToGrid is a full-stack platform that empowers Indian homeowners with:
 
 | Feature | What It Does |
 |---|---|
-| **Quick Solar Estimator** | No-signup interactive bill slider with state DISCOM tariffs & instant subsidy calculation |
+| **Guided Solar Decision Demo** | No-signup four-step flow from sizing to quote audit, project control and performance check |
+| **Quick Solar Estimator** | Browser-based bill and roof calculator with disclosed assumptions and subsidy estimate |
 | **Solar Sizing Engine** | Three-scenario calculator (Conservative, Optimal, Max Roof) with 25-year financial projections |
 | **Quote Normalizer** | Apples-to-apples comparison across 17+ metrics with automated red-flag detection |
-| **PM Surya Ghar Integration** | Auto-calculates central subsidy eligibility (up to ₹78,000) and net out-of-pocket investment |
+| **PM Surya Ghar Calculator** | Applies the current static central subsidy rules (up to ₹78,000) to planning costs |
 | **Project Tracker** | Nine-milestone visual lifecycle from inquiry to net meter grid commissioning |
-| **Official PDF Feasibility Report** | Printable bank-loan ready engineering & subsidy feasibility documentation |
-| **Pro UPI Subscription Engine** | Direct instant UPI QR code & mobile app intents (GPay/PhonePe/Paytm) with UTR audit verification |
-| **PWA & Offline Service Worker** | Installable to home screen on mobile with offline-first static shell caching |
 | **Solar Education & Blog** | Technical deep dives on subsidy policies, TOPCon vs Mono PERC, and installer red flags |
-| **WhatsApp Sharing & Referrals** | 1-click viral sharing of sizing runs and quote comparisons, plus friend referral rewards |
-| **Performance Monitor** | Monthly generation vs. seasonal projections with variance alerts |
+| **Performance Monitor** | Manual monthly generation vs. seasonal projections with variance alerts |
 | **Document Vault** | Private, encrypted storage for project paperwork |
 
 ---
@@ -45,7 +42,7 @@ RoofToGrid is a full-stack platform that empowers Indian homeowners with:
 ┌────────────────────────────────────────────────────────────────┐
 │                         Vercel CDN                             │
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │         Next.js 14 (App Router) + Tailwind CSS          │  │
+│  │         Next.js 16 (App Router) + Tailwind CSS          │  │
 │  │     Landing · Dashboard · Sizing · Quotes · Projects    │  │
 │  └──────────────────────┬───────────────────────────────────┘  │
 └─────────────────────────┼──────────────────────────────────────┘
@@ -81,7 +78,7 @@ RoofToGrid is a full-stack platform that empowers Indian homeowners with:
 | D — Monitor & maintain | Monthly generation vs seasonal projection, savings, warranty status, service requests | `/projects/[id]` → Monitoring |
 | E — Document vault | Private uploads tied to projects, milestones or quotes, with ownership-checked downloads | `/documents` |
 
-**Designed for (not yet built):** OCR/LLM quote parsing, live DISCOM and subsidy status,
+**Designed for (not yet built):** OCR/LLM bill and quote parsing, live DISCOM and subsidy status,
 inverter monitoring feeds, professional yield simulation, installer portal. Each sits behind an interface with
 a working stub — see [`docs/integration-strategy.md`](docs/integration-strategy.md).
 
@@ -109,7 +106,7 @@ backend/                Express API
     unit/               domain + helpers (no database needed)
     integration/        routes → service → real Postgres (skips when no database)
 frontend/               Next.js app
-  app/                  routes: landing, auth, dashboard, onboarding, bills, roof, sizing, quotes, projects, documents, profile
+  app/                  routes: landing, guided demo, auth, dashboard, onboarding, bills, roof, sizing, quotes, projects, documents, profile
   components/ui/        Button, Field, Card, Badge, Stepper, Feedback (alerts, toasts, empty states)
   components/domain/    sizing form and results, quote form, comparison table, milestone row, performance chart, document panel
   lib/                  api client, auth context, formatting, constants, hooks, shared types
@@ -168,6 +165,8 @@ npm run dev                   # http://localhost:3000
 ```
 
 `NEXT_PUBLIC_API_URL` must include the version prefix, e.g. `http://localhost:4000/api/v1`.
+The no-account product walkthrough is available at `http://localhost:3000/demo`; it is intentionally
+browser-only and clearly labels its fictional quote data.
 
 ### 4. Demo Login
 
@@ -245,9 +244,9 @@ Target topology: `rooftogrid.in` (Vercel) → `api.rooftogrid.com` (Render) → 
 
 ## Business Model
 
-**Freemium SaaS** — homeowners use core planning tools for free. Pro tier (₹499/month or ₹4,999/year) unlocks
-unlimited quote comparisons, PDF feasibility reports, full performance history, and priority support. Future
-revenue from a two-sided installer marketplace (see [`docs/business-model.md`](docs/business-model.md)).
+The current product focuses on validating homeowner value with free planning, quote comparison and project
+tracking. Possible paid expert review and installer referral models are future hypotheses with explicit trust
+guardrails (see [`docs/business-model.md`](docs/business-model.md)).
 
 ## Honesty About the Numbers
 

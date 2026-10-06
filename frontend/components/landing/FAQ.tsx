@@ -6,7 +6,7 @@ import { useScrollReveal } from '@/components/landing/useScrollReveal';
 const faqs = [
   {
     question: 'How accurate are the savings estimates?',
-    answer: 'Our estimates use published India solar averages, standard panel degradation rates (0.5%/year), and current grid tariffs. These are rule-based calculations using national data — not site surveys or irradiance simulations. All assumptions (IN_2026_07 standard) are fully disclosed in your personalized report.'
+    answer: 'They are planning estimates based on published India averages, your inputs and the disclosed IN_2026_07 assumption set. They are not a site survey or location-specific irradiance simulation. Use the result to set a range and challenge quotes, then have the roof verified before signing.'
   },
   {
     question: 'Is my data safe?',
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: 'What subsidies am I eligible for?',
-    answer: 'Under the PM Surya Ghar Muft Bijli Yojana, you may be eligible for a subsidy of up to ₹78,000 depending on your system size. Our platform auto-calculates your exact eligibility.'
+    answer: 'The calculator applies the published central PM Surya Ghar sizing rule, up to ₹78,000, as a planning estimate. Final eligibility and payment depend on current programme, property, vendor and DISCOM requirements; verify them on the official portal.'
   },
   {
     question: 'Can I track my installation progress?',

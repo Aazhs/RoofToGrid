@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'RoofToGrid — Rooftop Solar Planning',
     short_name: 'RoofToGrid',
-    description: "India's smartest rooftop solar planning platform for homeowners.",
+    description: 'Independent rooftop solar planning and quote auditing for Indian homeowners.',
     start_url: '/',
     display: 'standalone',
     background_color: '#faf9f7',
